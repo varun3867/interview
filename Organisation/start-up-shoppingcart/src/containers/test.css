@@ -1,0 +1,22 @@
+.box1{
+    position: fixed;
+    left:8rem;
+    height: 18rem;
+    width: 18rem;
+    background-color: white;
+    /* z-index: 50; */
+    border: 2px solid black;
+    float: left;
+}
+
+.box2{
+    position: fixed;
+    left:28rem;
+    height: 18rem;
+    width: 18rem;
+    background-color: white;
+    /* z-index: 10; */
+    border: 2px solid black;
+    /* float: left; */
+}
+
