@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="antlr.collections.List"/>
+<fullyQualifiedTypeName name="com.example.mapping.repository.ReviewRepository"/>
+<fullyQualifiedTypeName name="com.example.mapping.model.Review"/>
+<fullyQualifiedTypeName name="com.example.mapping.model.Dept"/>
+<fullyQualifiedTypeName name="com.example.mapping.model.Employee"/>
+<fullyQualifiedTypeName name="com.example.mapping.mrepository.SubjectRepo"/>
+<fullyQualifiedTypeName name="com.example.mapping.mrepository.StudentRepo"/>
+<fullyQualifiedTypeName name="com.example.mapping.model.Subject"/>
+<fullyQualifiedTypeName name="javax.persistence.OneToMany"/>
+<fullyQualifiedTypeName name="com.example.mapping.model.Course"/>
+<fullyQualifiedTypeName name="com.example.mapping.repository.CourseRepository"/>
+<fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
+<fullyQualifiedTypeName name="javax.persistence.JoinTable"/>
+<fullyQualifiedTypeName name="javax.persistence.ManyToMany"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.example.mapping.models.Course"/>
+<fullyQualifiedTypeName name="com.example.mapping.Repositories.CourseRepository"/>
+<fullyQualifiedTypeName name="com.example.mapping.Repositories.StudentRepository"/>
+<fullyQualifiedTypeName name="com.example.mapping.models.Student"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="javax.persistence.ManyToOne"/>
+<fullyQualifiedTypeName name="javax.persistence.JoinColumn"/>
+<fullyQualifiedTypeName name="lombok.Data"/>
+<fullyQualifiedTypeName name="lombok.NoArgsConstructor"/>
+<fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
+<fullyQualifiedTypeName name="javax.persistence.Id"/>
+<fullyQualifiedTypeName name="javax.persistence.OneToOne"/>
+<fullyQualifiedTypeName name="javax.persistence.Entity"/>
+<fullyQualifiedTypeName name="javax.persistence.Table"/>
+<fullyQualifiedTypeName name="org.springframework.data.jpa.repository.JpaRepository"/>
+<fullyQualifiedTypeName name="org.springframework.boot.CommandLineRunner"/>
+<fullyQualifiedTypeName name="lombok.NonNull"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="com.example.mapping.repository.StudentRepository"/>
+<fullyQualifiedTypeName name="com.example.mapping.repository.PassportRepository"/>
+<fullyQualifiedTypeName name="lombok.RequiredArgsConstructor"/>
+<fullyQualifiedTypeName name="com.example.mapping.model.Passport"/>
+<fullyQualifiedTypeName name="com.example.mapping.model.Student"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;OneToManyRaghu/src/main/java/com.example.mapping.model&apos;&#x0D;&#x0A;- Original project: &apos;HibernateManyToOne&apos;&#x0D;&#x0A;- Destination element: &apos;OneToManyRaghu/src/main/java/com.example.mapping.model&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     in.nit.model.Dept.java&#x0D;&#x0A;     in.nit.model.Employee.java" description="Copy compilation units" destination="=OneToManyRaghu/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.example.mapping.model" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;in.nit.model{Dept.java" element2="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;in.nit.model{Employee.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1631027813794" units="2" version="1.0"/>
+</session>

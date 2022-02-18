@@ -1,0 +1,9 @@
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="com.example.mapping.model.Review"><rhs name\="com.example.mapping.model.Review"/></lhs><lhs name\="com.example.mapping.model.Course"><rhs name\="com.example.mapping.model.Course"/></lhs><lhs name\="com.example.mapping.model.Employee"><rhs name\="com.example.mapping.model.Employee"/></lhs><lhs name\="com.example.mapping.model.Student"><rhs name\="com.example.mapping.model.Student"/></lhs><lhs name\="java.lang.Enum"><rhs name\="javax.persistence.CascadeType"/></lhs><lhs name\="com.example.mapping.models.Course"><rhs name\="com.example.mapping.models.Course"/></lhs><lhs name\="com.example.mapping.models.Student"><rhs name\="com.example.mapping.models.Student"/></lhs><lhs name\="com.example.mapping.model.Passport"><rhs name\="com.example.mapping.model.Passport"/></lhs></history>
+content_assist_number_of_computers=15
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=0,0,0
+eclipse.preferences.version=1
+org.eclipse.jdt.ui.formatterprofiles.version=19
+spelling_locale_initialized=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true
