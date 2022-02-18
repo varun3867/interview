@@ -1,0 +1,220 @@
+				Date : 20-Aug-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	--------------------------------------------------------------
+MVC:-
+https://www.youtube.com/watch?v=O8MtjB0Ru0E
+	---------------------------------------------------------------
+
+			Procedures Creation at Database
+--------------------------------------------------------------------------------
+*) Stored Procedures are block of queires/logics executed at database side
+  when it is called.
+
+> it is similer to Java methods.
+> limitation:-
+   Database migrations , SP need to be created in new DB also.
+   If version is upgraded, then syntax may get modified.
+
+https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_6009.htm
+https://www.plsqltutorial.com/plsql-procedure/
+
+a. Create Employee table 
+b. insert data
+INSERT INTO EMPLOYEE VALUES(10,'SAM','LEAD','DEV',600.0);
+INSERT INTO EMPLOYEE VALUES(11,'KHAN','MGR','QA',800.0);
+INSERT INTO EMPLOYEE VALUES(12,'SYED','ACE','QA',700.0);
+INSERT INTO EMPLOYEE VALUES(13,'AJAY','LEAD','QA',500.0);
+INSERT INTO EMPLOYEE VALUES(14,'AHMED','ASE','DEV',600.0);
+
+
+--------STORED PROCEDURE#1--------------------------------------------------------
+a. No Input and No Output
+
+DELIMITER $$
+
+CREATE PROCEDURE GETALLEMPS()
+    
+	BEGIN
+		SELECT * FROM EMPLOYEE;
+	END$$
+
+DELIMITER ;
+--------STORED PROCEDURE#2--------------------------------------------------------
+B. in param, but no out param
+
+DELIMITER $$
+
+CREATE PROCEDURE GETEMPSBYDEPT(IN EMP_DEPT VARCHAR(20))
+    
+	BEGIN
+		SELECT * FROM EMPLOYEE E WHERE E.EDPT=EMP_DEPT;
+	END$$
+
+DELIMITER ;
+
+--------STORED PROCEDURE#3--------------------------------------------------------
+C. in param, OUT PRAMETER
+
+DELIMITER $$
+
+CREATE PROCEDURE GETEMPSCOUNTBYDESG(IN EMP_DESG VARCHAR(20), OUT DESG_COUNT INT)
+    
+	BEGIN
+		SELECT COUNT(*) INTO DESG_COUNT FROM EMPLOYEE E WHERE E.edeg=EMP_DESG;
+	END$$
+
+DELIMITER ;
+
+
+*) If we call any SP then it is internally using CallableStatement(I) [java.sql]
+--------------------------------------------------------------------------------
+			Procedures Calls at Spring Data JPA
+--------------------------------------------------------------------------------
+Notes:
+a. Autowire EntityManager(em)
+   [old Hibernate Versions: Session(I) is used]
+b. create StoredProcedureQuery using em
+c. If in/out param is exist then register as In/OutParam
+   registerStoredProcedureParameter(position,type,mode)
+d. set input param if exist
+   setParameter("name",value)
+e. Execute StoredProcedure.
+
+--code-------------------------------------------
+*) No Repository interface is required.
+*) Must Register all IN and OUT types
+
+Name: SpringBoot2DataJpaSPusingJpa
+Dep : MySQL, Lombok, Data JPA
+
+1. Model class
+package in.nareshit.raghu.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="employee")
+public class Employee {
+	@Id
+	@Column(name="eid")
+	private Integer empId;
+	@Column(name="ename")
+	private String empName;
+	@Column(name="edeg")
+	private String empDesg;
+	@Column(name="edpt")
+	private String empDept;
+	@Column(name="esal")
+	private Double empSal;
+	
+}
+
+2. Repository interface
+package in.nareshit.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
+
+import in.nareshit.raghu.model.Employee;
+
+public interface EmployeeRepository 
+	extends JpaRepository<Employee, Integer>
+{
+
+	
+}
+
+
+3. Runner for insert
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+
+import in.nareshit.raghu.model.Employee;
+import in.nareshit.raghu.repo.EmployeeRepository;
+
+@Component
+public class EmployeeDataInsertRunner implements CommandLineRunner {
+
+	@Autowired
+	private EmployeeRepository erepo;
+	
+	public void run(String... args) throws Exception {
+		erepo.save(new Employee(101, "A", "SE", "DEV", 200.0));
+		erepo.save(new Employee(102, "B", "TE", "QA", 300.0));
+		erepo.save(new Employee(103, "C", "BE", "BA", 400.0));
+		erepo.save(new Employee(104, "D", "SE", "BA", 400.0));
+		erepo.save(new Employee(105, "E", "BE", "QA", 400.0));
+		erepo.save(new Employee(106, "F", "TE", "BA", 400.0));
+	}
+
+}
+4. Runner for SP Test
+package in.nareshit.raghu.runner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class StoredProcRunnerTest implements CommandLineRunner {
+
+	@Autowired
+	private EntityManager em;
+
+	public void run(String... args) throws Exception {
+		/*
+		//create SP Query
+		StoredProcedureQuery query = em.createStoredProcedureQuery("GETALLEMPS", Employee.class);
+		//execute
+		List<Employee> list = query.getResultList();
+		//print result
+		list.forEach(System.out::println);
+		 */
+
+		/*
+		//create SP Query
+		StoredProcedureQuery query = em.createStoredProcedureQuery("GETEMPSBYDEPT",Employee.class);
+		//register (name,type,mode)
+		query.registerStoredProcedureParameter("EMP_DEPT", String.class, ParameterMode.IN);
+		//set
+		query.setParameter("EMP_DEPT","BA");
+		//execute
+		List<Employee> list = query.getResultList();
+		//print result
+		list.forEach(System.out::println);
+		*/
+		
+		//create SP Query
+		StoredProcedureQuery query = em.createStoredProcedureQuery("GETEMPSCOUNTBYDESG");
+		//register params
+		query.registerStoredProcedureParameter("EMP_DESG", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("DESG_COUNT", Integer.class, ParameterMode.OUT);
+		//set
+		query.setParameter("EMP_DESG", "SE");
+		//execute
+		query.execute();
+		//read result and print
+		int count = (Integer) query.getOutputParameterValue("DESG_COUNT");
+		System.out.println(count);
+	}
+
+}

@@ -1,0 +1,117 @@
+				Date : 03-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+		---------------------------------------------------
+*) 1 Project = n modules
+ex: Amazon Project
+Module = User, Search , Cart, Payment, Feedback, Invoice, Returns..etc
+
+*) One Controller = One Module 
+ex: UserController, SearchController, CartController...etc
+---------------------------------------------------------------------------
+11. There can be multiple Controllers inside a project.
+
+=> If we are working on multiple Controllers, recomanded to use
+   @RequestMapping at class level too...
+
+--sample code---------------
+*) Controllers
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+
+	@RequestMapping("/show")
+	public String showEmp() {
+		return "EmpHome";
+	}
+}
+------------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/student")
+public class StudentController {
+
+	@RequestMapping("/show")
+	public String showStudent() {
+		return "StudentHome";
+	}
+	
+}
+--------------------
+*) UI pages:
+--EmpHome.jsp----------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE HOME </h3>
+</body>
+</html>
+---StudentHome.jsp------
+<html>
+<body>
+<h3>WELCOME TO STUDENT HOME </h3>
+</html>
+----------------------------------------
+
+http://localhost:9090/employee/show
+http://localhost:9090/student/show
+_________________________________________________________________________
+12. Even path '/' also valid.
+   Combination  / + GET and / + POST is allowed
+   for two different methods.
+
+13. Even class level path '/' is valid using @RequestMapping (no path)
+
+--sample code-------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class EmployeeController {
+
+	//@RequestMapping("/")
+	@RequestMapping  //default is [ / + GET ]
+	public String showEmpHome() {
+		return "EmpHome";
+	}
+	
+	@RequestMapping(method = RequestMethod.POST) //default is  /
+	public String showEmpDashboard() {
+		return "EmpDashboard";
+	}
+}
+
+*) UI : EmpHome.jsp
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE HOME </h3>
+<form action="/" method="POST">
+	<button type="submit">View Post</button>
+</form>
+</body>
+</html>
+
+--EmpDashboard.jsp----
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE DASHBOARD </h3>
+<a href="/">Home</a>
+</body>
+</html>
+-----------------------------------------------------------------------
+14. We can define normal java methods inside Controller.
+    A method which has no @RequestMapping.
+
+=> Why Normal Java Methods?
+A) If two or more RequestMethods having common logic to display

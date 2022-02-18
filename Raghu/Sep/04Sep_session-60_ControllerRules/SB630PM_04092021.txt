@@ -1,0 +1,340 @@
+				Date : 04-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	---------------------------------------------------------------
+Docker:-
+https://www.youtube.com/watch?v=LmoLFcoaeQw
+https://www.youtube.com/watch?v=6_6MoohzdEI
+
+*) 1 Project = n modules
+ex: Amazon Project
+Module = User, Search , Cart, Payment, Feedback, Invoice, Returns..etc
+
+*) One Controller = One Module 
+ex: UserController, SearchController, CartController...etc
+---------------------------------------------------------------------------
+11. There can be multiple Controllers inside a project.
+
+=> If we are working on multiple Controllers, recomanded to use
+   @RequestMapping at class level too...
+
+--sample code---------------
+*) Controllers
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+
+	@RequestMapping("/show")
+	public String showEmp() {
+		return "EmpHome";
+	}
+}
+------------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/student")
+public class StudentController {
+
+	@RequestMapping("/show")
+	public String showStudent() {
+		return "StudentHome";
+	}
+	
+}
+--------------------
+*) UI pages:
+--EmpHome.jsp----------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE HOME </h3>
+</body>
+</html>
+---StudentHome.jsp------
+<html>
+<body>
+<h3>WELCOME TO STUDENT HOME </h3>
+</html>
+----------------------------------------
+
+http://localhost:9090/employee/show
+http://localhost:9090/student/show
+_________________________________________________________________________
+12. Even path '/' also valid.
+   Combination  / + GET and / + POST is allowed
+   for two different methods.
+
+13. Even class level path '/' is valid using @RequestMapping (no path)
+
+--sample code-------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class EmployeeController {
+
+	//@RequestMapping("/")
+	@RequestMapping  //default is [ / + GET ]
+	public String showEmpHome() {
+		return "EmpHome";
+	}
+	
+	@RequestMapping(method = RequestMethod.POST) //default is  /
+	public String showEmpDashboard() {
+		return "EmpDashboard";
+	}
+}
+
+*) UI : EmpHome.jsp
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE HOME </h3>
+<form action="/" method="POST">
+	<button type="submit">View Post</button>
+</form>
+</body>
+</html>
+
+--EmpDashboard.jsp----
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE DASHBOARD </h3>
+<a href="/">Home</a>
+</body>
+</html>
+-----------------------------------------------------------------------
+14. We can define normal java methods inside Controller.
+    A method which has no @RequestMapping.
+
+Q) Why Normal Java Methods used in controller?
+A) If two or more RequestMethods having common logic to execute/display/validate
+  then define such code in one normal java method, call it where you want.
+--old code---
+@Controller
+class EmpController {
+  @RequestMapping("/delete")
+  String delete(id) {
+     //delete code
+     //display new data
+  }
+  @RequestMapping("/edit")
+  String edit(id) {
+     //edit code
+     //display new data
+  }
+}
+--new code----
+@Controller
+class EmpController {
+  @RequestMapping("/delete")
+  String delete(id) {
+     //delete code
+     display();
+  }
+  @RequestMapping("/edit")
+  String edit(id) {
+     //edit code
+     display(); 
+  }
+  private void display() {
+      //display new data
+  }
+}
+=======================================================================
+15. Latest Annotations also allowed at method level(not at class level)
+
+These annotations are given after Spring 4.3.x version.
+
+@GetMapping("/path")  --- @RequestMapping(value="/path",method=RequestMethod.GET)
+@PostMapping("/path")  --- @RequestMapping(value="/path",method=RequestMethod.POST)
+
+
+*) @RequestMapping annotation is added in Spring 2.5.x.
+
+-sample code-------
+*) Controller
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+
+	//@GetMapping({"/show","/find","/all"})
+	@GetMapping("/show")
+	public String showEmpHome() {
+		System.out.println("/show + GET");
+		return "EmpHome";
+	}
+	
+	@PostMapping("/create")
+	public String showEmpDashboard() {
+		System.out.println("/create + POST");
+		return "EmpDashboard";
+	}
+}
+
+*) UI pages: 
+---EmpHome.jsp----------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE HOME </h3>
+<form action="create" method="POST">
+	<button type="submit">View Post</button>
+</form>
+</body>
+</html>
+
+----EmpDashboard.jsp-------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE DASHBOARD </h3>
+<a href="show">Home</a>
+</body>
+</html>
+
+http://localhost:9090/employee/show
+
+====================================================================
+16. Default server.port number is 8080 in Spring Boot (Java)
+    Default HTTP Protocol port number is 80 (universal)
+
+*) If server/app is running on 80 port number, need not to provide in URL
+
+--application.properties----
+server.port=80
+
+----------------------------
+ex:
+http://localhost:80/student
+converted into:
+http://localhost/student
+
+_____________________________________________________________________
+17. URL is case-sensitive
+
+  code : @RequestMapping("/show"),
+  
+  but we entered as:
+         http://localhost:9090/SHOW
+  then FC, returns : 404 - Not Found   
+  (Spell is wrong, URL is wrong, URL not exist)
+
+=> Request URL : /show and Entered URL in addressbar(GET)
+  But code exist for /show + POST.
+
+  URL is matching , but HTTP method type is not matching
+  then FC returns, 405- Method Not Allowed.
+
+=> If Request method is executed and throwing some exception
+   then FC returns - 500 - INTERNAL SERVER ERROR.
+
+--sample code---
+*) Controller
+
+package in.nareshit.raghu.controller;
+
+import java.util.Random;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+
+	//@GetMapping({"/show","/find","/all"})
+	@GetMapping("/show")
+	public String showEmpHome() {
+		System.out.println("/show + GET");
+		if(new Random().nextInt(9999)>0)
+			throw new RuntimeException("DUMMY");
+		return "EmpHome";
+	}
+	
+	@PostMapping("/create")
+	public String showEmpDashboard() {
+		System.out.println("/create + POST");
+		return "EmpDashboard";
+	}
+}
+http://localhost/employee/show
+http://localhost/employee/create
+
+=> If Controller method is executed successfully and
+    returns View page back to browser then : 200 - OK
+
+For HTTP Status Codes:
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+-----------------------------------------------------------------------
+https://www.youtube.com/watch?v=fvG7FEU1Rt8
+https://www.youtube.com/watch?v=tX1Wtv8Gdpo
+___________________________________________________________________________
+18. Providing Context path in Spring boot is optional , default is /
+   we can modify using key: server.servlet.context-path
+
+   ex: server.servlet.context-path=/myapp
+
+
+Spring (Context Path---Project name exist in URL)
+http://localhost:9090/SpringBoot2WebMvcControllerTest/employee/show
+
+Protocol://IP:Port/ProjectName(ContextPath)/ControllerPath/MethodPath
+------------------------------------------------------------------------
+Spring Boot (default context path is / )
+http://localhost:9090/employee/show
+
+Protocol://IP:Port/ProjectName(ContextPath)/ControllerPath/MethodPath
+
+
+--before Context Path--------------
+http://localhost:9090/employee/show
+
+Ex: 
+server.servlet.context-path=sample
+IllegalArgumentException: ContextPath must start with '/' and not end with '/'
+
+---application.properties---
+server.servlet.context-path=/sample
+---------------------------
+New URL:
+http://localhost:9090/sample/employee/show
+
+====================================================================
+19. Controller is executed if path and HttpMethod is matching.
+   If View not exist we may see WhiteLabel Error Page(404).
+
+
+When can we get 404 (Not Found)
+--------------------------------------------------------
+a. If we miss @Controller at class
+b. If we miss @RequestMapping at method
+c. if we provide wrong URL which is not matching/not exist
+d. If we provide spaces in prefix/suffix in properties
+e. If we miss tomcat-embedded-jasper in pom.xml
+f. if we create invalid folder structure/Case is wrong (insted of Pages, pages is created)
+g. File name in Controller return is not matching
+h. File name spell/case is diff.
+--------------------------------------------------------
+20. If Request URL is matching with Controller#method but Request Method Type
+   (EX: GET) is not matching with Controller#Method (ex: POST)
+   then FC, returns error : 405 - Method Not Allowed.
+
+=======================================================================

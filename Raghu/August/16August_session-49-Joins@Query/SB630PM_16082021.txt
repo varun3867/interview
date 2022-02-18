@@ -1,0 +1,91 @@
+				Date :16-Aug-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	--------------------------------------------------------------
+			Spring Data JPA - Joins 
+
+SQL Joins:-
+a. Equal Join
+b. Self Join
+c. Cross Join
+d. Inner Join | Join
+e. Outer Join
+    I. Left Outer Join  | Left Join
+   II. Right Outer Join | Right Join
+  III. Full outer Join  | Full Join
+
+Spring Data JPA:
+1. Inner Join | Join
+2. Outer Join
+    I. Left Outer Join  | Left Join
+   II. Right Outer Join | Right Join
+  III. Full outer Join  | Full Join
+
+
+1. Inner Join | Join : Fetching two tables connected rows 
+    ie row in parent table is connected with row in child table.
+
+2. Left Outer Join  | Left Join :
+   Fetching all LeftSide table rows and connected right side table rows.
+
+3. Right Outer Join | Right Join :
+    Fetching all Right side table rows and Connected left side table rows.
+
+4. Full outer Join  | Full Join:
+    Fetchig both tables rows, Connected + non-connected
+===============================================================================
+SQL Syntax for Joins:
+
+SELECT p1.<column>, c1.<column>
+
+FROM  ParentTable p1
+	[join type]
+      ChildTable c1
+
+ON   p1.PK = c1.FK | p1.FK = c1.PK
+
+WHERE [Condition];
+
+Ex:
+SELECT P.PCODE, V.VNAME
+
+FROM PRODTAB P
+     INNER JOIN
+    VENDORTAB V
+
+ON P.VIDFK = V.VID
+
+WHERE P.COST > ?
+
+--Ex--------------------------------------
+
+   Customer ------  Product --------- Vendor  ------ Company 
+
+SELECT
+
+FROM  Customer c1
+      INNER JOIN
+      Product p1
+      LEFT JOIN
+      Vendor v1
+      RIGHT JOIN
+      Company c2
+
+
+ON c1.FK = p1.PK and p1.PK=v1.FK and v1.PK=c2.FK
+
+WHERE _________
+
+=============================================================
+JPQL/HQL Joins:-
+*) Here, two classes are connected with HAS-A Vaiable,
+   use that for Joins Concept.
+
+SELECT ________________
+
+FROM ParentClass P1
+     [join type]
+ P1.HASAvariable as C1
+
+WHERE ______________
+---------------------------------------------------------------

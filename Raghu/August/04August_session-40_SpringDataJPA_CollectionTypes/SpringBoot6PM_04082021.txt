@@ -1,0 +1,129 @@
+					Date : 04-Aug-21
+					Spring Boot 6:30PM
+					   Mr. RAGHU
+			----------------------------------------------
+				Collection Types in Data JPA
+
+*) A Child table is created for a CollectionType variable
+  using 3 columns,
+
+  > JoinColumn/FK Column/key Column
+  > Index Column (applied for List/Map only)
+  > Element Column (Data Column)
+
+*) On Collection Variable must apply : @ElementCollection
+
+--Java 8 based Testclass--------------------
+package in.nareshit.raghu.runner;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.Employee;
+import in.nareshit.raghu.repo.EmployeeRepository;
+
+@Component
+public class TestDataRunner implements CommandLineRunner {
+
+	@Autowired
+	private EmployeeRepository erepo;
+	
+	public void run(String... args) throws Exception {
+		List<String> l1 = new ArrayList<>();
+		l1.add("M11");
+		l1.add("M22");
+		l1.add("M33");
+		
+		Set<String> s1 = new HashSet<>();
+		s1.add("P11");
+		s1.add("P20");
+		s1.add("P30");
+		
+		Map<String,String> m1 = new HashMap<>();
+		m1.put("C01", "NIT");
+		m1.put("C02", "ORCL");
+		
+		erepo.save(
+				new Employee(10, "ABC", 200.0,s1,l1,m1)			
+				);
+		System.out.println("DONE");
+	}
+
+}
+==========================================================================
+*) Here @ElementCollection must be applied, else
+    MappingException: Could not determine type for___ message
+
+> other annotations are optional
+
+If we did not sepecify Table name     =>
+  then child table name is taken as 
+       ' ParentClassName_CollectionVariableName '
+
+If we did not sepecify FK Column name =>
+  then child table FK column name taken as,
+          ' ParentClassName_PKColumnName '
+
+If we did not sepecify Element Column name =>
+   then child table Element column name taken as,
+          ' CollectionVariableName '
+
+
+
+create table employee_address (
+      employee_eid integer not null,
+      address varchar(255)
+) 
+
+======================================================
+*) in case of List Collection, Index column is additional
+   Provide using @OrderColumn(name="___") 
+[it is optional to provide, but if we provide then index is shown else not]
+
+
+*) If we provide @OrderColumn(name="pos")  then table output
+
+mysql> select * from emp_mcodes_tab;
++--------+------+-----+
+| eid_fk | code | pos |
++--------+------+-----+
+|     10 | M11  |   0 |
+|     10 | M22  |   1 |
+|     10 | M33  |   2 |
++--------+------+-----+
+3 rows in set (0.00 sec)
+
+
+*) If we did not provide @OrderColumn(name="___")  then table output
+
+mysql> select * from emp_mcodes_tab;
++--------+------+
+| eid_fk | code |
++--------+------+
+|     10 | M11  |
+|     10 | M22  |
+|     10 | M33  |
++--------+------+
+
+======================================================
+*) In case Map Key Column, if we did not specify this
+  then column is created for sure. [must be exist]
+
+*) Annotation : @MapKeyColumn is optional.
+
+If we did not specify then,
+Map Key Column name = CollectionVariableName_key
+
+ex: variableName = sample
+  col name = sample_key
+
+> if you want to provide then use @MapKeyColumn(name="")
+===============================================================

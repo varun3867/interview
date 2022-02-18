@@ -1,0 +1,29 @@
+				Date : 13-11-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	---------------------------------------------------------------
+			Spring Cloud API Gateway
+
+=> Every Routig Configuration mainly contains
+  id
+  URI  (MS# Location details) 
+  Predicates  (Conditions to Match)
+  Filters (optional)
+
+*) Predicate : A boolean expression.
+  Here, a condition to match, to select MS# for execution.
+  To find out which MS# need to be executed based on PathMatching.
+
+*) URI : 
+  For Static Routing provide direct IP and PORT of MS# 
+    ex: URI: http://localhost:8686  (for single ServiceInstance)
+  For Dynamic Routing provide serviceId to choose instance from eureka
+    ex: URI: lb://PRODUCT-SERVICE
+
+*) All these Configuration details are stored using one Id (RoutingId)
+   [It is a String value]
+
+
+
+
+

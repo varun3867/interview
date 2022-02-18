@@ -1,0 +1,206 @@
+				Date : 14-09-2021
+				Spring Boot 6:15PM
+				  Mr. RAGHU
+		------------------------------------------
+			Spring Boot - Web MVC (Thymeleaf)
+
+> UI Template Engine (ie Dynamic UI Technology) for both web and standalone applications
+> Thymeleaf (tag) = static tags (HTML) + dynamic tags (th)
+> dynamic tags starts with common prefix 'th' (we can not change to other prefix)
+> Spring Boot supports thymeleaf Integration. 
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+> It is similer to Tomcat-embedded-Jasper (JSP->Servlet->HTML)
+> But thymeleaf replace tag output with actual function executed/output.
+> These are executed at server side. Finally rendered output(.html) is provided
+
+> Default prefix and suffix are given by Spring Boot Auto-Configuration
+  prefix = classpath:/templates
+  suffix = .html
+
+          ******************************************************
+		  |     classpath   =  src/main/resources  folder      |
+          ******************************************************
+
+ctrl+shift+T  : ThymeleafProperties
+
+*) Here need not to create folder system /WEB-INF/pages/
+   Create your files under templates folder.
+
+*) We can specify our own location like (WEB-INF or any) 
+ex:
+#location
+spring.thymeleaf.prefix=classpath:/mythfiles/
+#extension
+spring.thymeleaf.suffix=.html
+
+*) But mostly we do not modify.
+*) Light weight UI technology (less memory)
+   not converted to Servlet code, fully HTML Format.
+   Only dynamic tags are converted.
+===================================================================
+Symbols used:
+$ -- Reading Data from Model memory
+* -- point to variable in object (Form Binding)
+@ -- used to indicate path/URL/location
+# -- SpEL - Spring Expression Language 
+--------------------------------------------
+text = to print data at web browser
+each = to do looping
+--------------------------------------------
+[[ String - interpolation   ]] = Given expression is executed and convert toString
+                                     finally printed at browser.
+
+===================================================================
+xmlns : xml-namespace - location of actual tag code/meaning exist
+
+*) namespace is used only for dynamic content , if we are using only
+   static content then it is not required to specify
+   <html  xmlns:th="https://www.thymeleaf.org/">    </html>
+
+=======Full Code==========================================
+Name: SpringBoot2WebMvcThymeleafTest
+dep : web, lombok, devtools, thyemeleaf
+
+a. application.properties
+(empty)
+
+b. Controller
+package in.nareshit.raghu.controller;
+
+import java.util.Arrays;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import in.nareshit.raghu.model.Employee;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+
+	@GetMapping("/info")
+	public String display() {
+		return "EmpInfo";
+	}
+	
+
+	@GetMapping("/show")
+	public String showData(Model model) {
+		//primitive
+		model.addAttribute("eid", 101);
+		model.addAttribute("ename", "ABC");
+		model.addAttribute("esal", 200.0);
+
+		//object
+		model.addAttribute("eob", new Employee(990, "SAM", "DEV"));
+
+		//collection
+		model.addAttribute("list",
+				Arrays.asList(
+						new Employee(990, "SAM", "DEV"),
+						new Employee(991, "RAM", "QA"),
+						new Employee(992, "SYED", "BA"),
+						new Employee(993, "AJAY", "DEV")
+						)
+				);
+
+
+		return "EmpData";
+	}
+}
+
+c. UI :
+
+> right click on src/main/resources/templates folder > new > file > Enter name : EmpData.html
+
+|-src/main/resources
+    |-templates
+        |-EmpData.html
+
+
+---EmpData.html---------
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>WELCOME </title>
+	</head>
+	<body>
+		<h3>WELCOME TO FIRST THYMELEAF APP </h3>
+		Your data is : <span th:text="${eid}"></span>, <span th:text="${ename}"></span>, <span th:text="${esal}"></span>
+		<hr/>
+		Employee data is : <span th:text="${eob}"></span>
+		<br/>
+		<span th:text="${eob.empId}"></span>, [[ ${eob.empId} ]]
+			  <span th:text="${eob.empName}"></span>
+			  <span th:text="${eob.empDept}"></span>
+		<hr/>
+		<table border="1">
+			<tr>
+				<th>ID</th>
+				<th>NAME</th>
+				<th>DEPT</th>
+			</tr>
+			<tr th:each="ob:${list}">
+				<td>[[${ob.empId}]]</td>
+				<td>[[${ob.empName}]]</td>
+				<td>[[${ob.empDept}]]</td>
+			</tr>
+		</table>
+	</body>
+</html>
+
+
+--EmpInfo.html---------------
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>WELCOME </title>
+		<script th:src="@{/myjs/validate.js}"></script>
+		<link th:href="@{/myui/design.css}" rel="stylesheet"></link>
+	</head>
+	<body>
+		<img th:src="@{/images/nit.jpg}" width="160" height="80"/>
+		<a th:href="@{/employee/show}">Goto SHOW PAGE</a>
+		<h3 class="abc">HELLO TH</h3>
+	</body>
+</html>
+-----------------------------
+====================================================================
+*) Run app and enter URL: http://localhost:8080/employee/show
+			http://localhost:8080/employee/info
+_____________________________________________________________________
+Symbol @ : it indicates location/Path/URL
+
+Used for:
+> External location of CSS/JS/Images
+> HyperLink , Form Action
+ex:
+<script th:src="@{/myjs/validate.js}"></script>
+<link th:href="@{/myui/design.css}" rel="stylesheet"></link>
+
+<img th:src="@{/images/nit.jpg}" width="160" height="80"/>
+<a th:href="@{/employee/show}">Goto SHOW PAGE</a>
+
+
+---Example using JS and CSS: EmpInfo.html-----------------
+
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>WELCOME </title>
+		<script>
+			alert('Welcome to JS!content');
+		</script>
+		<style>
+		.abc {
+			color:red;
+		}
+		</style>
+	</head>
+	<body>
+		<h3 class="abc">HELLO TH</h3>
+	</body>
+</html>
+--------------------------------------------------

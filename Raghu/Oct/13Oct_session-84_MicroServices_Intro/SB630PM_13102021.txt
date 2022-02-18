@@ -1,0 +1,50 @@
+				Date : 13-10-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+		------------------------------------------
+				Microservices
+
+Application -- Collection of services
+Project     -- Collection of Module
+
+Email Application = Services ( User, Inbox, Compose and send, Sent Mail, Drafts...)
+Amazon Application = Services ( User, Search, Cart, Payment, Track, Feedback..etc)
+
+Monolithic Applications:-
+  Creating one application with collection of services together as
+  single Unit / single deployable component.
+
+Docker:-
+https://www.youtube.com/watch?v=LmoLFcoaeQw
+https://www.youtube.com/watch?v=6_6MoohzdEI
+
+*) Advantages :-
+a) It follows Layers Design (PL/SL/DAL/IL) , so Simple to develop.
+b) Testing is easy for QA team even using test tools (ex: Selenium)
+c) Easy to deploy and manage (log files, error, memory issues..etc)
+d) Scaling of Application can also be done easily.
+
+*) Limitations :-
+a) Must re-build and re-deploy in case of single module modification.
+b) These are not reliable (Single Point Failure), if one module is
+   failed that may cause other modules even problem.
+c) Enhancements/adding new technologies may need re-design of application
+   (or may not suitable to add).
+d) As No.of Modules gets increased then Code Size and bug rate gets increased.
+e) Downtime/Deployment time will be more incase of App is verybig.
+
+
+*) Monolithic application is good incase of no.of modules are less.
+
+
+Horizontal Scale -- one more instance (multiple instances)
+Vertical Scale -- h/w config  ( Enhance Hardware/Network configuration)
+
+LoadFactor = No.of Req/Max Req
+
+*) Build and Deploy
+
+Cloud Computing and Spring Cloud
+
+To deploy application --Env Required- Cloud Couputing
+ OS, S/w, Nw H/w 

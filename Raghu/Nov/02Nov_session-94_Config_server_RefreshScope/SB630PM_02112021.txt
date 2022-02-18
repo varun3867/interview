@@ -1,0 +1,56 @@
+				Date : 02-11-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	------------------------------------------------------------
+		     Config Server - Refresh Scope
+
+Problem Statement :-
+ Once we start MS# app, it gets KEY-VALs form Config Server.
+ After MS# start, if we modify KEY-VAL in Config Server location,
+ it will not be effected back to MS#. We need to re-start 
+ Config server and MS#.
+
+Solution :- [Refresh Scope Endpoint]
+ There is ready-made service given by Spring Cloud Config using
+ Actuator Concept named as " Refresh Scope "
+ 
+
+=> At MS# Application only
+S#1 Add Spring Boot Actuator Dependency
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+
+S#2 Enable Endpoints
+management.endpoints.web.exposure.include=*
+
+S#3 At RestController
+@RefreshScope
+
+S#4 Run Eureka, Config Server, MS# Apps
+S#5 Modify KEY-VAL in Gitlab account properties
+S#6 USE postman and make request like
+ +-----------------------------------------------------+
+ | POST | http://localhost:9696/actuator/refresh [SEND]|
+ +-----------------------------------------------------+
+S#7 Check MS# App URL again
+ex: http://localhost:9696/employee/info
+
+ (or define code)
+RestTemplate rt = new RestTemplate();
+rt.postForEntity(url,null,String.class);
+=============================================================
+Actuator : Product Ready endpoints
+
+=> Production server :-
+   Server used to run final project and service given to End-users.
+
+=> Readymade code, used services for production environment specially.
+
+=> Health, beans, env, properties, cache, log-levels..etc
+
+=> One common place to show all Product Readyendpoints details ie 
+   "Admin Server".
+==================================================================
+http://192.168.0.9:9696/actuator

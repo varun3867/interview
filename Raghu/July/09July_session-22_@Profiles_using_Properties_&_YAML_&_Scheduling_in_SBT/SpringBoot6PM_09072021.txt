@@ -1,0 +1,331 @@
+				Date : 09-Jul-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	------------------------------------------------------------
+			  @Profile --- Annotation
+
+=> Do you want to execute any logic based on Environment then use it.
+
+case#1
+@Profile("qa")
+@Component
+class A{ }
+
+=> A class object is created and works only if QA enviroment is active
+
+   --spring.profiles.active=qa
+
+
+case#2  
+@Profile({"qa","prod"})
+@Component
+class A{ }
+
+
+=> A class object is created and works only if qa/prod enviroment is active
+
+     --spring.profiles.active=qa
+            (or)
+     --spring.profiles.active=prod
+
+case#3 ***
+@Component
+class A{ }  
+
+=> A class object is created and works in every enviroment
+     [even if you activate any profile or not, it works]
+
+
+case#4**********
+@Component
+@Profile("default")
+class A{ }  
+
+=> A class object is created and works in default enviroment only
+    if you activate any profile like qa, prod it wont work.
+
+*) General meaning of default is Dev Machine.
+
+ ==============================================================================
+		    @Profile  with  application.properties
+
+*** application.properties is loaded in every environment
+    [Profiles fallback]
+
+*** If a class has no @Profile annotation then it works in every environment
+
+
+--Example----------------------
+a.
+ Name: SpringBoot2ProfilesWithPropsExOne
+ Dep : Lombok
+
+b. Runners with @Profile annotation
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+@Component
+@Profile("default")
+public class LogDataRunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		System.out.println("FROM LOG DATA RUNNER");
+	}
+
+}
+-----------------------------
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MessageRunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		System.out.println("FROM MESSAGE RUNNER");
+	}
+
+}
+----------------
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+@Component
+@Profile("qa")
+public class EmailRunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		System.out.println("FROM EMAIL RUNNER");
+	}
+
+}
+
+c. application.properties
+spring.config.use-legacy-processing=true
+
+
+d. Main class
+
+## --spring.profiles.active=qa
+## --spring.profiles.active=default
+## --spring.profiles.active=prod
+## Nothing
+-----------------------------------------------------------------------
+Spring Boot 2.3.x , Now current 2.4.x(Not supporting this)
+
+
+__(code)__________________________________________________________________
+A) Runner classes
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+@Component
+@Profile("qa")
+public class EmailRunner implements CommandLineRunner {
+
+	@Value("${mail.host}")
+	private String host;
+	
+	public void run(String... args) throws Exception {
+		System.out.println("FROM EMAIL RUNNER ==> " + host);
+	}
+
+}
+--------------
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MessageRunner implements CommandLineRunner {
+
+	@Value("${my.mode}")
+	private String mode;
+	
+	public void run(String... args) throws Exception {
+		System.out.println("FROM MESSAGE RUNNER => " + mode);
+	}
+
+}
+-----------
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+@Component
+@Profile("default")
+public class LogDataRunner implements CommandLineRunner {
+
+	@Value("${my.logger}")
+	private String logger;
+	
+	public void run(String... args) throws Exception {
+		System.out.println("FROM LOG DATA RUNNER => " + logger);
+	}
+
+}
+
+
+B) Properties files
+
+----application.properties-----
+spring.config.use-legacy-processing=true
+
+mail.host=DEFAULT-GMAIL
+my.logger=DEFAULT-LOG4J
+my.mode=DEFAULT-SMS
+
+
+----application-qa.properties-----
+mail.host=QA-YAHOO
+my.mode=DEFAULT-WHATSAPP
+
+  (or equal YAML File)
+
+----------application.yml--------------------
+mail:
+  host: DEFAULT-GMAIL
+my:
+  logger: DEFAULT-LOG4J
+  mode: DEFAULT-SMS
+spring:
+  config:
+    use-legacy-processing: true
+---
+
+mail:
+  host: QA-YAHOO
+my:
+  mode: DEFAULT-WHATSAPP
+
+spring:
+  profiles: qa
+  --------------------------------------------
+
+C) Run start class
+## --spring.profiles.active=qa
+## --spring.profiles.active=default
+## --spring.profiles.active=prod
+## Nothing
+===================================================
+*)Note:
+--spring.profiles.active=qa,prod
+
+For this class having @Profile("qa"), @Profile("prod")
+   and no Profile annotation are executed.
+
+Ex:
+@Profile("qa")
+class A{}
+
+@Profile("prod")
+class B{}
+
+
+*)Even files are loaded in order:
+application.properties (1st loaded)
+application-qa.properties
+application-prod.properties
+-------------------------------------------------------------------
+		   Scheduling  using Spring Boot
+-------------------------------------------------------------------
+ Execute a task in a Loop based on Period of time or Point of Time
+
+Ex:
+a. Alaram
+b. Bank Statement/ CreditCard Statement
+c. Stock market Report 
+d. App Report Generation 
+e. Birthday message
+f. Electricity  Bill
+..etc
+
+*) Unix/Linux --- CRON --- DATE AND TIME CONFIGURATION FOR TASK EXEcUTION
+
+*)Period of time  : time gap 
+4 hrs,
+3 days,
+6 months,
+ 
+*) Point of Time : Exact date and time
+ 12th JAN 9AM
+
+---------------------------------------------------------------------------
+CRON --->  SEC  MIN   HRS   DAY  MONTH  WEEKDAY
+          0-59  0-59  0-23 1-31  1-12   SUN-SAT
+
+Allowed symbols
+*   => any/all
+-   => range
+/   => specific Period
+,   => Possible values
+
+-----Examples-----------------------------------------
+cron expression #1
+  
+  0  0  9  *  *  *
+
+=> Execute given task every day at 9:00:00 AM
+  it is 9th hour in day
+  not 9hrs gap
+
+
+#2
+  0  0  18  *  *  *
+
+=> Execute given task every day 6:00:00 PM
+
+#3
+  0  0  6,18  *  *  *
+
+=> Execute given task every day 
+   at 6:00:00 AM and
+      6:00:00 PM 
+
+#4  0  0  6-9  *  *  *
+=> Execute given task every day (4 times)
+   at 6:00:00 AM and
+      7:00:00 AM and
+      8:00:00 AM and
+      9:00:00 AM 
+
+#5  0  30  *  *  *  *
+
+=> Execute given task for every 30 mins (WRONG ANSWER)
+9:00:00
+9:30:00
+10:00:00
+10:30:00
+
+=> Execute given task for hour 30th minute
+9:30:00
+10:30:00
+11:30:00
+
+#6    10  *  *  *  *  *
+=> Execute given task for every minute 10th sec
+
+Ex: app started at 10:00:00  (Consider)
+10:00:10  ---> execute
+10:01:10  ---> execute
+10:02:10  ---> execute
+10:03:10  ---> execute
+10:04:10  ---> execute
+-------------------------------------------------------
+

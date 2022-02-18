@@ -1,0 +1,220 @@
+				Date : 13-12-2021
+				 Spring Boot 6PM
+				   Mr. RAGHU
+	-------------------------------------------------------------------
+
+9AM
+ZoomId: 97674169818
+pwd: 536193
+			Spring Boot Reactive Programming
+
+*) Spring WebFlux is used for coding application (both Producer and Consumer).
+*) NoSQL Database : MongoDB 
+
+Download:-
+Goto : https://www.mongodb.com/try/download/community
+> Select Details and Click on Download
+> Start Server : mongod (cmd) Port: 27017
+> Start Client : mongo  (cmd)
+
+> show databases
+> use nit
+> show collections
+> db.student.find().pretty();
+
+==(Producer Code)============================================================
+1. Name : SpringBootReactiveProducerEx
+   Dep  : Reactive Web, Reactive MongoDB, Lombok, Devtools
+
+2. application.properties
+spring.data.mongodb.host=localhost
+spring.data.mongodb.port=27017
+spring.data.mongodb.database=nit
+
+3. Repository
+package in.nareshit.raghu.repo;
+
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+
+import in.nareshit.raghu.entity.Student;
+
+public interface StudentRepository 
+	extends ReactiveMongoRepository<Student, String>{
+
+}
+
+
+4. Service
+package in.nareshit.raghu.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.nareshit.raghu.entity.Student;
+import in.nareshit.raghu.repo.StudentRepository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+@Service
+public class StudentService {
+
+	@Autowired
+	private StudentRepository repo;
+	
+	public Mono<Student> save(Student std) {
+		return repo.save(std);
+	}
+	
+	public Mono<Student> getOne(String id) {
+		return repo.findById(id)
+				.switchIfEmpty(Mono.empty());
+	}
+	
+	public Flux<Student> findAll() {
+		return repo.findAll()
+				.switchIfEmpty(Flux.empty());
+	}
+	
+	public Mono<Void> delete(String id) {
+		return repo.deleteById(id);
+	}
+	
+}
+
+5. RestController
+package in.nareshit.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.nareshit.raghu.entity.Student;
+import in.nareshit.raghu.service.StudentService;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+@RestController
+@RequestMapping("/student")
+public class StudentController {
+
+	@Autowired
+	private StudentService service;
+	
+	@PostMapping("/create")
+	public Mono<Student> saveStudent(@RequestBody Student student) 
+	{
+		return service.save(student);
+	}
+	
+	@GetMapping("/find/{id}")
+	public Mono<Student> fetchOneStudent(@PathVariable String id) 
+	{
+		return service.getOne(id);
+	}
+	
+	@GetMapping("/all")
+	public Flux<Student> fetchAllStudents() 
+	{
+		return service.findAll();
+	}
+	
+	@DeleteMapping("/remove/{id}")
+	public Mono<Void> removeOneStudent(@PathVariable String id) 
+	{
+		return service.delete(id);
+	}
+	
+}
+
+
+-------------Consumer app------------------
+Name : SpringBootReactiveConsumerEx
+Dep  : Lombok, Spring Reactive Web
+
+a. application.properties
+server.port=8081
+
+b. Entity
+package in.nareshit.raghu.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+public class Student {
+
+	private String id;
+	@NonNull
+	private String name;
+	@NonNull
+	private Double fee;
+	
+}
+
+c. Runner class
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import in.nareshit.raghu.entity.Student;
+import reactor.core.publisher.Mono;
+
+@Component
+public class ConsumerService implements CommandLineRunner {
+
+	@Override
+	public void run(String... args) throws Exception {
+		WebClient client = WebClient.create("http://localhost:8080/student");
+
+		/*
+		Flux<Student> response = 
+				client.get()   //Method Type
+				.uri("/all")  // URI/Path
+				.retrieve()   //execute Request
+				.bodyToFlux(Student.class); //map Response to a Type
+
+		response.doOnNext(System.out::println).blockLast();
+		 */
+
+		/*Mono<Student> response = 
+				client.post() //Method Type
+				.uri("/create") // URI/Path
+				.body(Mono.just(new Student("5604","TTTT", 500.0)),Student.class) //ReqBody, Type
+				.retrieve() // execute request
+				.bodyToMono(Student.class); //map Response to a Type
+
+		response.subscribe(System.out::println);*/
+
+		/*Mono<Student> response = 
+				client.delete()
+				.uri("/remove/{id}",5604)
+				.retrieve()
+				.bodyToMono(Student.class);
+		response.subscribe(System.out::println);
+		System.out.println("DONE");*/
+
+		Mono<Student> response = 
+				client.get()
+				.uri("/find/{id}","61b74a895225953f02dc3776")
+				.retrieve()
+				.bodyToMono(Student.class);
+		response.subscribe(System.out::println);
+
+
+	}
+
+}
+=================================================================================

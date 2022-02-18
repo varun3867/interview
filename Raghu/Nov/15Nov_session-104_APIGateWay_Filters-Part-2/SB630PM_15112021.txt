@@ -1,0 +1,163 @@
+			Date : 15/11/2021
+			 Spring Boot 6PM
+			   Mr. RAGHU
+	----------------------------------------------------
+Security Videos:-
+https://www.youtube.com/watch?v=XTyQIrlyWfQ
+https://www.youtube.com/watch?v=7wA46kRh2u8
+https://www.youtube.com/watch?v=oLlSs-p6OEs
+https://www.youtube.com/watch?v=cnrJ-Nnvoik
+https://www.youtube.com/watch?v=rgG2_T-OB8g
+
+JWT:-
+https://www.youtube.com/watch?v=feETfZbvu-k
+https://www.youtube.com/watch?v=Hzkw846jIOU
+https://www.youtube.com/watch?v=bJAsHOH4lMk
+
+			   API Gateway
+
+=> API Gateway, it is also one type of MS# only.
+  ie A MS#(Gateway) that can call any other MS#(App Services)
+
+=> API Gateway need be register with Eureka Server, then only
+   it can fetch other MS# details. (in case of lb://SID)
+
+=> We can configure using YAML/PROPERTIES or Java Configuration
+   (Java Configuration Recomanded)
+
+=> Configuration regarding Routing(id,uri,path and filters)
+   [Filters are optional to use]
+
+=> For one MS# we need to define one RouteBuilder.
+======API====================================================
+class RouteLocatorBuilder {
+   Builder routes(){
+
+   }
+   static class Builder {
+      List<Buildable<Route>> routes = null;
+
+       RouteLocator build() {
+          ..
+       }
+  }
+}
+*) For RouteLocator(I) impl class is : CompositeRouteLocator(C)
+   [supports both static and dynamic routing details]
+========================================================
+a. One MS# Routing details are called as Buildable<Route>
+   [Here Buildable is used to define in Lambda Format]
+
+b. One Route contains details like id,predicate(path),
+   uri(where to go), filter
+
+c. onece Route object is created add to List<>
+    like List<Buildable<Route>>
+
+d. This List can be created and configured using methods of Builder(C)
+
+f. finally call build() method from Builder(C) that returns 
+    RouteLocator(I) object.
+
+g. id can be anything, but not duplicated. URI can be staic
+   (directURL) or Dynamic (lb://serviceID)
+=============================================================
+		    Gateway Filters
+
+*) These are used to access/modify Request and Response
+   details. (Mostly Header sections)
+
+=> Adding Token Authentication after security check
+=> Adding Success Header..etc
+
+==Execution Order==================================================
+1. Eureka Server
+2. MS# application
+3. API Gateway
+4. Enter URL
+http://localhost/product/info
+
+==code=====================
+1. eureka server same as before
+2. At MS# (RestController is modified)
+---
+package in.nareshit.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+	
+	@Value("${server.port}")
+	private String port;
+	
+	@GetMapping("/info")
+	public ResponseEntity<String> showData(
+			@RequestHeader("MyAuthHeader") String myAuthHeader
+			) 
+	{
+		return ResponseEntity.ok(myAuthHeader + ", FROM MS# PRODUCT!! " + port);
+	}
+}
+--------
+3. At API Gateway 
+--RoutingConfiguration class---------
+package in.nareshit.raghu.config;
+
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SpringCloudRoutingConfig {
+
+	@Bean
+	public RouteLocator configureRoutes(RouteLocatorBuilder builder) {
+		return builder.routes()
+				.route(
+						"productService",//id 
+						route -> route.path("/product/**")
+						.filters(
+								f->f.addRequestHeader("MyAuthHeader", "JWT-TOKEN-ABCD")
+								.addResponseHeader("Success-Header", "Response given!")
+								)
+						.uri("lb://PRODUCT-SERVICE")
+						)
+				.build();
+	}
+
+}
+-----------------------------------------------------------------
+*) in case of YAML Configuration for Filter at Gateway app:
+
+server:
+  port: 80
+  
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+      - id: productService
+        uri: lb://PRODUCT-SERVICE
+        predicates:
+        - Path=/product/**
+        filters:
+        - AddRequestHeader=header-name,headervalue
+        - AddResponseHeader=header-name,headervalue
+     - id: employeeService
+        uri: lb://EMP-SERVICE
+        predicates:
+        - Path=/employee/**
+        filters:
+        - AddRequestHeader=header-name,headervalue
+        - AddResponseHeader=header-name,headervalue
+        

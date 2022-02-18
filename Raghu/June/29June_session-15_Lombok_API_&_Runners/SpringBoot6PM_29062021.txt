@@ -1,0 +1,197 @@
+		  Date : 29/06/2021
+		  Spring Boot 6PM
+		     Mr. RAGHU
+	------------------------------------
+Runners:
+https://www.youtube.com/watch?v=8P5x4DH2WHA
+UML Notations:
+https://www.youtube.com/watch?v=9BSxd6KuNxw
+
+@Data : It is a combination annotation that is
+  internally following
+
+Setter + Getter + toString + equals and hashCode +
+ Required Args Constructor
+-----------------------------------------------------
+Q) What is camel Case Concept?
+A) 
+  variableName, method name,ObjectName :
+     start with lowercase, next word first letter uppercase
+
+ex: empId, empName, showDataModel()
+
+  className/interfaceName/Enum/Annotation:
+     start with uppercase, next word first letter uppercase
+
+
+-----------------------------------------
+Q) What is Kebab Case Concept?
+A) Replace uppercase/spaces with dash symbols and
+   use all in lowercase
+
+   ex: variableName : empId, driverClassName
+
+   ex: Kebab Case : emp-id, driver-class-name
+
+*) Note: if we create any variable in Spring Boot classes
+   using CamelCase then they can be accessed using
+   Kebab Case Concept.
+
+ Still we can use camel case based key name in properties file
+ but if we use both camel and Kebab case in properties
+ Kebab case only selected.
+
+ my.app.emp-id=10
+ my.app.empId=20
+
+ Output : 10 
+=====Example==========================================
+a. Spring Boot App
+Name : SpringBoot2LombokTest
+Dep  : Lombok
+
+b. Model/Bean class
+package in.nareshit.raghu.bean;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+@Data
+@Component
+@ConfigurationProperties(prefix = "my.app")
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	private Double empSal;
+	
+}
+
+c. application.properties
+my.app.emp-id=9999
+#my.app.empId=8800
+my.app.emp-name=SAMPLE
+my.app.emp-sal=2500.0
+
+d. Modified Main class
+package in.nareshit.raghu;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBoot2LombokTestApplication {
+
+	public static void main(String[] args) {
+		ApplicationContext ac =  SpringApplication.run(SpringBoot2LombokTestApplication.class, args);
+		Object ob = ac.getBean("employee");
+		System.out.println(ob);
+	}
+
+}
+============================================================
+		Runners in Spring Boot
+
+*) If you want to execute any logic in Spring Boot
+  on application startup(while starting, not after starting)
+  only once.
+
+*) Our Runners are classes executed only once.
+*) For testing Purpose
+*) Setup Data (ex: Create Admin Row in Db if not exist)
+*) We can define multiple runners
+*) We can provide our own order for runner
+*) we can pass data to runners
+*) We can executed Runners based on environment(Profile support)
+*) Executed on App Startup, not used for req/resp concept.
+*) Works in any type of Spring Boot application
+   (stand alone, web app..etc)
+*) These are functional Interfaces(so we can define as
+   lambda expression and method references too....)
+
+Types(2):
+a. CommandLineRunner (I)
+b. ApplicationRunner (I)
+
+ctrl+shift+T  -- open type (open a pre-defined class/interface...)
+
+
+---API Details-----------
+package org.springframework.boot;
+@FunctionalInterface
+public interface CommandLineRunner {
+ void run(String... args) throws Exception;
+}
+-----------------------------
+*) ctrl+F11 -- To run main class
+*) ctrl+shift+O -- Imports
+
+*) If we define multiple Runner classes , then all
+  are executed by Starter class in Naming(Unicode) order.
+Ex:  https://unicode-table.com/en/
+
+---------------------------------------------
+*) We can modify order of Runners using @Order annotation
+*) If we do not provide any order then default order is set to
+  Integer.MAX_VALUE : 2147483647
+
+
+--Code------
+*) Create Spring Starter Project
+Name : SpringBoot2RunnersFirstEx
+Dep  : Lombok
+
+*) create classes
+package in.nareshit.raghu.runner;
+
+//ctrl+shift+O
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+@Component
+@Order(49)
+public class MessageRunner implements CommandLineRunner {
+
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println("WELCOME TO APPLICATION!");
+	}
+}
+---
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+@Component
+@Order(50)
+public class JdbcSetupRunner implements CommandLineRunner {
+
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println("FROM JDBC RUNNER!");
+	}
+}
+---
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+//@Order(2147483647)
+public class EmailSetupRunner implements CommandLineRunner {
+
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println("FROM EMAIL SETUP!!");
+	}
+
+}
+-----------------------------------------
+

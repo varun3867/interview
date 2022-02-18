@@ -1,0 +1,132 @@
+				Date : 16-11-2021
+				 Spring Boot 6PM
+				   Mr. RAGHU
+	-----------------------------------------------------------------------
+Security#1
+https://www.youtube.com/watch?v=XTyQIrlyWfQ
+Security#2
+https://www.youtube.com/watch?v=7wA46kRh2u8
+
+	Spring Security : JAAS (Java Authentication and Authorization Service)
+
+
+Authentication:- Store and Validate Username and password 
+1. InMemory Authentication : Storing User details inside RAM(Temp Memory)
+			and validate when login Request comes.
+
+2. JDBC Authentication:- Using Database and validate using SQLs while login.
+
+3. ** ORM/UserDetailsService :- Using Database + ORM (Data JPA) Concept for login.
+
+
+Authorization:- Validate User Role
+a. permitAll : Given Request(URL) can be accessed by everyone (No Security checking)
+  ex: /login, /contactUs, /aboutUs ...etc
+
+b. authenticated: Only login(user/pwd) is required (any role is valid)
+  ex: /chagePwd, /logout, /profile, /settings ..etc
+
+c. hasAuthority :- Login (un/pwd) + Role(Matching role is required)
+  ex: /addUser  (can be done by ADMIN)
+      /viewPatient (can be done by Doctor)
+      /approveLoan (can be done by MANAGER)
+=================================================================================
+org.sf..
++ WebSecurityConfigurerAdapter(AC)
+
+# configure(AuthenticationManagerBuilder ):void
+# configure(HttpSecurity ):void
+
+*) Above class is abstract class. It has two abstract methods
+  one is for Authentication and another one for Authorization + additional config
+
+*) PasswordEncoder :-
+  Storing Plain Text password inside Database is not a good approch.
+  So, we encode data (convert into un-readable format) and store inside database.
+
+
+[Storing Plain Text]
+  +-----------------user-tab------------+
+  |   username  |  password  | role     |
+  +-------------------------------------+
+  |    SAM      |  SAM       |  ADMIN   |
+  |    SYED     |  SYED      | EMPLOYEE |
+  +-------------------------------------+
+
+[Encoded Password]
+  +-----------------user-tab----------------+
+  |   username  |  password      | role     |
+  +-----------------------------------------+
+  |    SAM      |  Stg^25AF99E2  |  ADMIN   |
+  |    SYED     |  BB3$3sJ84--9  | EMPLOYEE |
+  +-----------------------------------------+
+
+
+PasswordEncoder(I)
+BCryptPasswordEncoder(C)
+
+*) There is no decode concept, while login, it will encode your password
+   and compres with database encoded pwd, if matching continue..
+
+--sample code-----------------
+*) Spring Security Dependency in pom.xml
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+*) Test class:
+package com.example.demo;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+public class Test {
+
+	public static void main(String[] args) {
+		String pwd = "NIT";
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encPwd = encoder.encode(pwd);
+		System.out.println(encPwd);
+		
+		System.out.println(encoder.matches(pwd, encPwd));
+	}
+}
+---------------------------------------
+*) Our application code remains same 
+	(no code modifications in controller/service..etc)
+*) Only just add a new class and coinfugre everything there.
+
+--Spring Security configuration class---------------------------------
+package com.example.demo.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
+	//authentication
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		//InMemory (or) Jdbc (or) UserDetailsService
+	}
+	
+	//authorization
+	protected void configure(HttpSecurity http) throws Exception {
+		// Authorization Levels(permitAll/authenticated/hasAuthority)
+				// +
+		// Login Form details, Success URL, failure URL
+				// +
+		// Logout Details
+				// +
+		// Exception handling Details
+	}
+}
+-------------------------------------------------------------------------

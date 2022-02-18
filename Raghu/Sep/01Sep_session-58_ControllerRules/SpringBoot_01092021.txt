@@ -1,0 +1,212 @@
+				Date : 01-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	----------------------------------------------------------
+@RequestMapping -- linking one URL/Path ----- 1 java method
+
+1. Enter URL in addressbar (GET)
+2. Form Submit (GET/POST)  <form action="path" method="GET/POST"
+3. HyperLink (GET)
+
+pom.xml
+<dependency>
+	<groupId>org.apache.tomcat.embed</groupId>
+	<artifactId>tomcat-embed-jasper</artifactId>
+</dependency>
+
+-------------------------------------------------------------
+11. Multiple controllers allowed.
+   It is good Provide @RequestMapping at controller for common path.
+
+--sample code------------------------
+name : SpringBoot2WebMvcControllerRules
+Dep  : Spring web
+
+a. application.properties
+server.port=9090
+
+spring.mvc.view.prefix=/WEB-INF/pages/
+spring.mvc.view.suffix=.jsp
+
+b. pom.xml
+<dependency>
+	<groupId>org.apache.tomcat.embed</groupId>
+	<artifactId>tomcat-embed-jasper</artifactId>
+</dependency>
+
+c. controller classes
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/std")
+public class StudentController {
+
+	@RequestMapping("/show")
+	public String showStd() {
+		return "StdHome";
+	}
+}
+----------------------------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/emp")
+public class EmployeeController {
+
+	@RequestMapping("/show")
+	public String showEmp() {
+		return "EmpHome";
+	}
+}
+
+d. folder system
+ src
+  |-main
+     |-webapp
+     	|-WEB-INF
+	   |-pages
+	      |-EmpHome.jsp
+	      |-StdHome.jsp
+
+--EmpHome.jsp-----------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE HOME </h3>
+</body>
+</html>
+---StdHome.jsp----------
+<html>
+<body>
+<h3>WELCOME TO STUDENT HOME </h3>
+</body>
+</html>
+=========================================================
+12. Even path '/' also valid.
+   Combination  / + GET and / + POST is allowed
+   for two different methods.
+
+13. Even class level path '/' is valid using @RequestMapping (no path)
+
+--sample code-------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class EmployeeController {
+
+	//@RequestMapping("/")
+	@RequestMapping //default is / + GET
+	public String showEmpA() {
+		return "EmpHome";
+	}
+	
+	@RequestMapping(method = RequestMethod.POST) //default is / 
+	public String showEmpB() {
+		return "EmpTest";
+	}
+}
+
+---EmpHome.jsp-----------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE HOME </h3>
+<form action="/" method="POST">
+	<button type="submit">View Post</button>
+</form>
+</body>
+</html>
+
+---EmpTest.jsp------------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE TEST </h3>
+</body>
+</html>
+
+
+Run app and enter URL: http://localhost:9090/
+============================================================================
+14. normal java method are allowed inside controller which has no @RequestMapping
+   We can call like normal methods.
+
+--sample code------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/std")
+public class StudentController {
+
+	@RequestMapping("/show")
+	public String showStd() {
+		display();
+		return "StdHome";
+	}
+	
+	public void display() {
+		System.out.println("FROM DISPLAY");
+	}
+}
+
+---StdHome.jsp------
+<html>
+<body>
+<h3>WELCOME TO STUDENT HOME </h3>
+</body>
+</html>
+____________________________________________________________________
+15. Latest Annotations also allowed at method level(not at class level)
+[From Spring 4.3 version onwards]
+
+@GetMapping("/path") --> @RequestMapping(value="/path",method=RequestMethod.GET)
+@PostMapping("/path") --> @RequestMapping(value="/path",method=RequestMethod.POST)
+
+--sample code-------------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@Controller
+public class EmployeeController {
+
+	@GetMapping("/test")
+	public String showEmpA() {
+		return "EmpHome";
+	}
+	
+	@PostMapping("/sample") 
+	public String showEmpB() {
+		return "EmpTest";
+	}
+}
+
+----EmpHome.jsp----------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE HOME </h3>
+<form action="sample" method="POST">
+	<button type="submit">View Post</button>
+</form>
+</body>
+</html>
+---------EmpTest.jsp----------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE TEST </h3>
+</body>
+</html>
+
+URL: http://localhost:9090/test

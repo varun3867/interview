@@ -1,0 +1,181 @@
+				Date : 19-Jun-21
+				Spring Boot 6PM
+				   Mr. RAGHU
+	--------------------------------------------------------------------
+
+		  Spring Boot Core : @ConfigurationProperties
+
+*) @Value is used to read one key data into one variable (from properties).
+ If we have n keys and n variables then n times @Value should be provided.
+
+*) @ConfigurationProperties is given by Spring Boot used to load multiple
+  keys at a time into multiple variables [one time annotation + rules]
+
+
+--Rules to work with @ConfigurationProperties----
+a. common word / prefix for every key
+b. one key -- one variable (name matching)
+c. At class level @ConfigurationProperties(prefix="commonWord")
+d. set/get methods for variables.
+-------------------------------------------------
+
+---Spring container------------------------------
+--> find your class, create object
+--> set data to variable
+--> link objects (HAS-A)
+--> you can use them
+--> Destory them (When we stop)
+==========================================================================
+(code)
+1. Create new Project
+> File > new > Spring Starter Project
+> Name : SpringBoot2ConfigPropsExOne
+> Next > Finish
+
+2. Define one class with common prefix, variable, set/get, toString
+package in.nareshit.raghu;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+@Component
+@ConfigurationProperties(prefix="my.app")
+public class ProductInfo {
+
+	private Integer pid;
+	private String pcode;
+	private Double pcost;
+	
+	public Integer getPid() {
+		return pid;
+	}
+	public void setPid(Integer pid) {
+		this.pid = pid;
+	}
+	public String getPcode() {
+		return pcode;
+	}
+	public void setPcode(String pcode) {
+		this.pcode = pcode;
+	}
+	public Double getPcost() {
+		return pcost;
+	}
+
+	public void setPcost(Double pcost) {
+		this.pcost = pcost;
+	}
+
+	//override toString method
+	public String toString() {
+		return "ProductInfo [pid=" + pid + ", pcode=" + pcode + ", pcost=" + pcost + "]";
+	}
+	
+}
+
+3. another class
+package in.nareshit.raghu;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+@Component
+@ConfigurationProperties(prefix="my.test")
+public class AdminData {
+
+	private String grade;
+	private String mode;
+	
+	//source > Generate getter/setters > select All > Generate
+	public String getGrade() {
+		return grade;
+	}
+	
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	
+	public String getMode() {
+		return mode;
+	}
+	
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+	
+	//source > Generate toString > Generate
+	public String toString() {
+		return "AdminData [grade=" + grade + ", mode=" + mode + "]";
+	}
+	
+	
+}
+
+
+
+4. application.properties
+my.app.pid=20
+my.app.pcode=AA
+my.app.pcost=500.0
+
+my.test.grade=NEW
+my.test.mode=ACTIVE
+
+5. Modified main class
+package in.nareshit.raghu;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBoot2ConfigPropsExOneApplication {
+
+	public static void main(String[] args) {
+		ApplicationContext ac = SpringApplication.run(SpringBoot2ConfigPropsExOneApplication.class, args);
+		Object ob = ac.getBean("productInfo");
+		Object ob2 = ac.getBean("adminData");
+		System.out.println(ob);
+		System.out.println(ob2);
+	}
+
+}
+
+
+=============================================================================
+Q) If given key name in properties file is not matchin with our code
+	(preifx/variable)  then what will happen?
+
+A)  If key name not matched
+    ie prefix is not matched, variable name is not matched, spell is wrong
+    then No ERROR/No Exception/ No Value is injected.
+
+    Variable holds default value.
+
+Q) What is datatype is not matching while loading ?
+A) Exception, Failed to bind properties under 'my.app.pid' to java.lang.Integer:
+
+ex   my.app.id=10AA
+
+    Property: my.app.pid
+    Value: 10AA
+    Origin: class path resource [application.properties]:1:12
+    Reason: failed to convert java.lang.String to java.lang.Integer
+
+Q) What if we delete application.properties file?
+A) No Exception is given like FileNotFound, but
+  @Value--> Throws Exception if key not found
+  @ConfigurationProperties ---> null
+
+==========================================================================
+hr@nareshit.com
+Name:
+Email:
+mobile:
+PaymentSlip:
+Batch Details : Spring Boot 6PM | Raghu Sir, 10th June-2021
+
+javabyraghu@gmail.com
+Admin : Srikanth Sir +91- 630 296 8665 |  Whatsapp
+
+

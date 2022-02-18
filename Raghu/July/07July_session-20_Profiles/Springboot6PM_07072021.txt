@@ -1,0 +1,134 @@
+				Date : 07-Jul-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	-----------------------------------------------------------------
+			Profiles - using Spring Boot
+
+Environments:-  Where your application is running with all setup.
+Ex:   Dev, QA,Production, UAT (User Acceptance Test)
+Dev, QA,Production, UAT (User Acceptance Test)       ----------------  As per the interview questions
+
+*) Our application code is same in every environment,
+   Input (properties/YAML) gets modified.
+
+=> Profiles : 
+    Define multiple proeprties with same keys and different values.
+    Load Properties/YAML file based on activte environment.
+
+Syntax:
+    application-[profilename].properties
+    application-[profilename].yml
+
+
+[profilename] = it can be any word. Ex: dev, qa, prod
+
+ex:  application-qa.properties
+     application-prod.properties
+
+=> if we did not specify any [profilename] then it is called as default profile
+
+*** To activate any profile provide key while starting application,
+     --spring.profiles.active=[profilename]
+             (or)
+     -Dspring.profiles.active=[profilename]
+
+=> Based on active profile name, properties file is auto loaded.
+
+====(code)================================================================
+Name: SpringBoot2ProfilesEx
+Dep : Lombok
+
+1. Model class
+package in.nareshit.raghu.model;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+@Data
+@Component
+public class EmailInfo {
+	
+	@Value("${mail.host}")
+	private String host;
+	
+	@Value("${mail.port}")
+	private String port;
+	
+	@Value("${mail.un}")
+	private String un;
+	
+	@Value("${mail.pwd}")
+	private String pwd;
+	
+}
+
+2. application.properties
+mail.host=Gmail
+mail.port=587
+mail.un=AA
+mail.pwd=BB
+--------------------------------
+
+--application-qa.properties--
+mail.host=Yahoo
+mail.port=996
+mail.un=MN
+mail.pwd=XYZ
+
+--application-prod.properties--
+mail.host=MailGress
+mail.port=6859
+mail.un=OOOP
+mail.pwd=AAAA
+
+--------------------------------
+
+3. Runner class
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.EmailInfo;
+
+@Component
+public class EmailTestRunner implements CommandLineRunner {
+
+	@Autowired
+	private EmailInfo info;
+	
+	public void run(String... args) throws Exception {
+		System.out.println(info);
+	}
+
+}
+
+
+*) activate profile :
+   --spring.profiles.active=qa
+
+================================================================
+*) Profiles Fallback:-
+ If your active profile (ex: prod / application-prod.properties)
+ has no key=val pair then Spring boot will search inside default 
+ (application.properties).
+
+=> Even if we have common key-val for all profiles we can use 
+   application.properties and define it once.
+
+================================================================
+Q) What will happen if we provide this at runtime?
+  --spring.profiles.active=qa,prod
+
+A)
+  First application-qa.properties file data is loaded
+  then next application-prod.properties
+  If both files has same keys then prop replaces (overrides) qa values.
+
+  --spring.profiles.active=qa,prod
+  --spring.profiles.active=prod,qa   are different
+-------------------------------------------------------------------
+

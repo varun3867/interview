@@ -1,0 +1,150 @@
+				Date : 10-Jul-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+		---------------------------------------------
+		         Spring Boot - Scheduling
+
+Scheduling :
+  To execute any task based on period of time or point of time in a loop.
+
+Period of time : It is a time gap
+3 days,
+4 hours,
+8 mins,
+..etc
+
+Point of time : It is date/time for start
+1st JAN 9AM
+31st Dec 11:59:59
+..etc
+
+*) Schedulers will never run effect application regular process,
+   They will run in background as a thread(Demon thread)
+
+*) We can define multiple scheduler methods. All runs as independent threads.  
+*) One scheduler will never effect another one too...
+
+*) If Current method call is throwing exception,
+   it will never effect making next method call...
+
+--> ToDo Scheduling Coding in Spring Boot application,
+a. Apply @EnableScheduling at main class level
+b. Define a method (inside class) with annotation @Scheduled
+c. pass any one type
+    > fixedDelay
+    > fixedRate
+    > cron **** (Cron Expressions)
+
+*) This time method is called by Spring Container (not manually by programmer)
+  based on input given ( fixedDelay | fixedRate | cron )
+
+---Syntax---------
+@Component
+public class __________ {
+        
+	@Scheduled(__________)
+	public void _________() {
+           //logic
+	}
+}
+//No Params and No returnType (as method called by Spring container)
+
+  +-----------------------------------------------------------------+
+  |                 Scheduling using  fixedDelay                    |
+  +-----------------------------------------------------------------+
+
+> fixedDelay comes under period of time.
+> fixedDelay is a long Datatype we must pass milliseconds value.
+
+  1 sec = 1000 milliseconds
+
+*) It is a not a runner class (Runner is called only once).
+   It is schedler, called multiple times in a loop
+
+
+> fixedDelay will
+
+1st   callMethod() --EXECUTION IS FINISH
+      wait for given time
+2nd   callMethod() --EXECUTION IS FINISH
+      wait for given time
+3rd   callMethod() --EXECUTION IS FINISH
+      wait for given time
+...etc
+
+-----------------------------------------------------
+****) Method execution time is never fixed(bcoz n/w calls, DB Quries..etc)
+
+*) Wait time between last method call finish and next method call start
+   (same method) --fixed Time gap
+
+*) On App startup without any gap 1st call is done for scheduled method.
+   To give time gap between app start up and 1st method call use
+   initialDelay(wait time for for first method call)
+
+------Ex#1-----------------------------------------------------------
+Name : SpringBoot2SchedulingEx
+Dep  : Lombok
+
+a) At main class:  @EnableScheduling
+b) One service class
+package in.nareshit.raghu.service;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ReportService {
+
+	private static int count = 0;
+	private SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss"); 
+	
+	@Scheduled(initialDelay = 3000, fixedDelay = 2000)
+	public void generateReport() 
+			throws InterruptedException 
+	{
+		System.out.println(" START " + (++count) + " - "+ sdf.format(new Date()));
+		Thread.sleep(3000); // sec 
+		System.out.println(" END " + count + " - "+ sdf.format(new Date()));
+		
+	}
+	
+	
+	@Scheduled(initialDelay = 5000,fixedDelay = 1000)
+	public void helloMsg() {
+		System.out.println("HELLO DATA");
+		//throw new RuntimeException("DUMMY");
+	}
+	
+	
+}
+
+*) Not possible:
+  a. Only Run 10 times
+  b. Skip a specific method call
+  c. Wait for other methods finish
+  d. call method based on condition.
+  
+  +-----------------------------------------------------------------+
+  |                 Scheduling using  fixedRate                     |
+  +-----------------------------------------------------------------+
+
+The max time gap between first method call to next method call.
+If it is crossed then wait time is zero, just wait for last method call finish.
+
+*** even Method execution time also included
+
+> fixedRate will be (max time is 5 sec)
+1st   callMethod() --EXECUTION IS FINISH in 2 sec
+      wait for given time - 3 sec (5-2)
+2nd   callMethod() --EXECUTION IS FINISH in 3 sec
+      wait for given time -- 2sec (5-3)
+3rd   callMethod() --EXECUTION IS FINISH in 8 sec
+      wait for given time  -- 0sec (5-8/bcoz -ve)
+...etc
+
+----------------------------------------------------------
+

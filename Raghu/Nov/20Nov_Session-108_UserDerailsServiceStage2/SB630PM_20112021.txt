@@ -1,0 +1,289 @@
+				Date : 20-11-2021
+				 Spring Boot 6PM
+				   Mr. RAGHU
+	--------------------------------------------------------------------
+JWT:(TASK)
+https://www.youtube.com/watch?v=feETfZbvu-k
+https://www.youtube.com/watch?v=Hzkw846jIOU
+https://www.youtube.com/watch?v=bJAsHOH4lMk
+
+Video:
+https://www.youtube.com/watch?v=rgG2_T-OB8g
+Full Code:
+https://github.com/javabyraghu/SpringBoot2SecurityOrmEx
+
+		 Spring Security using ORM (UserDetailsService)
+============================================================================
+Stage#1 UserRegister Process (done)
+Stage#2 User Login and PasswordEncoder
+Stage#3 Custom Login Page
+Stage#4 Session Management and CSRF Token
+
+*) Note: There can be multiple classes exist in java with same class name
+	and different package name.
+ex: java.util.Date , java.sql.Date
+=============================================================================
+ 		Stage#2 User Login and PasswordEncoder
+
+*) In Login page, EndUser enters username(email) and password
+*) WebSecurityConfigurerAdapter is called when we click on Login Submit
+*) It makes call to "UserDetailsService"(I) method: 
+       loadUserByUsername(String uname) [Impl class object]
+
+**** UserDetailsService , makes Database call using findBy method and gets
+  User(Entity class) object, this we need to convert into User(Spring Security Object)
+
+
+*) Role is String in Database. But Security says it must be
+		GrantedAuthority(I)         [GA]
+		   Impl class
+           SimpleGrantedAuthority(C)        [SGA]
+
+Q) What is the diff. b/w Authority(Role), GrantedAuthority ?
+
+A)
+  In a project there can be multiple roles (Authorities)
+  	ex: ADMIN, EMPLOYEE, MANAGER, CEO, CLERK, CASHIER 
+
+  For a User few roles are allocated that is called GrantedAuthority
+       ex:  SAM -- ADMIN, CASHIER [ 2 GrantedAuthorities ]
+
+  All these GrantedAuthorities are stored as Set<GrantedAuthority>
+
+*) Converted Security User object is given back to WebSecurityConfigurerAdapter
+*) It validate Form Data and Database Data (un, pwd checking)
+   if invalid then goto Login page and display Error Message
+   Else if valid then,
+      >> Creates HttpSession
+      >> Link Current User Data
+      >> Redirect to DefaultSuccessUrl
+
+*) On Click Logout link, again come back to Login Page and display
+   success message : User Logout success.
+
+
+----------Main code-------------------------------
+package in.nareshit.raghu.service.impl;
+...
+
+@Service
+public class UserServiceImpl implements ...., UserDetailsService {
+
+	.....
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) 
+			throws UsernameNotFoundException {
+	
+		//make Database call using username
+		Optional<User> opt = findUserByEmail(username);
+		
+		if(!opt.isPresent()) { //if user not exist
+			throw new UsernameNotFoundException("User not found");
+		} else { //if user is present
+			User user = opt.get();
+			//User Roles
+			Set<String> roles = user.getRoles();
+			
+			Set<GrantedAuthority> authorities = new HashSet<>();
+			for(String role:roles) {
+				authorities.add(new SimpleGrantedAuthority(role));
+			}
+			//spring Security user object
+			return new org.springframework.security.core.userdetails.User(
+					user.getEmail(), 
+					user.getPwd(), 
+					authorities
+					);
+		}
+		
+	}
+
+}
+==============================================================
+*) use one PasswordEncoder to avoid storing plain text password data
+
+a. Define AppConfig for singleton bean 'BCryptPasswordEncoder'
+b. user this BCryptPasswordEncoder inside service before save.
+	>> read Form pwd
+	>> encode it
+	>> setback to same object
+	>> save to DB
+
+---Main code---------
+class UserServiceImpl implements IUserService,...... {
+
+	@Autowired
+	private UserRepository repo;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	public Integer saveUser(User user) {
+		//read Form Password, encode it
+		String encPwd = passwordEncoder.encode(user.getPwd());
+		//set back to same object
+		user.setPwd(encPwd);
+		
+		return repo.save(user).getId();
+	}
+	....
+}
+=======================================================================
+
+
+Run app and enter URL:
+http://localhost:9696/user/register
+
+http://localhost:9696/emp
+
+
+*) Error:
+failed to lazily initialize a collection of role: 
+ in.nareshit.raghu.entity.User.roles, 
+ could not initialize proxy - no Session
+
+===========New code===========================================
+1. Security Config
+package in.nareshit.raghu.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService)
+		.passwordEncoder(passwordEncoder);
+	}
+	
+	
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+		.antMatchers("/user/register","/user/save","/welcome").permitAll()
+		.antMatchers("/emp").hasAuthority("EMPLOYEE")
+		.antMatchers("/adm").hasAuthority("ADMIN")
+		.antMatchers("/std").hasAnyAuthority("ADMIN","EMPLOYEE")
+		.anyRequest().authenticated()
+		
+		.and()
+		.formLogin()
+		.defaultSuccessUrl("/home",true)
+		
+		.and()
+		.logout()
+		.logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
+		
+		.and()
+		.exceptionHandling()
+		.accessDeniedPage("/denied")
+		;
+	}
+}
+
+
+2. UserServiceImpl
+package in.nareshit.raghu.service.impl;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import in.nareshit.raghu.entity.User;
+import in.nareshit.raghu.repo.UserRepository;
+import in.nareshit.raghu.service.IUserService;
+
+@Service
+public class UserServiceImpl implements IUserService, UserDetailsService {
+
+	@Autowired
+	private UserRepository repo;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	public Integer saveUser(User user) {
+		//read Form Password, encode it
+		String encPwd = passwordEncoder.encode(user.getPwd());
+		//set back to same object
+		user.setPwd(encPwd);
+		
+		return repo.save(user).getId();
+	}
+
+	public Optional<User> findUserByEmail(String email) {
+		return repo.findByEmail(email);
+	}
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) 
+			throws UsernameNotFoundException {
+	
+		//make Database call using username
+		Optional<User> opt = findUserByEmail(username);
+		
+		if(!opt.isPresent()) { //if user not exist
+			throw new UsernameNotFoundException("User not found");
+		} else { //if user is present
+			User user = opt.get();
+			//User Roles
+			Set<String> roles = user.getRoles();
+			
+			Set<GrantedAuthority> authorities = new HashSet<>();
+			for(String role:roles) {
+				authorities.add(new SimpleGrantedAuthority(role));
+			}
+			//spring Security user object
+			return new org.springframework.security.core.userdetails.User(
+					user.getEmail(), 
+					user.getPwd(), 
+					authorities
+					);
+		}
+		
+	}
+
+}
+
+3. AppConfig
+package in.nareshit.raghu.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@Configuration
+public class AppConfig {
+	
+	@Bean
+	public BCryptPasswordEncoder encoder() {
+		return new BCryptPasswordEncoder();
+	}
+}
+
+4. At Entity
+@ElementCollection
+  to
+@ElementCollection(fetch = FetchType.EAGER)

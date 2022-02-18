@@ -1,0 +1,201 @@
+			Date : 08/11/2021
+			Spring Boot 6:30PM
+			  Mr. RAGHU
+	----------------------------------------------
+		  Message Queues (MQs)
+
+*) MQs:- To trasfer data from Producer machine to Consumer
+	 in continioues flow.
+
+Examples:-
+a. Swiggy Delivery Status
+b. Live Train Status
+c. Ola/Uber cab status
+d. Stock Market Data
+e. Cricket Score Update
+
+*) MQs uses mediator/broker/middleware softwares to trasfer
+   data between multiple system.
+
+*) MQs can be implemented using JMS (basic), Kafka (advanced)
+------------------------------------------------------------
+		JMS : Java Message Service
+
+*) It uses Mediator ie called as MOM : Message Oriented Middleware  
+*) Producer messages are stored inside MOM memory ie called as Destination.
+
+*) Sun/Oracle- JMS API-- Specification (1st party)
+   Apache ActiveMQ 5.x -- Implementation (Vendor/3rd Party)
+   Our Project (Application /2nd party)
+
+*) JMS communication types:-
+a. Peer-To-Peer Communication (P2P) [like 1...1]
+  If one Message is given to one Consumer 
+  then it is called as P2P communication
+  
+    +------------------+-------+
+    | Destination Type : Queue |
+    +------------------+-------+
+
+b. Publish and Subscribe Communication (Pub/Sub)
+  If one message is given to multiple consumers
+  [same message multiple copies/Cloned Objects]
+  then it is called as Pub/Sub communication
+
+    +------------------+-------+
+    | Destination Type : Topic |
+    +------------------+-------+
+
+*) Note: If System-A wants to send data to System-B
+   then Write Producer code at System-A and Consumer code at
+   System-B.
+
+*) Both Producer and Consumer communicates using 
+  same destination-name, there is no direct communication link
+  between producer and consumer.
+============================================================
+		Apache ActiveMQ 5.x 
+
+Download:-
+https://activemq.apache.org/components/classic/download/
+
+> Click on : apache-activemq-5.16.3-bin.zip
+> Extract to a folder (after download)
+> Open folder : ..\apache-activemq-5.16.3\bin\win64
+> Double click on : activemq.bat
+> Goto browser and enter URL:
+   http://localhost:8161/admin/
+> Default un/pwd : admin/admin
+[ check location : ..\apache-activemq-5.16.3\conf\users.properties ]
+
+*) Note: Web Console Port   : (HTTP) 8161
+         Communication Port : (TCP) 6161
+
+======Producer Coding===========================================
+1. Name : SpringBoot2JmsProducerEx
+   Dep  : Spring for Apache Active MQ 5.x , Lombok
+
+2. application.properties
+---------------------
+# Connection details with MOM
+spring.activemq.broker-url=tcp://localhost:61616
+spring.activemq.user=admin
+spring.activemq.password=admin
+
+# P2P communication
+spring.jms.pub-sub-domain=false
+
+# Destination-name
+my.desti.name=my-queue-abc
+---------------------
+
+*) At main clas: @EnableScheduling
+
+3. Producer code
+package in.nareshit.raghu.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class ProducerService {
+
+	@Value("${my.desti.name}")
+	private String destination;
+	
+	@Autowired
+	private JmsTemplate template;
+	
+	public boolean send(String message) {
+		boolean sent = false;
+		try {
+			//destination,MessageCreator
+			template.send(
+					destination, 
+					session-> session.createTextMessage(message)
+					);
+			log.info("MESSAGE SENT FROM PRODUCER ==> {}", message);
+			sent = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			sent = false;
+			log.error("MESSAGE SENDING FAILED..");
+		}
+		return sent;
+	}
+}
+
+
+4. Runner class
+package in.nareshit.raghu.runner;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.service.ProducerService;
+
+@Component
+public class TestMessageRunner 
+//implements CommandLineRunner 
+{
+
+	@Autowired
+	private ProducerService service;
+	
+	//public void run(String... args) throws Exception {
+	@Scheduled(fixedDelay = 2000)
+	public void run() throws Exception {
+		service.send("HELLO ="+ new Date());
+	}
+
+}
+
+
+5. execution order
+a. Run activeMQ batch file
+b. Run Producer code
+c. Goto browser  and Enter URL:
+ http://localhost:8161/admin/queues.jsp
+d. click on queue name >  messageId > check data
+
+=========Consumer code================================
+1. Name : SpringBoot2ConsumerEx
+   Dep  : Spring For Apache Active MQ 5 , Lombok
+
+2. At main class: @EnableJms
+
+3. application.properties
+# Connection details with MOM
+spring.activemq.broker-url=tcp://localhost:61616
+spring.activemq.user=admin
+spring.activemq.password=admin
+
+# P2P communication
+spring.jms.pub-sub-domain=false
+
+# Destination-name
+my.desti.name=my-queue-abc
+--------------------------
+4. Consumer Service
+package in.nareshit.raghu.service;
+
+import org.springframework.jms.annotation.JmsListener;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ConsumerService {
+
+	@JmsListener(destination = "${my.desti.name}")
+	public void readMessage(String message) {
+		System.out.println("At Consumer " + message);
+	}
+}
+=======================================================

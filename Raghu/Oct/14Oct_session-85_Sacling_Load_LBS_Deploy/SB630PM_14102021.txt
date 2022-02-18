@@ -1,0 +1,45 @@
+				Date : 14-10-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	-----------------------------------------------------------------
+Scaling:- Improve application performance.
+a. Horizontal Scaling:- Creating another instance of application at new VM/System
+b. Vertical Scaling :- Enhance VM/System Capacity of Same system.
+
+Q) What is Build ?
+A) .java ---> .class ---> .jar/.war
+       compile         build
+
+=> It is process of creating a final format/component of a project.
+   JAR - Java Archive
+   WAR - Web Archive
+
+Q) What is deploy?
+A) Place a build file inside server and start server.
+
+Q) What is ServiceInstance / Server Instance ?
+A)
+   ServiceInstance = A Successful deployment returns one SI
+
+Q) What Load, Load Balance? Load Factor ?
+A)
+   Load = No.of Request one Service Instance is processing currently.
+   Max Load = Max no.of Request a server can process at a time.
+
+	server.jetty.threads.max  = 200
+	server.tomcat.threads.max = 200
+
+  Load Factor = Current Load / Max Load
+
+	  [ 0 < Load Factor < 1 ]
+
+Load Balance = Creating Multiple Server instances and handling them
+		based on LoadFactor for multiple user request.
+======================================================================
+Q) CI CD Pipe line?
+A)
+  Continuous Integration and Deployment (Jenkins)
+ Link:-
+ https://www.youtube.com/watch?v=zF12QTfsI-Q
+
+------------------------------------------------------------------------

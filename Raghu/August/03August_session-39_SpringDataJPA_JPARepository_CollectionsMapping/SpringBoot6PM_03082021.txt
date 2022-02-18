@@ -1,0 +1,190 @@
+				Date : 03-Aug-21
+				Spring Boot 6:30PM
+				 Mr. RAGHU
+	-----------------------------------------------------------
+		      Spring Boot - Data JPA -- Collections
+
+ 1 class ------------------------ 1 table  (parent table)
+1 variable(Primitive) ----------- 1 column
+1 variable(Collection) ---------- 1 table (child table)
+
+*) Parent and child tables are connected using PK-FK (Primary Key - Foreign Key)
+   Concept. FK also called as Join Column.
+
+Collections Supported as Tables:- List, Set and Map only. 
+
+=> Every collection is one child table. 
+=> child table contains 3 columns at max 
+    --- FK Column/Join Column
+    --- Element(Data) Column
+    --- Index Column
+
+
+      Index based Collection     :   List and Map  ( table - 3 columns)
+      Non-Index based collection :   Set           ( table - 2 columns)
+
+*) Index column is not applied for Set Collection.
+
+
+*) PK is Unique, not null. FK can be Duplicated, may be null.
+   PK and FK DataTypes must be matching.
+   FK value must be matching with any one PK values.
+
+*) table and column names can be any names, but not duplicated.
+
+
+*) Must apply :  @ElementCollection  (on collection variable level)
+             For List -- @OrderColumn   (index)
+	     For Map  -- @MapKeyColumn  (index)
+
+*) Optional   :  @CollectionTable(table and column names)
+
+***** Above Collection mapping indicates : Collection of Primitive Types
+ex: List<Integer>, List<String> , List<Double> ...etc
+
+
+==Code================================================
+name : SpringBoot2DataJpaCollectionsEx
+Dep  : MySQL, Data JPA, Lombok
+
+1. application.yml
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: root
+    url: jdbc:mysql://localhost:3306/boot630pm
+    username: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+2. Model class
+package in.nareshit.raghu.model;
+
+//ctrl+shift+O
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="emptab")
+public class Employee {
+	
+	@Id
+	@Column(name="eid")
+	private Integer empId;
+	@Column(name="ename")
+	private String empName;
+	@Column(name="esal")
+	private Double empSal;
+	
+	@ElementCollection
+	@CollectionTable(
+			name="emp_prjs_tab", //child table name
+			joinColumns = @JoinColumn(name="eidFk")//FK Column name
+			)
+	@Column(name="pname") //element column
+	private Set<String> prjNames;
+	
+	
+	@ElementCollection
+	@CollectionTable(
+			name="emp_mcodes_tab", //child table name
+			joinColumns = @JoinColumn(name="eidFk") //FK colum name
+			)
+	@Column(name="code") //element column
+	@OrderColumn(name="pos") // index column
+	private List<String> modCodes;
+	
+	
+	@ElementCollection
+	@CollectionTable(
+			name="emp_clients_tab", //child table name
+			joinColumns = @JoinColumn(name="eidFk") // Fk column
+			)
+	@Column(name="cname") //element column
+	@MapKeyColumn(name="ccode") //index column
+	private Map<String,String> empClients;
+	
+	
+}
+
+
+3. Repository Interface
+package in.nareshit.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.nareshit.raghu.model.Employee;
+
+public interface EmployeeRepository 
+	extends JpaRepository<Employee, Integer> {
+
+}
+
+4. Runner class
+package in.nareshit.raghu.runner;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.Employee;
+import in.nareshit.raghu.repo.EmployeeRepository;
+
+@Component
+public class TestDataRunner implements CommandLineRunner {
+
+	@Autowired
+	private EmployeeRepository erepo;
+	
+	public void run(String... args) throws Exception {
+		/*Set<String> s1 = new HashSet<>();
+		s1.add("P1");
+		s1.add("P2");
+		s1.add("P3");*/
+		
+		erepo.save(
+				new Employee(10, "ABC", 200.0, 
+						Set.of("P1","P2","P3"),  //JDK 9 , pass s1 here for JDK 8
+						List.of("M1","M2","M3"), // Arrays.asList()
+						Map.of("C1","NIT","C2","ORC")) //use HashMap..etc for JDK 8 
+				);
+		System.out.println("DONE");
+	}
+
+}
+
+5. Go and check DB tables.
+
+
+*) JDK 9/Java SE 9. Inside Collections of() method is added.
+of() it creates new Collection object with given data as Immutable Collection.
+
+ex:
+  List.of("S1");
+  Set.of("S2");
+  Map.of("K","V);

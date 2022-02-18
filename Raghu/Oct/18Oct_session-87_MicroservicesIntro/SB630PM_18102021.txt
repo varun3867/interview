@@ -1,0 +1,99 @@
+				Date : 18-10-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	-----------------------------------------------------------------
+				Microservices
+
+ An independent deployable component that supports scaling and integration.
+
+ 1 Service running as 1 application for our project and finally linked
+ based on relations.
+
+ Collection of services creating one network that follows set of protocols
+ and light weight architecture.
+
+
+*) Microservices:-
+a. Microservices makes apps independent, no need to re-build all modules/services
+   for one MS# modification.
+b. If one MS# instance is not running/down then effect rate will be very less.
+c. New Services can be implemented/integrated using Rest-webservices
+d. MS# Design provides high cohesion and less coupling
+e. All are paralllel deployable components. 
+
+Limitations:-
+a. As no.of Instances are more, Maintainance becomes complex
+     I. Logging
+    II. Unit Testing
+   III. Health Checking (Are they running fine or not?)
+    IV. DB issues (N/w, Config, Pooling...)
+     V. Integration/Communications working or not?
+    VI. Code Duplicate(Consumers/Models/Entity)
+
+b. Need more tools for deployment (Container management)
+===========================================================================
+1. MS# Application :- 
+  Every MS# indicates one Module in Project.
+  ex: Search MS#, Payment MS#, Cart MS#, Feedback MS#...
+  Every MS# is implemented using Spring REST with Single RestController.
+  It can have multiple Services/Consumers/Database Connections..etc
+
+2. Register and Discovery Server:-
+  Every MS# instance must be registered with R&D Server (Eureka Server)
+
+    ------------------Register------------------------------------------
+    ServiceId    InstanceId            HOST/IP          PORT      LF
+    --------------------------------------------------------------------
+    SEARCH-APP  SEARCH:102-A0451     192.168.0.11       8080     0/200
+    SEARCH-APP  SEARCH:122-BB85C     192.168.1.15       9696     0/200
+    ....
+    --------------------------------------------------------------------
+
+ One MS# can find other MS# details using this Register.
+ ie called as Intra-Communication.
+
+3. Config Server : - A Shared application.properties 
+
+   There can be multiple MS# having their respected application.properties
+     (1 per MS#)
+   if all/multiple MS# having some common keys then do not repeate them
+   in every MS#, better write in external location (github/git account)
+   and link with Every MS#.
+
+4. Actuator and Admin Server :-
+   To find details like (for one MS#)
+      health (service is up/down)
+      log file details
+      properties loaded
+      beans created
+      ... (production-ready endpoints)
+   
+  we use Actuator, for all MS# one commpoint is Admin Server(UI).
+
+5. Logging and ELK :-
+    To find all types of messages from MS# (Succes/error/warning) we use loggging
+    all MS# log data is taken into one common place (ie one common UI) ie ELK
+  
+  ELK:
+  https://www.youtube.com/watch?v=uSYExRWbC9Y
+    
+6. MQs :- For continuoues data flow b/w MS# or applications.
+    Apache Kafka Integration
+
+
+7. Zipkin and Sleuth :-
+   To find execution path (Trace) and time consuming details in a request.
+   Sleuth finds all paths and zipkin makes UI.
+
+8. API Gateway :-
+   single entry and exit point to MS# setup.
+  > Even supports security
+  > Load balance(Routing)
+  > Fitlers 
+
+9. Intra communication :-
+   One MS# can communicate with another MS# using one of client below
+   a. Discovery Client
+   b. LoadBalancer Client
+   c.*** Feign Client.
+===================================================================

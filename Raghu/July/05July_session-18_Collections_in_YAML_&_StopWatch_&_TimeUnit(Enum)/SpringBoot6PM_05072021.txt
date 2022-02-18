@@ -1,0 +1,247 @@
+				Date : 05-Jul-21
+				Spring Boot 6:30PM
+                                 Mr. RAGHU
+		-----------------------------------------------
+			Spring Boot - YAML
+
+> Store in key:val
+> No duplicate levels 
+> dot(.)/equal(=) replaced with colon(:)
+> One space before value
+> Space count/indentation must be same for multiple levels
+-----------------------------------------------------------------------
+*) YAML with List/Set/Array
+
+prefix:
+   variable:
+    - val1
+    - val2
+    - val3
+
+*) here use symbol dash(-) which indicates index number
+
+-----------------------------------------------------------------------
+*) YAML with Map or Properties
+
+prefix:
+   variable:
+       mapKey: mapValue
+
+-----------------------------------------------------------------------
+*) YAML with class Type (HAS-A Relation)
+
+prefix:
+   hasAvariable:
+         variable: value
+
+-------------(code)----------------------------------------------------
+1. Create one Application
+Name : SpringBoot2ConfigPropsEx
+Dep  : Lombok
+
+2. Model classes
+
+package in.nareshit.raghu.model;
+import lombok.Data;
+@Data
+public class LicenceInfo {
+
+	private String provider;
+	private String code;
+}
+--------------
+package in.nareshit.raghu.model;
+
+import java.util.Properties;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+@ConfigurationProperties(prefix = "my.app")
+@Component
+@Data
+public class Product {
+
+	private Integer pid;
+	private String pcode;
+	private Double pcost;
+	
+	//private List<String> models;
+	private String[] models;
+	
+	private Properties clients;
+	//private Map<String,String> clients;
+	
+	private LicenceInfo lob;//HAS-A
+	
+}
+
+2. Runner class
+package in.nareshit.raghu.runner;
+
+//ctrl+shft+O
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.Product;
+
+@Component
+public class ProductTestRunner implements CommandLineRunner {
+
+	@Autowired
+	private Product prod;
+	
+	public void run(String... args) throws Exception {
+		System.out.println(prod);
+	}
+
+}
+
+3. application.yml
+my:
+  app:
+    pid: 10
+    pcode: ABC
+    pcost: 200.0
+    models:
+    - RED
+    - GREEN
+    - BLUE
+    clients:
+      C1: ABC
+      C2: XYZ
+      C3: NIT
+      
+    lob:
+      code: NIT
+      provider: XYZ
+
+4. Run main class(ctrl+F11)
+------------------------------------------------------
+*) Spring Container will create object of Environment(I)
+  using impl class: StandardEnvironment(C)
+
+*) It will load all key-val given from different sources
+  Command Line Inputs, Proeprties file, YAML Files
+
+*) We can read data using @Value for one key-val based into one variable
+*) We can load multiple key-val using one common word(prefix)
+  and variable name matchig using annotation: @ConfigurationProperties
+
+----------------------------------------------------------------
+StopWatch(C) : To calculate time taken for a process(method/block/object)
+			execution
+
+(methods)
+start() and stop()
+
+*) if we call st.start() 2 times then
+IllegalStateException: Can't start StopWatch: it's already running
+
+*) if we call st.stop() 2 times then
+IllegalStateException: Can't stop StopWatch: it's not running
+
+*) To print time value
+st.getTotalTimeSeconds()
+st.getTotalTimeMillis()
+st.getTotalTimeNanos()
+
+*) we can use StopWatch(title) and start(taskId)
+   to calculate time taken for a process/block.
+   Print final Resule using 'st.prettyPrint()'
+
+--Example---------------------------------
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
+
+@Component
+public class DataTestRunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		StopWatch st = new StopWatch("TITLE-APP TESTING");
+
+		st.start("TASK-ID-001");
+		
+		System.out.println("HELLO");
+		for (int i = 0; i < 999999999; i++) {
+			Math.pow(i+1*(i+1), Math.pow(i+1*(i+1), 
+					Math.pow(i+1, Math.pow(i+1, i))));
+		}
+		Thread.sleep(2000);
+		st.stop();
+		
+
+		st.start("TASK-ID-002");
+		
+		for (int i = 0; i < 999999999; i++) {
+			Math.pow(i+1*(i+1), Math.pow(i+1*(i+1), 
+					Math.pow(i+1, Math.pow(i+1, i))));
+		}
+		Thread.sleep(3000);
+		st.stop();
+		
+		st.start("TASK-ID-003");
+		for (int i = 0; i < 999999999; i++) {
+			Math.pow(i+1*(i+1), Math.pow(i+1*(i+1), 
+					Math.pow(i+1, Math.pow(i+1, i))));
+		}
+		System.out.println("BYE!");
+		st.stop();
+
+		System.out.println(st.prettyPrint());
+		/*System.out.println(st.getTotalTimeSeconds());
+		System.out.println(st.getTotalTimeMillis());
+		System.out.println(st.getTotalTimeNanos());*/
+	}
+}
+------------------------------------------------------------
+Enum : TimeUnit(E) [JDK1.5] (pack: java.util.concurrent)
+
+  Base Factor --- NANO
+  MICRO   = 1000 * NANO ;
+  MILLI   = 1000 * MICRO ;
+  SECOND  = 1000 * MILLI ;
+  MINUTE  = 60 * SECOND ;
+  HOUR    = 60 * MINUTE ;
+  DAY     = 24 * HOUR ;
+
+--Core Java----------
+package in.nareshit.raghu;
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+
+	public static void main(String[] args) {
+		System.out.println(TimeUnit.MINUTES.toSeconds(3));
+		System.out.println(TimeUnit.DAYS.toSeconds(3));
+		System.out.println(TimeUnit.SECONDS.toNanos(1));
+		System.out.println(TimeUnit.HOURS.toNanos(1));
+		System.out.println(TimeUnit.HOURS.toDays(48));
+	}
+}
+=====================================================================
+Maven Goals:
+https://www.youtube.com/watch?v=iLwuhbnFPqo
+
+S#1 Create any Spring Boot application
+S#2 Code as per requirements
+S#3 Execute Goal  : Maven Install
+   
+*) Jar name of your project:
+  artifatcId-version.jar Ex: SpringBoot2Message-1.0.jar
+
+>> Locatin : /target folder (Refresh/F5)
+
+S#4 Goto target folder and run this
+   cmd> java -jar  SpringBoot2Message-1.0.jar
+
+--------------ReactJs new batch--------------------------------
+7th July | 8PM
+Zoom Id : 98893151489
+------------------------------------------------------------

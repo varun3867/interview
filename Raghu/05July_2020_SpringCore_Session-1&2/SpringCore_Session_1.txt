@@ -1,0 +1,369 @@
+				Date : 05/07/2020
+ 			      Spring Core Session-1
+				Mr. RAGHU
+			      javabyraghu@gmail.com
+---------------------------------------------------------------------
+
+Spring = Framework => Enterprise Application (J2EE)
+Framework = RAD (Rapid Application Development)
+Faster and less lines of code.
+
+Framework = Technologies + Design patterns
+
+Web application = Technologies - Servlets/JSP , Database = JDBC
+  Duration = 3months , LOC = 10K 
+
+Web application  = Framework 
+    Duration = 1months , LOC = 3K 
+
+Database Connection - Singleton Design pattern (Manually)
+Framework = Scope=singleton
+
+Design patterns : Improvide application performance.
+
+=================================================================
+			Spring Core
+
+ Spring Core gives Rules and Guidelines to work with Spring Framework.
+
+*) Spring Container (Read made code given by Spring f/w)
+ a. Scan your classes (Component Scanning)
+ b. Create objects to detected classes
+ c. Provide data and link object (Dependeny Injection)
+ d. Destroy the objects while stopping application.
+
+
+*) Programmer has to provide 2 inputs 
+ 1. Spring Bean = Class + Rules given by Spring Container
+ 2. Spring Configuration File (XML/Java/Annotation)
+     Details = ObjectName, data, links,scopes..etc
+
+1. Spring Bean: -
+
+i.   Write class as public
+ii.  Write one package statement (ex: package in.nareshit.raghu)
+iii. Write one default constrcutor or param. constructor.
+iv.  Write variables as private 
+     and also generate set/get methods for every variable.
+
+v.   We can override method in our class from Object(C) [java.lang]
+     Like toString(), hashCode() + equals()
+     Override method : Method must be non-static, non-final, non-private
+
+vi. Inheritance Rule: Spring Bean can extends/implements only Spring F/w API
+    even our own classes.
+    Technologies or other f/w files are not allowed directly.
+
+vii. We can apply Annotation on Spring Bean
+    => Spring F/w Annotations
+    => Integration Annotation ( Hibernate with JPA, Security Annotation..etc)
+    => Core Annotations ( Annotation defined in java.lang Package)
+
+=======================================================================
+ 		Spring Configuration File - Annotation Configuration
+
+=> Annotation Configuration is fast in execution in Spring f/w
+=> Annotation Configuration can be appliable only for OUR CLASS 
+   (PROGRAMMER DEFINED CLASSES)
+   we should apply annotations in .java file
+
+--Types--
+1) StereoType Annotation: This type of annotations are used for Object creations
+  List of StereoType Annotations
+  @Component        = Creating object to our class
+  @Repository       = Creating object to our class + Database Operation 
+  @Service          = Creating object to our class + Transaction management, logics, calculations, sorting..etc
+  @Controller       = Creating object to our class + Web Applications - MVC (Http Request)
+  @RestController   = Creating object to our class + Webservices (HTTP) + JSON/XML
+
+
+2) Basic Annotation/Support Annotations:
+  @Value
+  @Autowired / @Qualifier / @Primary
+  @PropertySource
+  @ComponentScan
+  @Scope
+  ..etc
+----------------------------------------------------------------------------
+Spring Container : 2 Types
+old Container : BeanFactory (XML Config)
+new Container : ApplicationContext (I) (XML/Java/Annotation)
+                AnnotationConfigApplicationContext(C)
+
+
+@Component : It indicates create object to our class, to Spring container.
+              By using default constrcutor.
+
+If we do not specify any object name then default classname taken (as first lettwe small)
+with CamelCaseRule as object name.
+
+Ex:
+@Component 
+public class DbConn { }
+
+Then container : DbConn dbConn = new DbConn();
+
+Ex:
+@Component("con") 
+public class DbConn { .. }
+
+Then container : DbConn con = new DbConn();
+
+-------------------------------------------------------
+@Value : To provide data to variables in spring bean.
+  => static data / direct value
+  => Reading data from __.properties file
+  => By executing one Expression 
+
+======Ex#1=============================================================
+1. Create one Simple  Maven Project
+
+2. pom.xml
+
+	<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.2.7.RELEASE</version>
+		</dependency>
+	</dependencies>
+
+3. Spring bean
+
+package in.nareshit.raghu.bean;
+
+import org.springframework.beans.factory.annotation.Value;
+//ctrl+shift+O
+import org.springframework.stereotype.Component;
+
+@Component("con") 
+public class DbConn {
+	
+
+	@Value("OracleDriver")
+	private String driver;
+	
+	@Value("jdbc:oracle")
+	private String url;
+	
+
+	public DbConn() {
+		System.out.println("FROM DB CONN-DEFAULT CONST.");
+	}
+
+
+	//atl+shift+S, S > Generate
+	@Override
+	public String toString() {
+		return "DbConn [driver=" + driver + ", url=" + url + "]";
+	}
+	
+}
+
+4. Test class
+
+package in.nareshit.raghu.test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import in.nareshit.raghu.bean.DbConn;
+
+public class Test {
+
+	public static void main(String[] args) {
+		//Create Spring container refernce
+		AnnotationConfigApplicationContext ac = 
+		   new AnnotationConfigApplicationContext();
+		
+		//scan spring beans (classes) - using one package name
+		ac.scan("in.nareshit.raghu.bean");
+		
+		//refresh - create object, provide data, links object....
+		ac.refresh();
+		
+		//read object(bean) and print
+		DbConn ob = ac.getBean("con",DbConn.class);
+		
+		System.out.println(ob);
+		
+		//close container
+		ac.close();
+	}
+}
+==============================================================
+@ComponentScan : This annotation is used to provide package names to 
+      Spring conatiner, for finding(scanning) classes.
+
+If we provide one package name here then container will search for files in given
+package and also its sub-package files.
+
+
+--Ex#2  ComponentScan annotation -----
+1. Spring Bean
+
+package in.nareshit.raghu.bean;
+
+import org.springframework.beans.factory.annotation.Value;
+//ctrl+shift+O
+import org.springframework.stereotype.Component;
+
+@Component("con") 
+public class DbConn {
+	
+
+	@Value("OracleDriver")
+	private String driver;
+	
+	@Value("jdbc:oracle")
+	private String url;
+	
+
+	public DbConn() {
+		System.out.println("FROM DB CONN-DEFAULT CONST.");
+	}
+
+
+	//atl+shift+S, S > Generate
+	@Override
+	public String toString() {
+		return "DbConn [driver=" + driver + ", url=" + url + "]";
+	}
+	
+}
+
+2. class for Component Scan with basepackage
+
+package in.nareshit.raghu.config;
+import org.springframework.context.annotation.ComponentScan;
+//@ComponentScan(basePackages ={"in.nareshit.raghu.bean"})
+//@ComponentScan({"in.nareshit","in.nit","in.abc"})
+@ComponentScan("in.nareshit")
+public class AppConfig { }
+
+3. Test class
+
+package in.nareshit.raghu.test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import in.nareshit.raghu.bean.DbConn;
+import in.nareshit.raghu.config.AppConfig;
+
+public class Test {
+
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext ac = 
+				new AnnotationConfigApplicationContext(AppConfig.class);
+		
+		DbConn con = ac.getBean("con",DbConn.class);
+		System.out.println(con);
+		
+		ac.close();
+	}
+}
+
+===================================================================
+  Working with Properties files:-
+
+=> Properties means store data in key=val
+=> both key and values are String type
+=> create properties file under src/main/resources folder
+  > right click on 'src/main/resources' > new > other > serach using File
+  > Choose File option > enter name 'nit.properties' > Finish
+
+=> Symbol # indicates comment line
+=> keys are case-sensitive
+=> First Load properties file into Spring container using code
+   @PropertySource("classpath:nit.properties")
+   Here classpath = src/main/resources
+
+=> In Spring non-web applications word 'classpath' is optional
+   if it presents in src/main/resources.
+
+=> We can even load multiple properties files
+   @PropertySource({"nit.properties","app.properties","one.properties"})
+
+=> To read data into code , syntax is : @Value("${key}")
+   If key is not present in properties, then same data given as String type.
+
+--Example#3----------------
+1. Spring Bean
+
+package in.nareshit.raghu.bean;
+
+import org.springframework.beans.factory.annotation.Value;
+//ctrl+shift+O
+import org.springframework.stereotype.Component;
+
+@Component("con") 
+public class DbConn {
+	
+    //@Value("${key}")
+	//read data from Environment memory
+	@Value("${driver}")
+	private String driver;
+	
+	@Value("${dburl}")
+	private String url;
+	
+
+	public DbConn() {
+		System.out.println("FROM DB CONN-DEFAULT CONST.");
+	}
+
+
+	//atl+shift+S, S > Generate
+	@Override
+	public String toString() {
+		return "DbConn [driver=" + driver + ", url=" + url + "]";
+	}
+	
+}
+
+
+2. AppConfig class
+
+package in.nareshit.raghu.config;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
+
+//@ComponentScan(basePackages ={"in.nareshit.raghu.bean"})
+//@ComponentScan({"in.nareshit","in.nit","in.abc"})
+@ComponentScan("in.nareshit")
+//Loading Properties file into Spring container
+//@PropertySource({"nit.properties","app.properties","one.properties"})
+@PropertySource("nit.properties")
+public class AppConfig { }
+
+3. Test class
+
+package in.nareshit.raghu.test;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import in.nareshit.raghu.bean.DbConn;
+import in.nareshit.raghu.config.AppConfig;
+
+public class Test {
+
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext ac = 
+				new AnnotationConfigApplicationContext(AppConfig.class);
+		
+		DbConn con = ac.getBean("con",DbConn.class);
+		System.out.println(con);
+		
+		ac.close();
+	}
+}
+
+
+4. nit.properties (src/main/resources)
+# Comment key(String)=val(String)
+driver=MySQLDriver
+driver=OracleDriver
+dburl=jdbc:mysql
+
+** If same key is present multiple times with different values then
+ last combination in order is taken into Spring application.

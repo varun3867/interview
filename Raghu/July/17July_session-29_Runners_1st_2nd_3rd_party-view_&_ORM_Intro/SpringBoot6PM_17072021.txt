@@ -1,0 +1,187 @@
+				Date : 17-Jul-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	------------------------------------------------------------
+			  Spring Boot - Runners
+
+*) Runner: If you want to execute any logic/test while starting application,
+		then use runners.
+
+=> Once Spring Container is created (ApplicationContext) then all runners
+   are executed in order.
+
+a. CommandLineRunner(I) [Spring Boot 1.0]
+    run(String... args) 
+
+b. ApplicationRunner(I) [Spring Boot 1.3]
+    run(ApplicationArguments args)
+
+=> ApplicationRunner will arrange all inputs given by main class into 
+    'ApplicationArguments' (Option args and non-option args)
+
+=> Option-args means key-val based input, 
+ ex 
+   --spring.profiles.active=qa
+   --server.port=9696
+   --eureka.client.service-url.defaultZone=http://192.35.66.0:8761/eureka
+
+=> Non-Option args means commands/instructions.
+
+Ex:
+    createSetup
+      --> then we will insert City Table data.
+    exportData
+      --> Read data from Database and export to CSV/Excel
+
+
+=> All inputs given to main method using Command Line Args are called as 
+    "Source Args"
+
+---Methods in ApplicationArguments------------------
+a. getSourceArgs() : String[]
+   To read all input arguments given by main method.[both option and non-option]
+
+b. getOptionNames() : Set<String>
+   To read key names of all Option-args.
+
+c. containsOption(String key) : boolean
+   Given Option-arg key name is present in inputs or not?
+
+d. getOptionValues(String key): List<String>
+   To get all Option-args values based on key name
+
+e. getNonOptionArgs() : List<String>
+     To read all non-option args.
+
+     ====Runner class code===========
+package in.nareshit.raghu.runner;
+
+import java.util.Arrays;
+
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DataTestRunner implements ApplicationRunner {
+
+	public void run(ApplicationArguments args) throws Exception {
+		
+		System.out.println("------------All Arguments--------------");
+		System.out.println(args.getSourceArgs()); //toString
+		System.out.println(Arrays.toString(args.getSourceArgs()));
+		
+		System.out.println("------------Option Argument key names--------------");
+		System.out.println(args.getOptionNames());
+		
+		System.out.println("------------Option Argument exist?--------------");
+		System.out.println(args.containsOption("my.app.client"));
+		
+		System.out.println("------------Option Argument values--------------");
+		System.out.println(args.getOptionValues("my.app.client"));
+		
+		System.out.println("------------Nonoption Arguments--------------");
+		System.out.println(args.getNonOptionArgs());
+	}
+
+}
+==============================================================================
+Req#1
+      --spring.profiles.active=myem
+
+       @Profile("myem")
+       @Component
+       class EmailNotifications {
+          ....
+       }
+
+Req#2
+      @Component   
+      class BusAppDataSetup {
+        
+	run(AR ar) {
+	   if(ar.getNonOptionArgs().contains("citySetup")){
+	     ....
+	   }
+	   if(..) {} //trasport services
+	   if(..) {} // Currency 
+	}
+
+      }
+    ======================================================================
+		ORM --- Object Relational Mapping (Theory)
+    ======================================================================
+
+=> performing all database operations using Objects (OOPs) concept.
+=> ORM says Operation Query(SQL) must be generated based on Programmer 
+   task/method call.
+
+--Mapping Rule----------
+a. Define one class for table
+b. Define one variable for one column
+c. Provide one variable as Primary Key column
+-----------------------
+
+*) Entity-Relation, as per database Entity means table.
+   
+=> ORM says Primary Key column is MUST. 
+   All Operations are done based on this.
+
+=> In JDBC API, creating PK is optional. But in ORM it is must.
+--Ex------------------------------------------------------------------
+
+package in.nit;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class TestCon {
+
+	private static String driverClass="com.mysql.cj.jdbc.Driver";
+	private static String url="jdbc:mysql://localhost:3306/test";
+	private static String un="root";
+	private static String pwd="root";
+	
+	/*private static String driverClass="oracle.jdbc.driver.OracleDriver";
+	private static String url="jdbc:oracle:thin:@localhost:1521:xe";
+	private static String un="system";
+	private static String pwd="root";*/
+
+	public static void main(String[] args) throws Exception {
+		
+		Class.forName(driverClass);
+		Connection con = DriverManager.getConnection(url,un,pwd);
+		System.out.println(con.getClass().getName());
+		Statement st = con.createStatement();
+		System.out.println(st.getClass().getName());
+	}
+}
+
+
+pom.xml
+<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.25</version>
+		</dependency>
+		<!-- <dependency> <groupId>com.oracle.ojdbc</groupId> <artifactId>ojdbc8</artifactId> 
+			<version>19.3.0.0</version> </dependency> -->
+
+
+	</dependencies>
+
+Output: (Oralce)
+oracle.jdbc.driver.T4CConnection
+oracle.jdbc.driver.OracleStatementWrapper
+
+Output(MySQL)
+com.mysql.cj.jdbc.ConnectionImpl
+com.mysql.cj.jdbc.StatementImpl
+============================================================
+

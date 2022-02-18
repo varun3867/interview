@@ -1,0 +1,267 @@
+				Date : 26-Jul-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	-------------------------------------------------------------
+(Free batch for my Spring Boot Students only)
+Everyday Java Concepts # 5:30 pm to 6:30pm
+Zoom Id : 99582895224  Pwd: 112233
+Please dont share to outsiders.
+
+Concepts:
+Spring Core
+Core Java Concepts
+--------------------------------------------------------------------------------
+To work with Oracle DB
+
+application.properties
+----------------------------------------------------------------------
+#spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:XE
+spring.datasource.username=nit
+spring.datasource.password=nit
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=create
+#spring.jpa.database-platform=org.hibernate.dialect.Oracle10gDialect
+----------------------------------------------------------------------
+OJDBC8 JAR
+<dependency>
+	<groupId>com.oracle.database.jdbc</groupId>
+	<artifactId>ojdbc8</artifactId>
+	<scope>runtime</scope>
+</dependency>
+OJDBC 6
+<dependency>
+    <groupId>com.jslsolucoes</groupId>
+    <artifactId>ojdbc6</artifactId>
+    <version>11.2.0.1.0</version>
+</dependency>
+
+---For MySQL Database------------------------------
+
+-------application.properties--------------
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot630pm
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=create
+#spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+
+---MySQL JAR-------------------------------
+<dependency>
+	<groupId>mysql</groupId>
+	<artifactId>mysql-connector-java</artifactId>
+	<scope>runtime</scope>
+</dependency>
+
+------------------------------------------------------------------------------
+			Spring Boot Data JPA
+
+CrudRepository : Operations
+a. save(obj)
+b. saveAll(objs)
+c. findAll() 
+
+---------------------------------------------------------------------
+d. findById(id):Optional<T>
+  This method is used to fetch one row data from DB table.
+  Resule given as Optional(Object/EMPTY--null internally)
+
+
+Optional<T> : This class is added in JDK 1.8 (Java SE 8).
+It is used to handle null data check for runtime data
+may get connected with Container/Framework/Database/Streams/File Data..etc
+
+=> in simple, avoid NullPointerException by a creating one Class as Standard.
+-----------------------------------------------------------------
+e. existsById(id):boolean
+
+ This is used to check given ID exist or not in DB. 
+ If exist return true else false.
+
+ Internally uses: select count(*) from table where ID=?
+-----------------------------------------------------------------------------
+
+*) SQL: in  operator : selecting rows in random/multiple in manual
+Ex: select * from prodtab where pid in (101,104, 106,110) ;
+
+f. findAllById(Iterable<ID> ids):Iterable<T>
+  It takes multilple IDs as input (which may need not be in order)
+  Internally uses in operator.
+
+
+======================================================================
+g. count():long
+
+--> To fetch no.of rows count from given table.
+SQL: select count(*) from table;
+---------------------------
+h. deleteById(id):void
+ Given Id will be taken as input, if exist delete that row.
+ If given ID is not exist in DB, then
+ EmptyResultDataAccessException: 
+ No class in.nareshit.raghu.model.Product entity with id 1019 exists!
+---------------------------------------
+i. delete(object):void
+
+ This method we can pass an object exist in DB (or having PK)
+ else we can throw custom/any exception..etc
+
+========Full Code========================================
+a. 
+Name : SpringBoot2DataJpaCurdMySQL
+Dep : Data JPA, MySQL, Lombok
+
+1. Properties
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot630pm
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=create
+#spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+
+2. Model/Entity
+package in.nareshit.raghu.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Table(name="prodtab")
+@Entity
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+public class Product {
+	
+	@Column(name="pid")
+	@Id
+	private Integer prodId;
+	
+	@Column(name="pcode",length = 10) 
+	private String prodCode;
+	
+	@Column(name="pcost")
+	private Double prodCost;
+	
+}
+
+
+3. Repository Interface
+package in.nareshit.raghu.repo;
+
+import org.springframework.data.repository.CrudRepository;
+
+import in.nareshit.raghu.model.Product;
+
+public interface ProductRepository 
+	extends CrudRepository<Product, Integer>
+{
+
+}
+
+4. Runner class
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.exception.ProductNotFoundException;
+import in.nareshit.raghu.model.Product;
+import in.nareshit.raghu.repo.ProductRepository;
+
+@Component
+public class TestCrudRunner implements CommandLineRunner {
+
+	@Autowired
+	private ProductRepository repo;
+
+	public void run(String... args) throws Exception {
+		repo.save(new Product(101, "PEN", 200.0));
+		repo.save(new Product(102, "BOOK", 400.0));
+		repo.save(new Product(103, "TABLE", 500.0));
+		repo.save(new Product(104, "BAT", 100.0));
+		/*System.out.println("--DONE-----------");
+		repo.save(new Product(104, "BAT NEW", 150.0));
+
+
+		repo.saveAll(
+				//Arrays.asList( //JDK 1.2
+				List.of( //JDK 9	
+						new Product(105, "A", 900.0),
+						new Product(106, "B", 800.0),
+						new Product(107, "C", 700.0),
+						new Product(108, "D", 600.0)
+						)
+				);
+
+		Iterable<Product> itr = repo.findAll();
+
+		//===Print data using diff core java concepts=============
+		//itr.forEach(System.out::println); //using method reference
+		//itr.forEach(ob -> System.out.println(ob)); //using Lambda Expression
+		Iterator<Product> it = itr.iterator(); //using iterator
+		while (it.hasNext()) {
+			Product p =  it.next();
+			System.out.println(p);
+		}*/
+
+		//Optional<Product> opt = repo.findById(101);
+		/*Optional<Product> opt = repo.findById(996);
+		if(opt.isPresent()) {
+			Product p = opt.get();
+			System.out.println(p);
+		} else {
+			System.out.println("No data found");
+		}*/
+
+		/*boolean exist = repo.existsById(101);
+		System.out.println(exist);*/
+
+		/*Iterable<Product> list = 
+				repo.findAllById(Arrays.asList(100,101,105,120,111,174,104));
+		list.forEach(System.out::println);*/
+
+		//System.out.println("No Of Rows are: " + repo.count());
+
+		/*repo.deleteById(1019);
+		System.out.println("DELETED");*/
+
+
+		repo.delete(repo.findById(1019)
+				.orElseThrow(
+						()->
+						new ProductNotFoundException("Product is not exist")
+						)
+				);
+	}
+
+}
+
+5. Custom Exception 
+package in.nareshit.raghu.exception;
+
+public class ProductNotFoundException extends RuntimeException {
+
+	private static final long serialVersionUID = 1L;
+
+	public ProductNotFoundException() {
+		super();
+	}
+	
+	public ProductNotFoundException(String message) {
+		super(message);
+	}
+}
+
+

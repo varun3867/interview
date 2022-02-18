@@ -1,0 +1,263 @@
+				Date : 06-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+		----------------------------------------------------
+==========================================================
+Task:
+  Create List<Student>  [Student(id,name,course)]
+  Send to UI
+  Display as HTML table at StudentData.jsp
+  if we enter /student/all URL in addressbar
+===========================================================
+
+				Data Exchange Concept.
+
+a. Sending Data from Controller to UI
+b. Sending Data From UI to Controller
+
+*) Spring Boot Dev Tools:
+  It will restart server if any code changes are done in application.
+
+> without devtools, we need to stop and start again manually.
+> LiveReload Server is used interlally.
+
+*) in Spring boot just add dependency, that gives auto-configuration
+  LiveReloadServer, OptionalLiveReloadServer.
+  DEFAULT_PORT = 35729
+
+	-----------------------------------------------------------------
+  	           a. Sending Data from Controller to UI
+
+=> UI(View) gets data at runtime, from Controller using shared memory  
+   Model(I).
+
+=> Model stores data in key=val format.
+=> key is String type, value is object type.
+=> Send Data from Controller to Model memory using method:
+		addAttribute(k,v)
+=> Read data at UI using Syntax: ${key} 
+     [EL - Expression Language]
+
+
+Q) Here, Model(I) is interface then how it is working?
+A) Spring Boot recomandes us to work interfaces,
+   at runtime impl classes are selected.
+   In future if better class comes, then code will not get effected.
+
+   here, Model(I), Impl class is : BindingAwareModelMap
+
+   Such concept is called LooseCoupling.
+
+
+Q) is below code valid or not?
+   Object ob = 10 ;
+
+A) Yes. 10(int) ---> Integer [Autoboxing]
+    Integer--> Number ---> Object [Upcasing]
+
+   Point: Autobox + Upcast
+
+----Servlets Equal Code------------------------------------------
+RequestDispatcher rd = request.getRequestDispatcher("EmpHome.jsp");
+request.setAttribute("eid",200);
+rd.forward(req,resp);
+
+--EmpHome.jsp---
+${eid} ---> <%=request.getAttribute("eid")%>
+-------------------------------------------------------------------
+
+ ===Full Code======================
+Name : SpringBoot2WebMvcControllerToUi
+Dep  : Spring Web, Devtools, Lombok
+
+a. application.properties
+server.port=9090
+
+spring.mvc.view.prefix=/WEB-INF/pages/
+spring.mvc.view.suffix=.jsp
+
+b. Controller
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+
+	@GetMapping("/show")
+	public String showData(Model model) {
+		//System.out.println(model.getClass().getName());
+		model.addAttribute("eid", 200);
+		model.addAttribute("ename", "AA");
+		model.addAttribute("esal", 500.0);
+		return "EmpHome";
+	}
+}
+
+
+c. Folder System
+|-src
+   |-main
+      |-webapp
+         |-WEB-INF
+	     |-pages
+	        |-EmpHome.jsp
+
+d. UI code : EmpHome.jsp
+<html>
+ <head>
+  <title>Document</title>
+ </head>
+ <body>
+  <h2>WELCOME TO EMPLOYEE PAGE</h2>
+  <p>
+  	Data is : ${eid},${ename},${esal}
+  </p>
+ </body>
+</html>
+
+
+e. pom.xml
+<dependency>
+	<groupId>org.apache.tomcat.embed</groupId>
+	<artifactId>tomcat-embed-jasper</artifactId>
+</dependency>
+
+
+===sending Object data(Ex#2)=======================================================================
+*) Controller
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import in.nareshit.raghu.entity.Employee;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+
+	@GetMapping("/show")
+	public String showData(Model model) {
+		//System.out.println(model.getClass().getName());
+		
+		Employee emp = new Employee(101, "AA", "DEV");
+		model.addAttribute("ob", emp);
+		
+		return "EmpHome";
+	}
+}
+
+*) UI: EmpHome.jsp
+<html>
+ <head>
+  <title>Document</title>
+ </head>
+ <body>
+  <h2>WELCOME TO EMPLOYEE PAGE</h2>
+  <p>
+  	Data is : ${ob} //toString  	<br/>
+  	${ob.empId}, ${ob.empName} , ${ob.empDept} //calls get method
+  </p>
+ </body>
+</html>
+===ex:3 sending collection data===========================================================
+
+*) must add (pom.xml)
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+
+*) Model class
+package in.nareshit.raghu.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Employee {
+	
+	public Integer empId;
+	public String empName;
+	public String empDept;
+	
+	
+}
+
+----------------------------------------------
+*) Controller
+
+package in.nareshit.raghu.controller;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import in.nareshit.raghu.entity.Employee;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+
+	@GetMapping("/show")
+	public String showData(Model model) {
+		
+		List<Employee> list =
+				Arrays.asList(
+						new Employee(101, "AA", "DEV"),
+						new Employee(102, "AC", "QA"),
+						new Employee(103, "BA", "DEV"),
+						new Employee(104, "AT", "QA")
+						);
+		model.addAttribute("list", list);
+
+		return "EmpHome";
+	}
+}
+
+*) UI : EmpHome.jsp
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
+ <head>
+  <title>Document</title>
+ </head>
+ <body>
+  <h2>WELCOME TO EMPLOYEE PAGE</h2>
+  <p>
+  	<table border="1">
+  		<tr>
+  			<th>ID</th>
+  			<th>NAME</th>
+  			<th>DEPT</th>
+  		</tr>
+  		<c:forEach items="${list}" var="ob">
+  			<tr>
+  				<td>${ob.empId} </td>
+  				<td>${ob.empName} </td>
+  				<td>${ob.empDept} </td>
+  			</tr>
+  		</c:forEach>
+  	</table>
+  </p>
+ </body>
+</html>

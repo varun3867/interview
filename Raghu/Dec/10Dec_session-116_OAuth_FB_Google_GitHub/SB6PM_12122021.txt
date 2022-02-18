@@ -1,0 +1,91 @@
+				  Date : 10-12-2021 
+				   Spring Boot 6PM
+				    Mr. RAGHU
+	---------------------------------------------------------------
+Frontend
+https://github.com/javabyraghu/react-social
+Backend
+https://github.com/javabyraghu/spring-social
+
+
+Client Id and Secret using all Auth Servers
+
+a. Facebook
+b. Github
+c. Google
+----------------------------------------------------------
+a. Facebook
+1. Goto https://developers.facebook.com/
+2. Login If not done (top right corner)
+3. Click on MyApps (top right corner)
+4. Click on Create App
+5. Choose Consumer > Next button
+6. Enter display name > Create App > Enter pwd
+7. Click on Settings and Basic
+8. Click on Show > Copy Clientid and Secret.
+
+client Id: 1541674619532508
+secret: 1e3494c6b8ec489090798d33208307e2
+----------------------------------------------------------
+b. Github
+1. Login to Github account
+2. Goto : https://github.com/settings/developers
+3. click on Oauth Apps
+4. Enter Details
+ Application Name :
+ HomePage and Auth URL : http://localhost:8080
+
+client Id: 92d38dc4f1a291955c0f
+
+5. Generate a new client secret
+ secret:  99533cdf6f305c16e2237a2e124edaeb7c4c6330
+
+----------------------------------------------------------
+c. Google
+1. Login to Google Account
+2. Goto : https://console.cloud.google.com/
+3. Click on SELECT A PROJECT
+4. Click on new Project, enter name, click on create
+5. Goto API services and Choose OAuth Consent Screen
+6. Choose External and click on Create
+7. Enter details
+ AppName : 
+ Support Email:
+ Develoepr Email:
+
+ > save and continue (3) times
+
+
+8. Click on Credentials > Create Credentials > OAuth Client Id
+
+Type : Web App
+Authorized JavaScript origins
+URL : http://localhost:8081
+
+Authorized redirect URIs
+http://localhost:8081/oauth2/callback/google
+
+9. copy client id and secret
+673236912-pa1bcvjonjofbp50s3t5mtnfa135icdv.apps.googleusercontent.com
+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
+
+
+==========================================
+> Import Backend Application as Maven project
+> Create Database name : spring_social (in MySQL)
+
+> FrontEnd Application (react-social-master)
+  1st time    : npm install
+  2nd command : npm start
+
+D:\OauthApps\react-social-master>npm install
+D:\OauthApps\react-social-master>npm start
+
+
+http://localhost:3000/login
+
+
+*) UserDetailsService(I)
+
+(*) DefaultOAuth2UserService
+    #loadUser

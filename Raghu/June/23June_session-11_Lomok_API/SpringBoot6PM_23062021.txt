@@ -1,0 +1,331 @@
+                Date : 23-Jun-21
+                Spring Boot 6PM
+                  Mr. RAGHU
+    --------------------------------------------------------------------
+Installing steps:
+https://projectlombok.org/setup/intellij
+https://projectlombok.org/setup/eclipse
+
+Documentation:
+https://projectlombok.org/features/all
+
+                Project Lombok 
+
+*) It is Open source JAVA API, used to generate code.
+*) we can generate:
+  > Constructors
+  > set/get methods
+  > toString
+  > equals and hashCode
+  ..etc
+
+*) Just add lombok annotations inside source code file (.java)
+*) in pom.xml
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.20</version>
+    <scope>provided</scope>
+</dependency>
+
+  ============================(Install Process)=============================
+                                Eclipse / STS
+
+S#1 Open Eclipse/STS and create SpringBoot/or any Maven Project also.
+
+ Select > Lombok (from Dependencies) > Next > Finish
+
+S#2 Define one dummy class with any one lombok annotation
+
+package in.nareshit.raghu.bean;
+
+import lombok.Data;
+
+@Data
+public class Employee {
+
+    private Integer empId;
+    private String empName;
+}
+
+S#3 Expan your class under package explorer
+   [if you are unable to find set/get, constructor, toString...]
+
+S#4 Close STS/Eclipse
+
+S#5 Goto .m2 location of project lombok
+Goto Location: 
+    C:\Users\Raghu\.m2\repository\org\projectlombok\lombok\1.18.20
+
+S#6 Double click on "lombok-1.18.20.jar"
+         (or)
+ cmd> java -jar lombok-1.18.20.jar
+
+S#7 Wait for few minutes to auto-detect Eclipse/STS
+   (or) Specify Location manually
+Ex: D:\sts-4.10.0.RELEASE
+
+> Click on Install/Update
+> Quit Installer
+
+S#8 Open your sts/eclipse, start coding with new apps..
+----------------------------------------------------------------------
+*) Note: Lombok works before compilation only.
+    It is required only at Dev Environment, not required at Production.
+
+=======================================================================
+1. @NoArgsConstructor : It provides default constrcutor to your java class
+
+Ex:
+@NoArgsConstructor
+public class Employee {
+
+    private Integer empId;
+    private String empName;
+}
+--Generated Source Code---
+public class Employee {
+
+    private Integer empId;
+    private String empName;
+
+    public Employee() {
+        super();
+    }
+}
+-----------------------------------------------------
+2. @AllArgsConstructor:- This is used to generate all params Constructor
+
+Ex:
+@AllArgsConstructor
+public class Employee {
+
+    private Integer empId;
+    private String empName;
+}
+
+--Generated Source Code---
+public class Employee {
+
+    private Integer empId;
+    private String empName;
+
+    public Employee(Integer empId,String empName) {
+        super();
+        this.empId = empId;
+        this.empName = empName;
+    }
+}
+-----------------------------------------------------
+*) Java Compiler provides default constrcutor if class has zero/no constrcutors
+
+***** @AllArgsConstructor: It will generate default/zero param constrcutor
+        if class has zero/no variables.
+
+@AllArgsConstructor
+public class Employee {
+    
+}
+--Generated Source Code---
+public class Employee {
+
+    public Employee() {
+        super();
+    }
+}
+____________________________________________________________________
+Ex#1:
+package in.nareshit.raghu.bean;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+public class Employee {
+
+    private Integer empId;
+    private String empName;
+}
+--Generated Source Code---
+public class Employee {
+
+    private Integer empId;
+    private String empName;
+
+    public Employee() {
+        super();
+    }
+
+    public Employee(Integer empId,String empName) {
+        super();
+        this.empId = empId;
+        this.empName = empName;
+    }
+}
+______________________________________________________________
+ex#2
+@NoArgsConstructor
+@AllArgsConstructor
+public class Employee { }
+
+
+--Generated Source Code---
+// java compiler error : duplicate methods
+public class Employee {
+    public Employee() {
+        super();
+    }
+    public Employee() {
+        super();
+    }
+}
+_________________________________________________________________
+*) @RequiredArgsConstructor : This is used to generate selected variables
+      as param. Constructor. But select variables using annotation: @NonNull
+
+ex:#3
+package in.nareshit.raghu.bean;
+
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class Employee {
+
+    private Integer empId;
+    @NonNull
+    private String empName;
+    private Double empSal;
+}
+----Generated Source code-------
+public class Employee {
+
+    private Integer empId;
+    private String empName;
+    private Double empSal;
+
+    public Employee(String empName) {
+         super();
+         this.empName = empName;
+        }
+
+}
+
+Ex#4
+package in.nareshit.raghu.bean;
+
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class Employee {
+
+    private Integer empId;
+    
+    @NonNull
+    private String empName;
+    @NonNull
+    private Double empSal;
+}
+----Generated Source code-----------------
+public class Employee {
+
+    private Integer empId;
+    private String empName;
+    private Double empSal;
+
+    public Employee(String empName,Double empSal) {
+         super();
+         this.empName = empName;
+         this.empSal = empSal;
+        }
+}
+*** @RequiredArgsConstructor is applied but no variable has @NonNull
+  then it will generate default/zero param constructor.
+
+ex:
+@RequiredArgsConstructor
+public class Employee {
+
+    private Integer empId;
+    private String empName;
+    private Double empSal;
+    
+}
+----Generated Source code-----------------
+public class Employee {
+
+    private Integer empId;
+    private String empName;
+    private Double empSal;
+    
+    public Employee() {
+         super();
+        }
+}
+==================================================================
+Ex#6
+package in.nareshit.raghu.bean;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class Employee {
+    @NonNull
+    private Integer empId;
+    private String empName;
+    private Double empSal;
+    
+}
+-----Generated Source code------------
+public class Employee {
+    private Integer empId;
+    private String empName;
+    private Double empSal;
+    public Employee() {
+         super();
+        }
+    public Employee(Integer empId) {
+         super();
+         this.empId = empId;
+        }
+    public Employee(Integer empId,String empName,Double empSal) {
+         super();
+         this.empId = empId;
+         this.empName = empName;
+         this.empSal = empSal;
+        }
+}
+------------------------------------------------------
+Ex#7
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
+public class Employee { }
+
+---Generated Source code----
+// compile time error: duplicate method Employee() 3 times generated
+public class Employee { 
+   public Employee() {
+     super();
+   }
+   public Employee() {
+     super();
+   }
+   public Employee() {
+     super();
+   }
+
+}
+------------------------------------------------------------
+Do we need .java file to run app? No
+.java , lombok no, lombok jar not required
+
+.jar(.class)
+

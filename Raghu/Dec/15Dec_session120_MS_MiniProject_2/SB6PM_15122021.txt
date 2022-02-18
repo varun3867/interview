@@ -1,0 +1,60 @@
+				 Date : 15-12-2021
+				  Spring Boot 6PM
+				    Mr. RAGHU
+	---------------------------------------------------------------------
+Workspace Link:-
+https://www.mediafire.com/file/0bb2hzffejrrutg/WORKSPACE_630PM_RAGHU_DEC_2021.zip/file
+
+		  Mini Project using Spring Cloud (API BackEnd)
+
+1. Eureka Server : 
+   It is a Register, it holds all MS# details
+   ServiceInstances (serviceid + InstanceId + HOST + PORT + LF)
+   ..etc
+
+> Every MS# Must be register with eureka.
+> Even Gateway Application should be register with eureka.
+> one MS# (or) Gateway can fetch other MS# details from Eureka based on serviceid
+
+2. Config Server :
+> All Common Key-Val of MS# must be kept in one common place
+  ie GitHub account and access using one server ie 'Config server'.
+> At MS# level provide Config Client Dependency and location of Config Server
+
+3. Admin Server :
+> To make Visual Actuator service Results of every MS#
+> Actuator gives services like health, beans, info, mappings, cache, schedulings..etc
+> At Every MS# We add Admin client and Admin Server location.
+
+4. MS# Applications:
+> Product Service
+> Auth Service (Register and Login)
+
+5. Gateway Application:
+> There are lot os MS# runnig at Diff IPs and PORTs.
+   But we should give only one IP/PORT to UI/Client Team
+   ie Gateway Application.
+   (Common entry/exit)
+
+Task:-
+#1
+https://www.youtube.com/watch?v=dkLsuDhDo_g
+#2
+https://www.youtube.com/watch?v=uSYExRWbC9Y
+
+=====Execution order==========================================
+1. Run Eureka Server [http://localhost:8761/]
+2. Run Config Server
+3. Run Admin Server [http://localhost:9999/applications]
+4. Product MS# (3 times)
+5. Auth MS# (1 time)
+6. Run Gateway
+
+S#1 Create User 
+(check screens)
+S#2 Login User
+(check screens)
+S#3 Create product using JWT Token
+(check screens)
+S#4 View All Products using JWT Token
+(check screens)

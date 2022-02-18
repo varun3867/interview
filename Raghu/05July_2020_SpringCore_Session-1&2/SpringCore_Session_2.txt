@@ -1,0 +1,297 @@
+		Date : 05/07/2020
+		Spring Core Session-2
+		Mr. RAGHU
+----------------------------------------------------------------
+FB:     https://www.facebook.com/groups/thejavatemple/
+Email:  javabyraghu@gmail.com
+
+Association (HAS-A) Relation:-
+ using one Child object/object reference inside another Parent
+ is called as HAS-A Relation.
+
+=> Using child as a DataType inside Parent and creating one variable 
+   is called as  HAS-A Relation.
+
+** Wiring : Create link between two objects which are in Spring container
+* Autowired: Link between two objects is created by Spring container.
+
+=> Apply this annotation on top of HAS-A Relation : @Autowired
+
+=> If this annotation is not applied then link is not created, has-A variable
+   holds default value - null.
+
+=> If @Autowired in applied on HAS-A Variable but child object is not created
+   then Spring container throws Exception:
+     NoSuchBeanDefinitionException: 
+         Expected at least 1 bean which qualifies as autowire candidate
+
+=> By default @Autowired internally works with 'required=true'
+   It means one child object must be provided, else Exception. 
+   Not even parent object  or other objects linked created. (App also not started).
+
+=> If we write @Autowired(required = false) , then Spring container will search for
+   child object, if found injected or linked, else null value for HAS-A variable.
+
+===Ex#1=====================
+*) Create simple maven project
+1. pom.xml
+<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.2.7.RELEASE</version>
+		</dependency>
+
+	</dependencies>
+
+2. Spring Beans 
+
+package in.nareshit.raghu.bean;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component("aob")
+public class Address {
+
+	@Value("5-55")
+	private String hno;
+	@Value("HYD")
+	private String loc;
+	
+	@Override
+	public String toString() {
+		return "Address [hno=" + hno + ", loc=" + loc + "]";
+	}
+	
+	
+}
+
+
+
+package in.nareshit.raghu.bean;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component("eob")
+public class Employee {
+
+	@Value("10")
+	private int empId;
+	
+	@Autowired(required = false)
+	//@Autowired
+	private Address addr; //HAS-A
+
+	//alt+shift+S,S>Generate
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", addr=" + addr + "]";
+	}
+	
+	
+}
+
+3. AppConfig file
+package in.nareshit.raghu.config;
+import org.springframework.context.annotation.ComponentScan;
+@ComponentScan("in.nareshit.raghu.bean")
+public class AppConfig {
+
+}
+
+
+4. Test class
+
+package in.nareshit.raghu.test;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import in.nareshit.raghu.bean.Employee;
+import in.nareshit.raghu.config.AppConfig;
+
+public class Test {
+
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext ac =
+				  new AnnotationConfigApplicationContext(AppConfig.class);
+		
+		Employee e= ac.getBean("eob",Employee.class);
+		System.out.println(e);
+		
+		ac.close();
+	}
+}
+================================================================================
+			Autowired using Child Interface
+
+If Child Type is interface in HAS-A relation then Autowired will search for 
+Implementaion class object for child interface, same injected into parent object.
+
+*) If child interface has no implementation class or did not write @Component
+  on child impl class level (no child impl class object), then
+  NoSuchBeanDefinitionException: 
+   No qualifying bean of type 'in.nareshit.raghu.bean.IEmpRepo' 
+   available: expected at least 1 bean which qualifies as autowire candidate
+
+=============================================================================
+	  Child Interface Having Multiple Impl classes + Objects
+
+*) If child interface is having multiple Impl classes and their objects are created
+  Spring container throws  NoUniqueBeanDefinitionException: 
+   expected single matching bean but found 2: empJdbcRepo,empJpaRepo
+
+
+*) Use @Qualifier annotation at HAS-A Variable level to select one child object
+   incase of multiple found. (use this if childs are pre-defined we have Jar files
+   or .class files, no .java file)
+
+*) Use @Primary annotation at any one child Impl class level, that says if multiple
+   objects are exist then choose current class only.
+
+=> @Qualifier compares given objectname with evey object in container
+   (bit slow), @Primary says to Autowire "DO NOT SEARCH ANY OTHER, LINK TO THIS".
+
+==Ex#3=============
+1. Spring Beans
+
+package in.nareshit.raghu.bean;
+public interface IEmpRepo {
+	
+}
+
+
+package in.nareshit.raghu.bean;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class EmpJdbcRepo
+  implements IEmpRepo
+{
+
+	@Value("EMPLOYEE-JDBC")
+	private String model;
+
+	@Override
+	public String toString() {
+		return "EmpJdbcRepo [model=" + model + "]";
+	}
+}
+
+
+package in.nareshit.raghu.bean;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class EmpJpaRepo 
+implements IEmpRepo {
+
+	@Value("EMPLOYEE-JPA")
+	private String model;
+
+	@Override
+	public String toString() {
+		return "EmpJpaRepo [model=" + model + "]";
+	}
+
+
+	
+}
+
+
+package in.nareshit.raghu.bean;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class EmpService {
+
+	@Value("EMP_SERV")
+	private String mode;
+	
+	@Autowired
+	private IEmpRepo repo;
+
+	@Override
+	public String toString() {
+		return "EmpService [mode=" + mode + ", repo=" + repo + "]";
+	}
+	
+	
+}
+
+2. AppConfig
+
+package in.nareshit.raghu.config;
+
+import org.springframework.context.annotation.ComponentScan;
+
+@ComponentScan("in.nareshit.raghu.bean")
+public class AppConfig {
+
+}
+
+3. Test class
+
+package in.nareshit.raghu.test;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import in.nareshit.raghu.bean.EmpService;
+import in.nareshit.raghu.config.AppConfig;
+
+public class Test {
+
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+		
+		EmpService service = ac.getBean("empService",EmpService.class);
+		System.out.println(service);
+		
+		ac.close();
+	}
+}
+
+
+=====================================================================
+Q) Can we use @Value for Objects linking in Spring f/w?
+A) YES.   @Value("#{objecName}") on top of HAS-A Variable.
+
+package in.nareshit.raghu.bean;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class EmpService {
+
+	@Value("EMP_SERV")
+	private String mode;
+	
+	@Value("#{empJdbcRepo}")       // "$" -- indicates properties file and "#" -- indicates reference variable
+	private IEmpRepo repo;
+
+	@Override
+	public String toString() {
+		return "EmpService [mode=" + mode + ", repo=" + repo + "]";
+	}
+	
+	
+}
+
+Q) What is the difference between @Autowired and @Value ?
+A) 

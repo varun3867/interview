@@ -1,0 +1,108 @@
+			     Date : 06-Jul-21
+			     Spring Boot 6:30PM
+			       Mr. RAGHU
+	-----------------------------------------------------------
+Runners:
+https://www.youtube.com/watch?v=8P5x4DH2WHA
+
+			Passing Input to Spring Container
+
+Priority Order:-
+1. Command Line Args(Option Args)
+2. VM Args (JVM Variable) 
+3. Properties 
+4. YAML
+
+*)Command Line Args : main method parameters,
+    but in Spring Boot follow syntax
+       --key=value
+ex:
+   --server.port=9696
+   --spring.profiles.active=qa
+
+=> These are passed while running the application.
+
+--Core java ------------
+class A{
+  main(String[] args){}
+}
+
+javac A.java
+java  A  --my.app.id=10 --app.title=ABC Hello
+> java -jar Sample-1.0.jar --app.title=ABC Hello
+---------------------------------------------------
+Q) How can we set port number while running Spring Boot application?
+A)
+By using Command Line Args(option args)
+> java -jar Sample-1.0.jar --server.port=9696
+
+
+===(code)====================================================================
+a. Spring Boot application
+Name : SpringBoot2OptionArgsEx
+Dep  : Lombok
+
+b. Model class
+package in.nareshit.raghu.model;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+@Data
+@Component
+public class ProductInfo {
+	
+	@Value("${my.client.id}")
+	private String clientId;
+	
+	@Value("${my.client.code}")
+	private String clientCode;
+}
+
+d. application.properties
+my.client.id=C1
+my.client.code=ABC
+------------------------------------
+e. Runner class
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.ProductInfo;
+
+@Component
+public class TestArgsRunner implements CommandLineRunner {
+
+	@Autowired
+	private ProductInfo pob;
+	
+	public void run(String... args) throws Exception {
+		System.out.println(pob);
+	}
+
+}
+
+>> Right click on main class > Run As > Run Configuration
+> Arguments tab > Programm Arguments > Enter data in --key=val <space> --key=val
+ex:
+  --my.client.id=NIT  --my.client.code=NIT-HYD
+
+> Apply and Run
+
+-----------Pass using JAR-----------------------------------------
+a. Finish coding
+b. Run As > Maven Install
+c. Goto Jar file > Right click > properties > copy location
+d. open cmd prompt
+  cmd> java -jar SpringBoot2OptionArgs-1.0.jar --my.client.id=NIT
+===Core Java FAQs===================================================================
+Q) What is Command Line Argument?
+Q) What is VM/JVM  Argument?
+Q) How can we pass these  Argument?
+Q) What is the diff b/w these  Argument?
+-----------------------------------------------------------------------------
+

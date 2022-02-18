@@ -1,0 +1,230 @@
+			 Date : 12/11/2021
+			  Spring Boot 6PM
+			    Mr. RAGHU
+	--------------------------------------------------
+Task:
+https://www.youtube.com/watch?v=uSYExRWbC9Y
+
+		  Spring Cloud API Gateway
+
+*) IP : Number allocated to a system to identify in a network.
+ a. Private IP : Works with-in LAN (May be duplicated in in some other LANs)
+ b. Public  IP : Globally Unique.
+    
+*) If a System# exist in N/w#1 wants to connect with another
+  System# exist in N/w#2 then they must have configured
+  using public IPs
+
+=================================================================
+		Spring Cloud : API Gateway
+
+=> There are multiple components in MS#,
+ ex: MS# application, Eureka Server, Config Server, MQS,
+      Admin Server,...etc
+
+=> All these are running under one common network (LAN)
+   these are never recomanded to expose to outside world
+   directly. So, outside clients they can not access our application.
+
+=> Here, we are using one Common Entry and Exit point to our MS# setup
+  ie API GAteway which runs on Public IP (in realtime)
+  allows all client request.
+
+*) Why API Gateway?
+-> Routing (execute a MS# for a Request)
+   a. Static Routing : Direct MS# is called using URL(incase of single instance)
+   b. Dynamic Routing(LoadBalancing) : execute a MS# by fetching 
+                   details from Eureka Server (using LoadBalancer)
+
+-> Filters : Conditional Filters 
+    checking expected headers, content-type, content..etc
+
+-> Security : If we apply security here, it is fine.
+   a. No Direct call is made to any service by avoiding this
+   b. Authentication using Token Management (JWT/OAuth).
+
+=====================================================
+=> When ever end-client made request,
+  a. Gatway Handler Mapper is executed
+  b. Goes to Router (Router Configuration)
+  c. Checks given Request URL with Predicates 
+    (for matching condition , for given req--> where to go?)
+  d. selects one URL(static routing) or lb:service-id (dynamic routing)
+  e. Filters are optional to use, here it gives
+     PreFilter and PostFilter which works Header and Body
+     (read/modify/check...)
+-----------------------------------------------------------------
+old : Netflix Zuul (removed)
+new : Spring Cloud Gateway
+
+*) Note:
+=> Recomanded port number for API Gateway to run : 80
+
+======Example#1 Static Routing + YAML CONFIG ==============
+1. Eurerka Server
+Name : SpringCloudEurekaServer
+Dep  : Eureka Server
+
+> at main class: @EnableEurekaServer
+--application.properties---
+server.port=8761
+
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+---------------------
+2. MS# Application
+Name : SpringCloudProductService
+Dep  : Eureka Discovery Client, Web
+
+> at main class : @EnableEurekaClient
+---application.properties------
+server.port=9900
+
+spring.application.name=PRODUCT-SERVICE
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+#eureka.instance.instance-id=${spring.application.name}:${random.value}
+-----------
+> Rest Controller
+package in.nareshit.raghu.rest;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+	
+	@GetMapping("/info")
+	public ResponseEntity<String> showData() {
+		return ResponseEntity.ok("FROM MS# PRODUCT!!");
+	}
+}
+
+3. Gateway Application
+Name : SpringCloudApiGateway
+Dep  : Web, Eureka Discovery Client, Gateway
+
+> At main class: @EnableEurekaClient
+--application.yml------
+server:
+  port: 80
+  
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+      - id: productService
+        uri: http://localhost:9900/
+        predicates:
+        - Path=/product/**
+-----------------------
+server.port=80
+spring.application.name=API-GATEWAY
+spring.cloud.gateway.routes[0]={id=productService, uri=http://localhost:9900/, predicates=[Path=/product/**]}
+spring.cloud.gateway.routes[1]={id=productService, uri=http://localhost:9900/, predicates=[Path=/product/**]}
+--------------------------
+
+======Execution order============
+1. Eureka Server
+2. MS# application
+3. Api Gateway (last)
+4. Goto Eureka click on Gateway link
+  http://localhost:80/product/info
+  http://nit/product/info
+
+======================================================
+*) Above configuration is static routing ie giving hardcoded URI
+  just replace
+     uri: http://localhost:9900
+     with code
+     uri: lb:SERVICE-ID
+
+--Code modifications------------
+S#1 At MS# application(Product Service)
+> add Instance Id:
+  eureka.instance.instance-id=${spring.application.name}:${random.value}
+> print Port number (modified RestController)
+package in.nareshit.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+	
+	@Value("${server.port}")
+	private String port;
+	
+	@GetMapping("/info")
+	public ResponseEntity<String> showData() {
+		return ResponseEntity.ok("FROM MS# PRODUCT!! " + port);
+	}
+}
+
+S#2 At Gateway Application
+server:
+  port: 80
+  
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+      - id: productService
+        uri: lb://PRODUCT-SERVICE      (modified line)
+        predicates:
+        - Path=/product/**
+
+=========================================================
+	Java Configuration for ApiGateway
+=========================================================
+Name : SpringCloudApiGateway
+Dep  : Eureka DiscoveryClient, Gateway
+
+--application.yml--
+server:
+  port: 80
+  
+spring:
+  application:
+    name: API-GATEWAY
+-----------
+> Java Configuration File
+package in.nareshit.raghu.config;
+
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SpringCloudRoutingConfig {
+	
+	@Bean
+	public RouteLocator configureLocators(RouteLocatorBuilder builder) {
+		return builder.routes()
+				.route(
+						"productService", //id 
+						//r -> r.path("/product/**").uri("http://localhost:9900") //static
+						r -> r.path("/product/**").uri("lb://PRODUCT-SERVICE") //dynamic
+						)
+				/*.route(
+						"employeeService", //id 
+						//r -> r.path("/employee/**").uri("http://localhost:8686") //config
+						r -> r.path("/employee/**").uri("lb://EMPLOYEE-SERVICE") //config
+						)*/
+				.build();
+	}
+}
+================================================
+*) Execution order and URL same as before
+http://localhost/product/info

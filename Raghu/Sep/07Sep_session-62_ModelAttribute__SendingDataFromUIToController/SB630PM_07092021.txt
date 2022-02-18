@@ -1,0 +1,212 @@
+				Date : 07-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	      ------------------------------------------------------
+Spring Boot Error and Exception handling
+https://www.youtube.com/watch?v=AFq9eK2OoGU
+https://www.youtube.com/watch?v=tBVAybXMKzY
+https://www.youtube.com/watch?v=M-LRfrYHWrk
+
+		Web MVC : Sending Data From UI to Controller
+
+a. HTML Forms
+b. URL Parameters
+
+
+a. HTML Forms:-   [ Form Data ==(submit)==> Object ]
+> In case of servlets , to read one Form input,
+syntax:-
+ [Reading Form input]
+    String value = request.getParemeter("key");
+ [parse data ]
+    int id = Integer.parseInt(val);
+
+> In Web MVC, on Click Form submit, data is converted into one Object
+  by Spring container (in 4 steps)
+  [Such concept is called as ModelAttribute ]
+
+  I. Container creates Model class object using default constrcutor.
+ II. Read Form Inputs (one by one / request.getParemeter("key") )
+III. Parse Data if Required (Double.parseDouble )
+ IV. Provide Data to variable (using set method )
+
+> Programmer has to follow below stpes,
+   I. Define one public class with default constrcutor
+  II. No.of variables equals to  No.of Form Inputs
+ III. Generate set/get methods to variables
+  VI.  Bind Form Input name with variable name
+     (<input name="variableName" | 
+        <select name="variableName" | <textarea name="variableName")
+
+
+*) objectname will be className first letter lowercase
+   [camelCase rule ]
+
+
+> Finally read object at Controller#method parameter
+
+Syntax#1
+   @ModelAttribute("objectName") ClassName localVariableName
+
+ex:
+  @ModelAttribute("employee") Employee emp
+
+Syntax#2
+   @ModelAttribute ClassName objectName
+
+ex:
+  @ModelAttribute  Employee employee
+
+*) if there is only one Employee class object exist in then @ModelAttribute
+   is optional.
+=======================================================
+Name : SpringBoot2WebMvcFormsBasicEx
+Dep  : Web , DevTools, Lombok, Tomcat-embedded Jasper
+
+1. Model class
+package in.nareshit.raghu.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	private Double empSal;
+	
+}
+
+2. Controller
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import in.nareshit.raghu.model.Employee;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+
+	//1. show Employee Register page
+	@GetMapping("/register")
+	public String showEmpReg() {
+		return "EmpRegister";
+	}
+	
+	
+	//2. read form data on click submit
+	@PostMapping("/create")
+	public String readFormData(
+			@ModelAttribute Employee employee,
+			Model model 
+			) 
+	{
+		System.out.println("FORM DATA IS =>" + employee);
+		model.addAttribute("eob", employee);
+		return "EmpSuccess";
+	}
+}
+
+3. UI : 
+---EmpRegister.jsp-----
+<html>
+	<head>
+		<title>REGISTER </title>
+	</head>
+	<body>
+	<pre>
+		<h1> WELCOME TO EMPLOYEE REGISTER PAGE </h1>
+		<form action="create" method="POST">
+			  ID : <input type="text" name="empId"/>
+			NAME : <input type="text" name="empName"/>
+			SAL  : <input type="text" name="empSal"/>
+				<input type="submit" value="Create"/>						
+		</form>
+	</pre>
+	</body>
+</html>
+--------EmpSuccess.jsp--------
+<html>
+	<head>
+		<title>REGISTER </title>
+	</head>
+	<body>
+	<pre>
+		<h1> WELCOME TO EMPLOYEE SUCCESS PAGE </h1>
+		Data is : ${eob}
+	</pre>
+	</body>
+</html>
+
+4. application.properties
+server.port=9090
+
+spring.mvc.view.prefix=/WEB-INF/pages/
+spring.mvc.view.suffix=.jsp
+
+
+*) Check with below model class
+package in.nareshit.raghu.model;
+
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	private Double empSal;
+
+	public Employee() {
+		System.out.println("OBJ IS CREATED");
+	}
+
+	public Integer getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(Integer empId) {
+		System.out.println("SET ID");
+		this.empId = empId;
+	}
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		System.out.println("SET NAME");
+		this.empName = empName;
+	}
+
+	public Double getEmpSal() {
+		return empSal;
+	}
+
+	public void setEmpSal(Double empSal) {
+		System.out.println("SET SAL");
+		this.empSal = empSal;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", empName=" + empName + ", empSal=" + empSal + "]";
+	}
+}
+
+-----------------------------------------------
+URL:
+http://localhost:9090/employee/register
+
+=============================================================
+Task#1
+> Student(sid,sname,sfee,course) [all text inputs]
+> create Student Form, on click submit read form data and print 
+   at StudentData.jsp page

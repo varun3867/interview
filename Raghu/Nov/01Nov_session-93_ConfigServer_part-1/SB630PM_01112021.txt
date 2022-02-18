@@ -1,0 +1,158 @@
+				Date : 01-11-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	-------------------------------------------------------------
+			Spring Cloud Config Server
+
+*) Config Server :-
+      Used to create a properties file in a shared location to all MS#
+      that contains common key=val for all MS#.
+
+ex: Eureka Location, Database properties, Pooling/cache deails..etc
+
+=> key=val Specific to MS# can be kept in MS# app only.
+
+----Note--------------------
+1) Eureka Server and Config Server must be started before starting MS#.
+   [in any order]
+
+2) When we run Config Server, 
+  > It will goto location given for a shared properties file
+  > try to read key=val
+  > Store in a memory 'Environment'(I) [key-val]
+  > Now, ready to share with MS#.
+  > it runs on port : 8888 (Recomanded)
+
+3) Now, Eureka And Config servers are running.
+
+4) When we start MS# app,
+  > Config Client is the 1st component executed
+  > it will make call to Config Server
+  > get all common key=val and update with MS# Environment.
+
+5) Run other code: Database Connection, JPA Codes, Security,....etc
+
+6) At last, finally MS# Registered with Eureka.
+============================================================
+*) Config Server and Config Client are pre-defined codes. 
+   Just add dependencies and work.
+
+*) Config server recomanded port number is : 8888
+
+*) Config client must be added inside every MS#. 
+
+*) Config Client is the 1st component executed when we run MS#.
+
+*) Config Servers are two types
+   a. External Config **** (used in realtime)
+      ex: (any git vendor) Github, Gitlab, bitbucket ..etc
+
+   b. Native Config (local testing purpose only)
+
+==(coding)===========================================================
+1. Eureka Server
+Name : SpringCloudCSEurekaServer
+Dep  : Eureka Server
+
+> At main class: @EnableEurekaServer
+
+---application.properties-------
+server.port=8761
+eureka.client.fetch-registry=false
+eureka.client.register-with-eureka=false
+______________________________________________________________________
+
+---------gitlab setup---------------------------------------------
+S#1 Register new account
+https://gitlab.com/users/sign_up
+
+S#2 Goto Email account and verify
+S#3 Login 
+https://gitlab.com/users/sign_in?redirect_to_referer=yes
+
+javabyraghu /Javabyraghu50
+
+S#4 Create new Project
+
+> New Project Button
+> Enter Name : ex: test-cs-external
+> uncheck checkboxes
+> create button
+
+S#5 create properties file
+> Click on new file > create new file button
+> Enter file name : application.properties
+> create button
+> Enter your all common key=vals
+> click on commit
+> Enter commit message and click on commit
+
+S#6 Get details
+> Menu > Projects > Your Projects
+> Click on Your Project link
+> Click on Clone option , copy HTTPs option
+
+https://gitlab.com/<username>/<project-name>.git
+https://gitlab.com/javabyraghu/test-cs-external.git
+
+------------------------------------------------------
+2. Config Server + Git setup
+Name : SpringCloudCSConfigServer
+Dep  : Config Server
+
+> at main class: @EnableConfigServer
+
+---application.properties---
+server.port=8888
+#repository is public -- [varun] extra wrote
+spring.cloud.config.server.git.uri=https://gitlab.com/javabyraghu/test-cs-external.git
+spring.cloud.config.server.git.username=javabyraghu
+spring.cloud.config.server.git.password=Javabyraghu50
+spring.cloud.config.server.git.default-label=main
+#skip ssl certification -- [varun] extra wrote
+spring.cloud.config.server.git.skip-ssl-validation=true
+------------------------------------------------------
+3. MS# application
+Name : SpringCloudCSEmployeeService
+Dep  : Eureka Discovery Client, Web, Config Client.
+
+> At main class: @EnableEurekaClient
+
+---application.properties---
+server.port=9696
+
+spring.application.name=EMPLOYEE-SERVICE
+#Eureka  Server location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+#Config Server location
+spring.config.import=optional:configserver:http://localhost:8888
+
+---------------------
+> rest Controller
+package in.nareshit.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/employee")
+public class EmployeeRestController {
+
+	@Value("${my.app.title}")
+	private String title;
+	
+	@GetMapping("/info")
+	public String showData() {
+		return "FROM MS#-CS-==>" + title;
+	}
+}
+
+===Execution order==================================================================
+1. Run Eureka Server
+2. Run Config Server
+3. Run MS# application
+4. Goto eureka and click on Employee link
+URL:
+http://192.168.0.9:9696/employee/info

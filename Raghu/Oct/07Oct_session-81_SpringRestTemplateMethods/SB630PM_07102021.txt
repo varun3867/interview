@@ -1,0 +1,328 @@
+				Date : 07-10-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	-----------------------------------------------------------------
+Junit:
+https://www.youtube.com/watch?v=PT9WQ_Rz1ew
+https://www.youtube.com/watch?v=Rue28g3reRI
+RestTemplate(C) 
+  exchange(
+     String url, 
+     HttpMethod method,
+     HttpEntity<?> requestEntity,
+     Class<T> responseType, 
+     Object... uriVariables) : ResponseEntity<T>
+
+=> By using exchange() method we can call any http method.
+
+=> put() and delete() methods are pre-defined and returns value void
+   insted of ResponseEntity. In those cases we can use exchange() method.
+
+--code samples-----------------------
+Ex#1
+using getForEntity():
+
+ResponseEntity<String> response = rt.getForEntity(url, String.class,101);
+
+using exchange() method:
+//URL, HttpMethod, HttpEntity(request), Class<T> responseType,URI Variables
+ResponseEntity<String> response =
+        rt.exchange(url, HttpMethod.GET, null, String.class, 101);
+
+
+Ex#2
+using getForEntity():
+ResponseEntity<Student> resp = rt.getForEntity(url, Student.class, 9025);
+
+using exchange() method:
+//URL, HttpMethod, HttpEntity, Response type, URI Variables
+ResponseEntity<Student> resp = 
+           rt.exchange(url, HttpMethod.GET, null, Student.class, 500);
+
+Ex#3
+using postForEntity():
+ResponseEntity<String> resp = rt.postForEntity(url, request, String.class);
+
+using exchange() method:
+//URL, HttpMethod, HttpEntity, ResponseType, uri variable
+ResponseEntity<String> resp = 
+       rt.exchange(url, HttpMethod.POST, request, String.class);
+
+
+==Full Code=================================================================
+*) producer
+Name : SpringBoot2ProducerEx
+Dep : Web, Devtools, Lombok
+
+a. Model
+package in.nareshit.raghu.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Student {
+
+	private Integer sid;
+	private String sname;
+	private Double sfee;
+}
+
+b. Controller
+package in.nareshit.raghu.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.nareshit.raghu.model.Student;
+import lombok.extern.slf4j.Slf4j;
+
+@RestController
+@RequestMapping("/student")
+@Slf4j
+public class StudentRestController {
+	
+	//private static final Logger log = LoggerFactory.getLogger(StudentRestController.class);
+	
+	
+	@DeleteMapping("/remove/{id}")
+	public ResponseEntity<String> removeStudent(
+			@PathVariable Integer id
+			) 
+	{
+		log.info("DELETE METHOD IS CALLED WITH INPUT {}",id);
+		return new ResponseEntity<String>(
+				"Product removed=>"+id,
+				HttpStatus.OK);
+	}
+	
+	@PutMapping("/modify")
+	public ResponseEntity<String> modifyStudent(
+			@RequestBody Student student
+			) 
+	{
+		log.info("PUT METHOD IS CALLED WITH INPUT: {}",student);
+		return new ResponseEntity<String>(
+				"Modified Data is  => " + student.toString(), 
+				HttpStatus.OK);
+	}
+	
+}
+
+---Consumer App---------------
+Name : SpringBoot2ConsumerEx
+Dep  : Spring web, lombok, devtools
+
+
+a. Runner#1 for DELETE call
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+import lombok.extern.slf4j.Slf4j;
+
+//@Component
+@Slf4j
+public class TestDeleteRunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+
+		RestTemplate rt = new RestTemplate();
+		String url = "http://localhost:8080/student/remove/{id}";
+		
+		//rt.delete(url, 101); //returns void
+		//we can not get response given by producer here
+		//log.info("DELETE IS CALLED SUCCESSFULLY");
+		
+		ResponseEntity<String> resp = rt.exchange(url, HttpMethod.DELETE, null, String.class, 999);
+		
+		log.info("Body {}", resp.getBody());
+		log.info("Code {}", resp.getStatusCode().name());
+		log.info("value {}", resp.getStatusCode().value());
+		log.info("Header {}", resp.getHeaders());
+	
+		System.exit(0);
+	}
+
+}
+
+b. Runner#2 for UPDATE/PUT CALL
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class TestPutRunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String body = "{\"sid\":10,\"sname\":\"A\",\"sfee\":200.0}";
+		HttpEntity<String> request = new HttpEntity<String>(body, headers);
+
+		
+		RestTemplate rt = new RestTemplate();
+		String url = "http://localhost:8080/student/modify";
+		
+		ResponseEntity<String> resp = rt.exchange(url, HttpMethod.PUT, request, String.class);
+		
+		log.info("Body {}", resp.getBody());
+		log.info("Code {}", resp.getStatusCode().name());
+		log.info("value {}", resp.getStatusCode().value());
+		log.info("Header {}", resp.getHeaders());
+	
+		System.exit(0);
+	}
+
+}
+=====================================================================
+
+getForEntity
+postForEntity
+
+put()
+delete() void ResponseEntity
+
+exchange(url,httpmethod,httpEntity,responseType,urivariable)
+   : ResponseEntity<T>
+
+
+*) if we are using List<T> then it is converted into JSON Format 
+  like [ {},{},{}]. This one can be converted into Type[] at consumer side.
+
+  It is not possible to read as List<T> directly.
+   First read Type[].class and convert into List<Type>
+
+
+--Producer RestController method--------------------
+	@GetMapping("/all")
+	public ResponseEntity<List<Student>> findAll() 
+	{
+		return new ResponseEntity<List<Student>>(
+				Arrays.asList(
+				new Student(101, "AJAY", 300.0),
+				new Student(102, "SAM", 400.0),
+				new Student(103, "SYED", 500.0)
+				),
+				HttpStatus.OK);
+	}
+--Consumer Runner----------------------
+package in.nareshit.raghu;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+import in.nareshit.raghu.model.Student;
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class TestConsumerGETJSONComplex implements CommandLineRunner{
+
+	public void run(String... args) throws Exception {
+		RestTemplate rt = new RestTemplate();
+		
+		String url = "http://localhost:8080/student/all";
+		
+		ResponseEntity<Student[]> response= 
+				//rt.exchange(url, HttpMethod.GET, null, String.class, 101);
+				rt.exchange(url, HttpMethod.GET, null, Student[].class, 101);
+		
+		List<Student> list = Arrays.asList(response.getBody());
+		//e. print/use details.
+		log.info("Response body : {}", list);
+		log.info("Response Status CODE : {}", response.getStatusCode().name());
+		log.info("Response Status VALUE: {}", response.getStatusCodeValue());
+		log.info("Response HEADERS: {}", response.getHeaders());
+		
+		//stop server before running one more time
+		System.exit(0);
+	}
+}
+
+*) In case of Consumer is sending Complex JSON then producer supports
+   implicit conversion into List<T>.
+  ( Internally Arrays.asList(Type[])  output as List<T> )
+
+--Producer code----------
+	@PostMapping("/saveAll")
+	public ResponseEntity<String> saveMultiple(
+			@RequestBody List<Student> student
+			) 
+	{
+		return new ResponseEntity<String>(
+				"Students saved multiple => " + student,
+				HttpStatus.CREATED);
+	}
+--Consumer code-------------
+package in.nareshit.raghu;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class TestConsumerPostTypeComplexRunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		String body = "[{\"sid\":10,\"sname\":\"A\",\"sfee\":200.0},{\"sid\":20,\"sname\":\"B\",\"sfee\":300.0},{\"sid\":30,\"sname\":\"C\",\"sfee\":400.0}]";
+		
+		HttpEntity<String> request = new HttpEntity<String>(body, headers);
+		
+		
+		RestTemplate rt = new RestTemplate();
+		String url = "http://localhost:8080/student/saveAll";
+
+		ResponseEntity<String> resp = 
+				rt.exchange(url, HttpMethod.POST, request, String.class);
+		
+		log.info("Body {}", resp.getBody());
+		log.info("Code {}", resp.getStatusCode().name());
+		log.info("value {}", resp.getStatusCode().value());
+		log.info("Header {}", resp.getHeaders());
+		
+	}
+
+}

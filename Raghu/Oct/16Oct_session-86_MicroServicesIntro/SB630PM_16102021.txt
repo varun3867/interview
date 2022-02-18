@@ -1,0 +1,58 @@
+				Date : 16-10-2021
+				Spring boot 6:30PM
+				   Mr. RAGHU
+	---------------------------------------------------------------
+SOA : Service Oriented Architecture.
+https://www.youtube.com/watch?v=tX1Wtv8Gdpo
+
+
+			MediaType Annotations
+
+*) @RequestBody  : Http Request Body (XML/JSON) is taken into one Object Format
+			this is given as method parameter / Input.
+
+*) @ResponseBody : ReturnType (Object) is converted into XML/JSON and placed
+			inside Http Response Body Section / Output.
+
+*) These works on non-String type (ex: ClassType, CollectionType).
+*) When we apply @RestController by default it provides @ResponseBody.
+
+
+Microservices:-
+ An independent deployable component that supports 
+ Intra-Communication, Load Balace.
+
+
+=> Monolithic Application = all Modules/services together as one application.
+=> Microservices Application = one module/service as one project
+			and support inter-link
+
+
+*) Monolithic Limitations :-
+a) Must re-build and re-deploy in case of single module modification.
+
+Sol#
+=> Microservices makes app independent, no need to re-build all modules/services.
+
+b) These are not reliable (Single Point Failure), if one module is
+   failed that may cause other modules even problem.
+
+Sol#
+=> Microservices makes app independent, effect rate will be very less.
+
+
+c) Enhancements/adding new technologies may need re-design of application
+   (or may not suitable to add).
+
+Sol# Only add new service and link with RestWebservices(XML/JSON)
+
+
+d) As No.of Modules gets increased then Code Size and bug rate gets increased.
+
+Sol# Here not, they are high cohesion and less coupling.
+
+e) Downtime/Deployment time will be more incase of App is verybig.
+
+Sol# All are paralllel deployable components.
+
+

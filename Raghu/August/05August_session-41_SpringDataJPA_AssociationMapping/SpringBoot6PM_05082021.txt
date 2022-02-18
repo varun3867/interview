@@ -1,0 +1,61 @@
+				Date : 05/08/2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+			-------------------------------------
+			Association Mapping using Data JPA
+
+
+Database Multiplicity:-
+ Connecting one table with another table using PK-FK Columns
+ (Primary Key - Foreign Key Columns).
+
+Multiplicity Type(4)
+ one-to-one     |  one-to-many
+ many-to-one    |  many-to-many
+
+Here, one/many indicates rows in tables.
+Ex:
+    Employee *...1 Department
+
+Many Employee table rows are connected with One row in Department
+
+   Student 1...* Address
+
+ Student table one row is connected with address table many rows.
+-------------------------------------------------------------
+*) One Table PK is taken as another Table FK.
+ Hint: *(many) side table contains FK 
+
+> In case of 1...*/*...1 , many side table gets FK column
+  which referes 1 side table PK column, to link tables.
+
+> For *...* , one extra table(3rd table / Join Table) is created
+  with 2 FK columns (Join Column, inverseJoin Column).
+
+-----------------------------------------------------------
+Q) What are key constraints in database? Explain with examples?
+A) 
+------------------------------------------------------------
+*) This Database Multiplicity Concept can be implementred
+     using Association Mapping (HAS-A)
+
+    +--------------------------------------------------+
+    |  Non-Collection based           Collection Based |
+    +--------------------------------------------------+
+        1...1                        1...*
+		*...1                        *...*
+If child is many, then it is collection based
+If child is one, then it is non-collection based.
+---------------------------------------------------------
+Q) Diff b/w Composition and Aggregation ?
+A)
+    Composition (Strong Relation)
+       Student---Address
+If student deleted, no use of keeping Address. So address also should be deleted. It is composition(Strong Relation)
+
+    Aggregation (week relation)
+     Employee----Department
+If Employee deleted, Department should be there as we can't remove Department when one employee leaves. It is Aggregation(Week Relation)
+
+=> Both are sub types of Association.
+---------------------------------------------------------

@@ -1,0 +1,126 @@
+				Date : 26-11-2021
+				 Spring Boot 6PM
+				  Mr. RAGHU
+	---------------------------------------------------------------
+batch processing-1
+https://www.youtube.com/watch?v=5dFhc5WH33c
+
+Spring Boot JWT Security (for ReST)
+https://www.youtube.com/watch?v=bJAsHOH4lMk
+
+Code Link:
+https://github.com/javabyraghu/SpringBoot2SecurityJwtMySQLEx
+
+=> JWT Security means, manual checking. Spring Security has not given code
+   (or configuration for this). Only Stateless concept support is given.
+   
+=> In case of Orm Security there was a pre-defined filter given by Boot. 
+   But this time, for JWT we need to define one custom filter, which check
+   all request (but not /register and /login - permitAll).
+
+=> Additional we need to define :
+ SecurityConfig (WebSecurityConfigurerAdapter)
+ AppConfig (PasswordEncoder)
+ AuthenticationEntryPoint (In case User login Failed)
+ 
+=> It is ReST app, client apps communicates using JSON data
+   Request Data (JSON) -- Response Data (JSON)
+
+---Code files-------------------------------------------
+1. Entity(model class)
+2. Repository
+3. Service
+4. ServiceImpl
+5. RestController
+6. AppConfig
+   SecurityConfig
+   AuthenticationEntryPoint
+7. Request/Response classes.
+8. application.properties
+---------------------------------------------------------
+*) As we have no frontend/client, we use POSTMAN for TESTING.
+
+a. JwtUtil(C)
+-> Method#1 is used to generate Token by taking username(subject) as input
+-> Method#2 is used to validate Token by taking token as Input
+             also read username(subject)
+
+
+b. User Register (JSON)
+   {
+     "name"    :
+     "username":
+     "password":
+     "roles"   :
+   }
+
+  Response: User created!! 10
+
+c. Login Request
+
+@Data
+public class UserRequest {
+
+	private String username;
+	private String password;
+}
+
+-->Example:
+  {
+     "username" : 
+     "password" : 
+  }
+ 
+
+d. Login Success Response
+
+@Data
+public class UserResponse {
+
+	private String token;
+	private String notes;
+}
+--> Example:
+  {
+     "token" : "xxxxxxx.yyyyyyyy.zzzz",
+     "notes" : 
+  }
+
+e. Login Failed
+
+--AuthenticationEntryPoint--
+response.sendError(
+   HttpServletResponse.SC_UNAUTHORIZED,  //401
+   "Invalid User Found!"  //error message
+);
+
+
+
+==========POSTMAN===================================================
+#1 User Register checking
+
+POST  http://localhost:8080/user/save
+	BODY
+	  raw(*)     [JSON]
+{
+    "name" : "SAM SUN",
+    "username": "sam1234",
+    "password" : "sam1234",
+    "roles" : ["ADMIN","EMPLOYEE"]
+}
+
+#2 User Login Request
+POST http://localhost:8080/user/login
+	BODY	
+		raw(*) [JSON]
+{
+    "username": "sam1234",
+    "password" : "sam1234"
+}
+
+#3 Access Any Resource using Token
+POST http://localhost:8080/user/home
+	Headers
+ Key              Value
+ Authorization    ahdyhs.sdwessdsa.wesddsfi
+

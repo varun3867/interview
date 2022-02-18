@@ -1,0 +1,7 @@
+session - 8  -- 18-01-2021 --- Friday
+	@configurationProperties(prefix="xxxxx") -- instance variables
+session - 9 -- 21-06-2021 --- Monday 
+	@configurationProperties(prefix="xxxxx")  -- instance variables,list,set,maps,objects
+session - 10 -- 22-06-2021 --- Tuesday
+	Intellij setup and Lombok API
+session 

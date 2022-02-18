@@ -1,0 +1,442 @@
+			Date : 24/06/2020
+ 		     JUnit 5 with Mockito 3
+-------------------------------------------------------------------
+	FB: https://www.facebook.com/groups/thejavatemple/
+		      Next Session : 27th 9AM
+		      javabyraghu@gmail.com
+ Unit Testing:
+  Here Unit indicates a Part of a Project which can be a task/story.
+  Once code is completed by Developer, then That part must be tested.
+
+  Unit Testing = testing one part of project developed by Programmer.
+
+Ex: EmployeeRegister Task, Test EmployeeRegister.
+
+-------------------------------------------------------------
+ JUnit 5 : JUnit is a Unit Test framework. It is Opensource Java Library.
+
+=> To test our code (class), we need to define one class that is called as
+   Test Case (Test class).
+
+=> To define one Test case we should use
+  a. JUnit 5 Annotations  
+  b. JUnit 5 Assert API
+
+=> Here, JUnit Runtime is provided with 3 components and one platform runtime.
+   i. JUnit Jupiter Engine (JUnit 5 API)
+  ii. JUnit Vintage Engine (JUnit 4 and 3 APIs)
+  iii. Integration (TestNg, Mock...etc)
+
+=> For Our Test cases (Class + method) object creation and test-method calling
+   done by JUnit Platform Runtime.
+
+
+---Writing test case---------
+1. Create one Maven Project
+> File > new > Maven Project > Choose checkbox 
+[v] Create Simple Project > Next > Enter details
+
+   group Id   : in.nit
+   artifactId : TestJUnitApp
+   version    : 1.0
+
+> finish.
+
+2. Open pom.xml , provide Java version and JUnit Dependencies
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.6.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+=> after adding content in pom.xml, ctrl+A => ctrl+I => ctrl+S 
+
+
+3. Create a Test case (class) under folder src/test/java
+
+> Right click on 'src/test/java' > new > class > enter details
+   Name   : TestEmployee
+   Package: in.nit.test
+
+4. Add one method TODO testing. [Test method]
+
+   Syntax:
+     @Test
+     public void <methodName>() {
+       //test logic
+     }
+   
+5. After wiring Test case with test method , run it
+  > Right click on code > Run as > JUnit Test.
+
+==Example Code#1============================
+package in.nit.test;
+
+import org.junit.jupiter.api.Test;
+
+// Test case: A class that will test our code
+
+public class TestEmployee {
+
+	//test methods 
+	@Test
+	public void testSave() {
+		System.out.println("HELLO-SAVE");
+	}
+	
+	@Test
+	public void testUpdate() {
+		System.out.println("HELLO-UPDATE");
+	}
+	
+	@Test
+	public void testDelete() {
+		System.out.println("HELLO-DELETE");
+	}
+}
+
+======================================================
+@TestMethodOrder : We can define multiple test methods inside Testcase.
+ Those are executed in Random order by default.
+
+We can specify our own order using @TestMethodOrder + OrderAnnotation
+Here we need to provide @Order(number).
+
+---Example-------------
+package in.nit.test;
+
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
+// Test case: A class that will test our code
+@TestMethodOrder(OrderAnnotation.class)
+public class TestEmployee {
+
+	//test methods 
+	@Test
+	@Order(1)
+	public void testSave() {
+		System.out.println("HELLO-SAVE");
+	}
+	
+	@Test
+	@Order(2)
+	public void testUpdate() {
+		System.out.println("HELLO-UPDATE");
+	}
+	
+	@Test
+	@Order(3)
+	public void testDelete() {
+		System.out.println("HELLO-DELETE");
+	}
+}
+
+
+*) We can use @TestMethodOrder(Alphanumeric.class) for provide test method order.
+First sort using 0-9 if same found then compare with A-Z sorting order.
+
+
+-_Example#2_-
+package in.nit.test;
+
+import org.junit.jupiter.api.MethodOrderer.Alphanumeric;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
+// Test case: A class that will test our code
+@TestMethodOrder(Alphanumeric.class)
+public class TestEmployee {
+
+	//test methods 
+	@Test
+	public void testSave() {
+		System.out.println("HELLO-SAVE");
+	}
+	
+	@Test
+	public void testUpdate() {
+		System.out.println("HELLO-UPDATE");
+	}
+	
+	@Test
+	public void testDelete() {
+		System.out.println("HELLO-DELETE");
+	}
+}
+==============================================================
+@BeforeEach : To execute any logic once per test method before starting test method.
+@AfterEach  : To execute any logic once per test method after finishing test method.
+
+@BeforeAll : To execute any logic once per test case before starting.
+@AfterAll  : To execute any logic once per test case after finishing.
+
+--Example#3----
+package in.nit.test;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+public class TestEmployee {
+	
+	@BeforeAll
+	public static void setupOnce() {
+		System.out.println("FROM ONETIME SETUP");
+	}
+
+	@BeforeEach
+	public void setup() {
+		//setup, init data
+		System.out.println("FROM SETUP");
+	}
+	
+	@Test
+	public void testSave() {
+		System.out.println("HELLO-SAVE");
+	}
+
+	@Test
+	public void testUpdate() {
+		System.out.println("HELLO-UPDATE");
+	}
+	
+	@AfterEach
+	public void clear() {
+		System.out.println("CLEAR DATA");
+	}
+	
+	@AfterAll
+	public static void closeAll() {
+		System.out.println("FROM ONETIME AT END");
+	}
+
+}
+Output:
+FROM ONETIME SETUP
+FROM SETUP
+HELLO-SAVE
+CLEAR DATA
+
+FROM SETUP
+HELLO-UPDATE
+CLEAR DATA
+FROM ONETIME AT END
+
+
+*) @DisplayName : This annotation is used to provide 'Readable text' inplace of
+                   actual method and class names at JUnit console.
+
+--Ex#4--
+package in.nit.test;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+@DisplayName("TESTING EMPLOYEE TASK")
+public class TestEmployee {
+	
+	@BeforeAll
+	public static void setupOnce() {
+		System.out.println("FROM ONETIME SETUP");
+	}
+
+	@BeforeEach
+	public void setup() {
+		//setup, init data
+		System.out.println("FROM SETUP");
+	}
+	
+	@Test
+	@DisplayName("TESTING SAVE METHOD")
+	public void testSave() {
+		System.out.println("HELLO-SAVE");
+	}
+
+	@DisplayName("TESTING UPDATE METHOD")
+	@Test
+	public void testUpdate() {
+		System.out.println("HELLO-UPDATE");
+	}
+	
+	@AfterEach
+	public void clear() {
+		System.out.println("CLEAR DATA");
+	}
+	
+	@AfterAll
+	public static void closeAll() {
+		System.out.println("ONCE AT END");
+	}
+	
+}
+
+
+*) @Disabled : This annotation is used to specify Ignore one Test-method 
+               while executing test-case (do not execute test method)
+	       
+--Ex#5--
+package in.nit.test;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+@DisplayName("TESTING EMPLOYEE TASK")
+public class TestEmployee {
+
+	@Test
+	@DisplayName("TESTING SAVE METHOD")
+	public void testSave() {
+		System.out.println("HELLO-SAVE");
+	}
+
+	@DisplayName("TESTING UPDATE METHOD")
+	@Test
+	@Disabled
+	public void testUpdate() {
+		System.out.println("HELLO-UPDATE");
+	}
+	
+}
+
+-----------------------------------------------------------------------
+*) @RepeatedTest and TestInfo
+
+=> To execute any test method multiple time (like batch processing) using
+    @RepeatedTest annotation.
+
+   Ex: Export 1-10 Records
+       Export 11-20 Records
+       Export 21-30 Records
+
+=> To know our Test case details like classname,method name, display name,tag name etc
+   we can use one interface TestInfo.
+
+
+--Ex#6---
+package in.nit.test;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.TestInfo;
+
+@DisplayName("TESTING EMPLOYEE TASK")
+public class TestEmployee {
+	
+	@RepeatedTest(value = 3,name="{displayName} - {currentRepetition}/{totalRepetitions}")
+	@DisplayName("MULTIPLE TEST")
+	public void testMultiple(TestInfo info) {
+		//System.out.println("HELLO:"+info.getTestClass().get().getName());
+		//System.out.println("HELLO:"+info.getTestMethod().get().getName());
+		System.out.println("HELLO:"+info.getDisplayName());
+	}
+	
+}
+
+==========================================================================
+@Tag : These are used to filter test methods for execution in different environments.
+
+For Example, i want to test export example in production env at same
+	    i want to test delete operation only in development environment 
+then use tag concept and maven-surefire-plugin in pom.xml
+
+
+---EX#7---
+package in.nit.test;
+
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
+public class TestEmployee {
+	
+	@Test
+	@Tag("dev")
+	public void testA() {
+		System.out.println("HELLO-TEST-A");
+	}
+	
+	@Test
+	@Tag("prod")
+	public void testB() {
+		System.out.println("HELLO-TEST-B");
+	}
+	
+	@Test
+	@Tag("prod")
+	public void testC() {
+		System.out.println("HELLO-TEST-C");
+	}
+	
+	@Test
+	@Tag("dev")
+	public void testD() {
+		System.out.println("HELLO-TEST-D");
+	}
+	
+}
+
+
+pom.xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>int.nit</groupId>
+	<artifactId>JUnit5App</artifactId>
+	<version>1.0</version>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.6.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M5</version>
+				<configuration>
+					<!-- include tags -->
+					<groups>prod</groups>
+					<!-- exclude tags -->
+					<excludedGroups>dev</excludedGroups>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+=> Right click on Project > Run as > maven test.
+
+(or)
+=> Right click on code > Run as > Run Configuration
+> Click on configuration
+> provide Include(dev) and exclude(prod) option > Apply and Run

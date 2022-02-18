@@ -1,0 +1,186 @@
+				Date : 01-10-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+		-------------------------------------------------
+Logging
+https://www.youtube.com/watch?v=mblGoKU1aKo
+https://www.youtube.com/watch?v=5oLfHiP_iJc
+
+MyGithub account:
+https://github.com/javabyraghu
+
+Spring Boot + Angular integration
+https://www.youtube.com/watch?v=LE3KvvhkUkM
+https://www.youtube.com/watch?v=Do87D4TJ9M8
+https://www.youtube.com/watch?v=gkp-Mhxuxjo
+https://www.youtube.com/watch?v=lpPiM5MIAoQ
+https://www.youtube.com/watch?v=Iax4vA4MEPU
+
+Error and Exception handling:
+https://www.youtube.com/watch?v=AFq9eK2OoGU
+https://www.youtube.com/watch?v=tBVAybXMKzY
+https://www.youtube.com/watch?v=M-LRfrYHWrk
+
+AOP
+https://www.youtube.com/watch?v=x2f4NzNCkCI
+https://www.youtube.com/watch?v=8DG-J8_WfUE
+
+Github
+https://www.youtube.com/watch?v=T2UHpsxJ-2o
+https://www.youtube.com/watch?v=38UGVeXuj3Q
+
+			Mini Project - Crud - PART-II
+
+*) delete code:
+> Read one Pathvariable (id)
+> call service delete method
+  if it is deleted return Response(String,OK)
+  else service will throw ProductNotFoundException
+> catch exception and return response(errorString,Internal Server Error)
+
+---Test using POSTMAN-------
+
+
+--code: RestController------------
+	@DeleteMapping("/remove/{id}")
+	public ResponseEntity<String> removeOneProduct(
+			@PathVariable Integer id
+			) 
+	{
+		ResponseEntity<String> resp = null;
+		try {
+
+			service.deleteProduct(id);
+			resp = new ResponseEntity<String>(id+"-deleted!", HttpStatus.OK);
+			
+		} catch (ProductNotFoundException e) {
+			e.printStackTrace();
+			resp = new ResponseEntity<String>(
+					e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return resp;
+	}
+
+*) Global Exception Handling:-
+By default Spring Boot has provided one class 'BasicErrorController'
+with method error() that returns Map of Attributes which gives
+JSON output by default.
+
+> We can customize Exception handling, ie called as Global Exception handling.
+
+*) AOP : Aspected Oriented programming,
+  without tuching actual logics, adding additional services,
+  like : Security, Exception handling, Transaction Management,
+     Unit test, Logging..etc
+
+--code for Exception Handling------
+package in.nareshit.raghu.handler;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import in.nareshit.raghu.exception.ProductNotFoundException;
+
+@RestControllerAdvice
+public class MyCustomExceptionHandler {
+
+	@ExceptionHandler(ProductNotFoundException.class)
+	public ResponseEntity<String> handleProductNotFound(
+			ProductNotFoundException pnfe) 
+	{
+		
+		return new ResponseEntity<String>(
+				pnfe.getMessage(), 
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+}
+
+-> Custom Response can be even ComplexType (JSON) insted of String Format.
+a. Define one model class
+package in.nareshit.raghu.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ErrorMessage {
+
+	private String message;
+	private String module;
+	private String date;
+	private String code;
+}
+
+b. use it as ResponseEntity Generic Parameter and provide your own data.
+
+package in.nareshit.raghu.handler;
+
+import java.util.Date;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import in.nareshit.raghu.exception.ProductNotFoundException;
+import in.nareshit.raghu.model.ErrorMessage;
+
+@RestControllerAdvice
+public class MyCustomExceptionHandler {
+
+	/*@ExceptionHandler(ProductNotFoundException.class)
+	public ResponseEntity<String> handleProductNotFound(
+			ProductNotFoundException pnfe) 
+	{
+		
+		return new ResponseEntity<String>(
+				pnfe.getMessage(), 
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}*/
+	
+	@ExceptionHandler(ProductNotFoundException.class)
+	public ResponseEntity<ErrorMessage> handleProductNotFound(
+			ProductNotFoundException pnfe) 
+	{
+		
+		return new ResponseEntity<ErrorMessage>(
+				new ErrorMessage(
+						pnfe.getMessage(), 
+						"PRODUCT", 
+						new Date().toString(),
+						"DATA NOT FOUND"),
+				HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+}
+========================================================================
+*) Note:
+=> @RestControllerAdvice is providing @ResponseBody internally.
+   So, return Type is converted into JSON Format.
+
+
+--Update---
+	@PutMapping("/modify")
+	public ResponseEntity<String> updateProduct(
+			@RequestBody Product product) 
+	{
+		ResponseEntity<String> resp = null;
+		try {
+			service.updateProduct(product);
+			resp = new ResponseEntity<String>(
+					"Product updated!", 
+					HttpStatus.OK);
+		} catch (ProductNotFoundException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return resp;
+	}
+--POSTMAN SCREEN------------
+
+@Slf4j
+https://projectlombok.org/features/log

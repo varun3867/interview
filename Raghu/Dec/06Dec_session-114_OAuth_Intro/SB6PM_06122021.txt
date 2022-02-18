@@ -1,0 +1,39 @@
+				Date : 06-12-2021
+				 Spring Boot 6PM
+				   Mr. RAGHU
+	--------------------------------------------------------------
+		Spring Security : OAuth 2.x (Open Authorization)
+
+*) OAuth is a protocol standard. (Open Authorization)
+*) It is used to authorize app and user to create a communication link.
+
+*) Auth Server : (Authorization and Resource Server)
+This server contains all user-details (like name, email, gender, profile image..etc)
+Ex:
+   Facebook, Google, Github, LinkedIn, Twitter..etc
+
+*) Client Applications:
+  An application that gives service to end user (business applications)
+
+Ex:
+ BookMyshow, Redbus, Zomato, Quora, quicker, MakeMyTrip..etc
+
+*) End users:-
+  Can access business services using 3rd party applications, ie called
+  open authorization.
+
+-------------------------------------------------------------------  
+Q) Can I login to XYZ bank account using Facebook?
+A) No.
+
+Q) Can I Login to BookMyShow account using Facebook?
+A) Yes.
+-------------------------------------------------------------------
+*) Use Oauth Standard using Facebook, Google, Github..etc for
+  day to day business applications, not for Finance Services(bank/Creditcard)..etc
+
+For Developers:-
+https://developers.facebook.com/
+https://console.cloud.google.com/
+https://github.com/settings/developers/
+

@@ -1,0 +1,165 @@
+				Date: 26-10-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	----------------------------------------------------------------
+  	MS# Intracommunication ---- Eureka Server # Discovery Client 
+
+*) DiscoveryClient : gets data (ServiceInstance) from Eureka Server		
+			using Input (serviceId)
+
+=> To register MS# with Eureka server we need DiscoveryClient even.
+
+*) RestTemplate :- To make HTTP calls (request/response) from one App to another.
+
+Example:-
+               Monolithic Application
+           Employee ----------<> Department
+
+___MS# Intracommunication__________________________
+1. Eureka Server
+Name : SpringCloudDCEurekaServer
+Dep  : Eureka Server
+
+> At main class : @EnableEurekaServer
+---application.properties----
+server.port=8761
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+______________________________________________
+2. Department Service 
+Name : SpringCloudDCDepartmentService 
+Dep  : Eureka Discovery Client, Spring web
+
+> At main class : @EnableEurekaClient
+---application.properties----
+server.port=8686
+
+#serviceId
+spring.application.name=DEPARTMENT-SERVICE
+
+#Register with Eureka
+#eureka.client.register-with-eureka=true
+#eureka.client.fetch-registry=true
+
+#Eureka Server location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+------------------------------
+
+> Rest Controller
+package in.nareshit.raghu.rest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/dept")
+public class DepartmentRestController {
+
+	@GetMapping("/data")
+	public ResponseEntity<String> showDeptMsg() {
+		return new ResponseEntity<String>("FROM DEPT",HttpStatus.OK);
+	}
+}
+__________________________________________________________________
+3. Employee Service
+Name : SpringCloudDCEmployeeService 
+Dep  : Eureka Discovery Client, Spring web
+
+
+> At main class: @EnableEurekaClient
+---application.properties----
+server.port=9090
+
+#serviceId
+spring.application.name=EMPLOYEE-SERVICE
+
+#Register with Eureka
+#eureka.client.register-with-eureka=true
+#eureka.client.fetch-registry=true
+
+#Eureka Server location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+------------------------
+
+>*** Consumer code
+package in.nareshit.raghu.consumer;
+
+import java.net.URI;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+
+@Component
+public class DepartmentRestConsumer {
+
+	@Autowired
+	private DiscoveryClient client;
+	
+	public String geteDataFromDept() {
+		// GET DATA FROM EUREKA SERVER BASED ON SERVICEID
+		List<ServiceInstance> list = client.getInstances("DEPARTMENT-SERVICE");
+		
+		//read SI from index#0
+		ServiceInstance si  = list.get(0);
+		
+		//Read URI FROM SI
+		URI uri = si.getUri();
+		
+		//create URL
+		String url = uri + "/dept/data";
+		
+		//use RestTemplate 
+		RestTemplate rt = new RestTemplate();
+		
+		//make HTTP call
+		ResponseEntity<String> response = rt.getForEntity(url, String.class);
+		
+		return response.getBody();
+	}
+}
+
+----------
+> RestController
+package in.nareshit.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.nareshit.raghu.consumer.DepartmentRestConsumer;
+
+@RestController
+@RequestMapping("/employee")
+public class EmployeeRestController {
+	
+	@Autowired
+	private DepartmentRestConsumer consumer;
+
+	@GetMapping("/data")
+	public ResponseEntity<String> showData() {
+		return new ResponseEntity<String>("FROM EMP ==> " + consumer.geteDataFromDept(), HttpStatus.OK);
+	}
+}
+=====================Execution====================================
+1. Start Eureka Server
+2. Deprtment Service
+3. Employee Service
+4. click on Employee link
+  Ex: http://192.168.0.9:9090/actuator/info
+Modify as:
+    http://192.168.0.9:9090/employee/data
+=================================================================
+Task:
+        Product-----------<>Vendor

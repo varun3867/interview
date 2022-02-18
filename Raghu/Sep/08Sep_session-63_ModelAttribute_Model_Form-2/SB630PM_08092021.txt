@@ -1,0 +1,187 @@
+				Date : 08-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	------------------------------------------------------------
+Spring Boot + Dynamic DropDown
+https://github.com/javabyraghu/SpringBoot2CascadeDropDownEx
+
+
+			HTML Form | Model Attribute
+
+> 1 Input = 1 variable (set/get)
+> Form Input name attribute must match with variableName
+   <input type="" name="" | <select name="" |  <textarea name=""
+
+*) If we are working with radio buttons, checkboxes then must specify
+   same name="value" to all inputs. Then they are one group.
+
+*) Single Select DropDown | radio button  --> primitive varaible
+*) Multi-select DropDown  | Checkbox      --> Collection variable
+-------------------------------------------------------------------
+Name : SpringBoot2WebMvcFormsBasic
+Dep  : Web, Lombok, Devtools
+
+1. application.properties
+server.port=9090
+
+spring.mvc.view.prefix=/WEB-INF/pages/
+spring.mvc.view.suffix=.jsp
+
+2. Model class
+package in.nareshit.raghu.model;
+
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	private Double empSal;
+	private String empPwd;
+	private String empGen;
+	private String empDept;
+	private String empAddr;
+	
+	private List<String> empClients;
+	private List<String> empSlots;
+	
+	private String empImg;
+	private Double empAge;
+	private String empJoinDate;
+	private String empNewDate;
+	private String empColor;
+}
+
+3. Controller
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import in.nareshit.raghu.model.Employee;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+
+	//1. show Employee Register page
+	@GetMapping("/register")
+	public String showEmpReg() {
+		return "EmpRegister";
+	}
+	
+	
+	//2. read form data on click submit
+	@PostMapping("/create")
+	public String readFormData(
+			@ModelAttribute Employee employee,
+			Model model 
+			) 
+	{
+		System.out.println("FORM DATA IS =>" + employee);
+		model.addAttribute("eob", employee);
+		return "EmpSuccess";
+	}
+}
+
+4. UI: EmpRegister.jsp
+<html>
+<head>
+		<title>REGISTER </title>
+</head>
+<body>
+<pre>
+<h1> WELCOME TO EMPLOYEE REGISTER PAGE </h1>
+<form action="create" method="POST">
+	ID : <input type="text" name="empId"/>
+	NAME : <input type="text" name="empName"/>
+	SAL  : <input type="text" name="empSal"/>
+	PWD  : <input type="password" name="empPwd"/>
+	GEN  : 
+	  <input type="radio" name="empGen" value="Male"/> Male 
+	  <input type="radio" name="empGen" value="Female"/> Female
+	DETP : <select name="empDept">
+				<option>--SELECT--</option>
+				<option>DEV</option>
+				<option>QA</option>
+				<option>BA</option>
+    	   </select>	   
+	ADDR : <textarea name="empAddr"></textarea>
+	
+	CLIENT: <select name="empClients" multiple>
+				<option>NIT</option>
+				<option>XYZ</option>
+				<option>MNO</option>
+				<option>PQR</option>
+			</select>
+	SLOTS:
+		<input type="checkbox" name="empSlots" value="SHIFT1"/>SHIFT1
+		<input type="checkbox" name="empSlots" value="SHIFT2"/>SHIFT2
+		<input type="checkbox" name="empSlots" value="SHIFT3"/>SHIFT3
+		<input type="checkbox" name="empSlots" value="SHIFT4"/>SHIFT4
+	
+	IMAGE : <input type="file" name="empImg" />
+	
+	AGE  : <input type="number" name="empAge" min="18" max="60" />
+	DATE : <input type="date" name="empJoinDate" />
+	DATE : <input type="datetime-local" name="empNewDate" />
+	COLOR: <input type="color" name="empColor"/>
+	
+	
+	<input type="submit" value="Create"/>						
+</form>
+</pre>
+</body>
+</html>
+
+
+5. UI: EmpSuccess.jsp
+<html>
+	<head>
+		<title>REGISTER </title>
+	</head>
+	<body>
+
+		<h1> WELCOME TO EMPLOYEE SUCCESS PAGE </h1>
+		Data is : ${eob}
+	</body>
+</html>
+=====================================================================
+@DateTimeFormat(pattern="yyyy-MM-dd")
+To Convert String to java.util.Date format.
+=====================================================================
+1 Project - n Modules
+1 Module -- 3 layers design
+
+PL - Presentation Layer
+SL - Service Layer
+DAL - Data Access Layer
+
+				Layers
+       ------------------------------------------------------------
+             PL                     SL                DAL
+       ------------------------------------------------------------
+           Web MVC             POJI-POJO           Data JPA
+----------------------------------------------------------------------
+Task: 
+  Student
+    sid,sname,sgen(radion),spwd(password), scourse(DropDown), slangs(checkbox)
+    saddress[textarea], slots (Multi-select DropDown), DOJ(date)
+    [Submit]
+
+a. Model
+b. Controller
+c. Register Page
+d. Display Result
+--------------------------------------------------------------------

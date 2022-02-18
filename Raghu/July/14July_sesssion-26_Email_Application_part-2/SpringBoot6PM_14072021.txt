@@ -1,0 +1,261 @@
+				Date : 14-Jul-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	------------------------------------------------------------
+			Spring Based Configuration for email
+
+a. XML (Legacy)
+b. Annotation --- Only for Programmer defined classes
+c. Java  --- For Pre-defined (supports all even) classes
+> Define one public class with any name
+> apply @Configuration over class 
+  [so that class behaves as input to spring container]
+> Define one method for one object and apply @Bean
+  over method so that container creates only one object.
+
+
+---Example Code-----------------------------
+package in.nareshit.raghu.config;
+
+import java.util.Properties;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+@Configuration
+public class AppConfig {
+	
+	@Bean
+	public JavaMailSenderImpl mailSender() {
+		JavaMailSenderImpl jm = new JavaMailSenderImpl();
+		jm.setHost("smtp.gmail.com");
+		jm.setPort(587);
+		jm.setUsername("abcd@gmail.com");
+		jm.setPassword("ijkl");
+		jm.setJavaMailProperties(props());
+		return jm;
+	}
+
+	public Properties props() {
+		Properties p = new Properties();
+		p.setProperty("mail.smtp.starttls.enable", "true");
+		return p;
+	}
+}
+---pom.xml (For Spring application)-------------------------------------------------
+  <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>5.3.8</version>
+ </dependency>
+ <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>5.3.8</version>
+ </dependency>
+ <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>jakarta.mail</artifactId>
+      <version>1.6.7</version>
+ </dependency>
+  <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>5.3.8</version>
+  </dependency>
+=========================================================================
+*) In Spring Boot Object for JavaMailSenderImpl(C) is auto-configured
+  we can find this code inside jar 'spring-boot-autoconfigure'
+  in package : org.springframework.boot.autoconfigure.mail
+  with class name : MailSenderPropertiesConfiguration
+
+  (or use STS key)
+   ctrl+shift+T  : MailSenderPropertiesConfiguration
+
+Add this dependency, to activate above code:-
+<dependency>
+     <groupId>org.springframework.boot</groupId>
+     <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+
+*) Above code is expecting inputs from programmer using 
+   @ConfigurationProperties concept.
+
+ctrl+shift+T:  MailProperties(C)  prefix="spring.mail"
+
+
+--application.properties---
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=nitsample123
+spring.mail.password=Test1450.
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+
+---application.yml---
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: nitsample123
+    password: Test1450.
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+--------------------------------------
+
+*) You have to define one class , that
+ > creates one new MimeMessage object using JavaMailSender(I)
+ > Fill details to MimeMessage using MimeMessageHelper class
+ > send Email using JavaMailSender(I)
+
+
+*) MimeMessageHelper It is used to set details to our Message object.
+ > To create this object we need to provide Inputs
+    a. Message object reference
+    b. Is Attachment Exist (boolean)
+
+Q) Everytime are we going to send email with attachment or without attachment?
+A) It depends, Attachment is optional. May or may not be added.
+
+
+Q) are they return same expression value?
+
+I.  a>b ? true:false
+II. a>b
+
+A) returns same type : boolean (even same value)
+   II one is short format.
+
+==(code)=========================================================
+a. Spring Boot Application
+Name : SpringBoot2EmailApp
+Dep  : Java Mail Sender
+
+
+b. application.yml
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: nitsample123
+    password: aaaa.
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+
+c. MyMailUtil
+package in.nareshit.raghu.util;
+
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyMailUtil {
+	
+	@Autowired
+	private JavaMailSender mailSender;
+
+	public boolean send(
+			String to,
+			String cc[],
+			String bcc[],
+			String subject,
+			String text,
+			Resource file
+			) 
+	{
+		boolean flag = false;
+
+		try {
+			//1. create one Empty/new MimeMessage
+			MimeMessage message  = mailSender.createMimeMessage();
+			
+			//2. use Helper class and set details
+			MimeMessageHelper  helper = new MimeMessageHelper(message, file!=null);
+			
+			helper.setTo(to);
+			
+			if(cc!=null && cc.length>0)
+				helper.setCc(cc);
+			
+			if(bcc!=null && bcc.length>0)
+				helper.setBcc(bcc);
+			
+			helper.setSubject(subject);
+			helper.setText(text);
+			
+			if(file!=null) {
+				//file name , resource object
+				helper.addAttachment(file.getFilename(), file);
+			}
+			
+			//3. send email 
+			mailSender.send(message);
+			
+			flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+}
+
+
+d. Runner class
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.util.MyMailUtil;
+
+@Component
+public class TestEmailRunner implements CommandLineRunner {
+
+	@Autowired
+	private MyMailUtil mailUtil;
+
+	public void run(String... args) throws Exception {
+		Resource file = new FileSystemResource("D:/Images/SpringBoot630PM_1407021_2.png");
+
+		boolean sent = mailUtil.send(
+				"draju.raj19@gmail.com", 
+				new String[] {
+						"vikashjava8@gmail.com",
+						"parag.varu@gmail.com",
+						"mahato.jayanta114@gmail.com"
+				}, 
+				new String[] {
+						"sethisritam1234@gmail.com",
+						"preddy7111@gmail.com",
+						"ashishjsr07@gmail.com",
+						"jagannivasac@gmail.com",
+						"nitsample123@gmail.com"
+						
+				}, 
+				"TEST SUB", 
+				"HELLO EMAIL",
+				file);
+		if(sent) 
+			System.out.println("SUCCESS");
+		else
+			System.out.println("FAILED");
+	}
+
+}
+======================================================================
+

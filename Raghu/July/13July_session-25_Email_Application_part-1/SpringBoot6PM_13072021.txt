@@ -1,0 +1,96 @@
+				Date : 13-Jul-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+		--------------------------------------------------
+UML Design:-
+https://youtu.be/rKW-b3F6Oc4?list=PLVlQHNRLflP9XSWeY4x4FLwnL3UOIxnTr
+
+All PDFs:-
+https://www.mediafire.com/file/w5x9w5vcmkwkkdv/RaghuSirNareshITJavaPdfs.zip/file
+
+Autoconfiguration:-
+
+>  In Spring we do manual Configuration like XML/Java Configuration
+   for onetime setup.
+
+> But in spring boot Configuration is automated (pre-defined).
+  For that we need to add one JAR inside your project,
+   name looks like
+
+         spring-boot-starter-[ConceptName]
+
+ex: spring-boot-starter-mail
+
+    +-------------------------------------------------------------+
+    |           Spring Boot -- Email Application                  |
+    +-------------------------------------------------------------+
+
+--Manual Process---------
+a. Goto Mail Server  (ex: gmail.com)
+b. Login with details(un/pwd)
+c. Create a New Message
+d. Fill details (to, subj, cc,bcc,text, file)
+e. send Message
+-------------------------
+API: classes/interface/enum/annotation (pre-defined) -- used for a concept
+
+JDBC API    : Database Operations
+Servlets API: Web applications
+
+.java --> .class --> .jar (build format)
+
+-----------------------------------------------
+Gmail Server SMTP Details
+https://support.google.com/mail/answer/7126229?hl=en
+
+host: smtp.gmail.com
+Port for TLS/STARTTLS: 587
+-----------------------------------------------
+API: Java Mail Sender
+ This API is provided by Spring boot, by using this we can implement
+ Email Application.
+
+*) While creating Spring Boot application , choose Java Mail Sender
+   option, that will add to pom.xml
+
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
+
+*) MimeMessage : A message that need to be sent.
+   MIME - Multipurpose Internet Mail Extension -- Send any type of data
+		(Image, Pdf, Video..etc)
+
+
+
+--FAQs--------------------------------------------------------
+Q) Who is handling Version to your Dependencies(JARs)?
+A) In Spring Boot for all Dependencies version is controlled by
+	Spring Boot Parent Project.
+
+Q) Can we define Spring Boot application without parent Link?
+A) Not possible.
+
+Q) Where can we find Autoconfiguration code?
+A) Jar is added to Project (classpath) with name
+     spring-boot-autoconfigure-2.5.1.jar
+
+--------------------------------------------------------------------------------------
+Q) What is Cc/Bcc in Email? 
+A) 
+
+Q) What is SSL and TLS ? which one is better ?
+A)
+
+Q) Which protocol is used to send email?
+A)
+
+
+--Reference only----------------
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=abcd@gmail.com
+spring.mail.password=xyz
+spring.mail.properties.mail.smtp.starttls.enable=true
+------------------------------------------

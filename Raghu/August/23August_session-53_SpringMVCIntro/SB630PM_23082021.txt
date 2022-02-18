@@ -1,0 +1,106 @@
+				Date : 23-08-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+		-------------------------------------------
+Spring WEB MVC Workflow:-
+https://www.youtube.com/watch?v=O8MtjB0Ru0E
+
+			  Spring Boot - WEB MVC
+
+M - Model      : Data (Primitive, Object, Collection)
+V - View       : User Interface (Display) [HTML/JSP/Thymeleaf]
+C - Controller : Class - That process Http Request.
+
+		-----------------------------------------
+Q) In how many ways End User can make request using Web Browser?
+A) 3 ways
+  I. Enter URL in addressbar (GET)
+ II. Click on HyperLink (<a>)(GET)
+III. Form Submit             (GET/POST)
+
+*) In Java there can be no web application implemented without Servlets API.
+
+*) FrontController[FC](Concept name) is the one which takes request and returns
+   response (Entry and exit gate for our application)
+
+*) FC is implemented using Servlet concept, named as DispatcherServlet
+   by Spring WEB MVC. 
+
+*) Controller is a class, that contains request processing logic.
+   [main java code for HTTP exist in Controller only]
+
+Gmail App: User, Inbox, Drafts, Settings ...etc Modules
+Controller : UserController, InboxController, DraftsController, SettingController
+
+              1 Module[operation] - 1 Controller(methods)
+
+*) In a Project multiple Controllers exist. They are connected/mapped with
+   Path/URL and Http Method(GET/POST)
+
+*) HandlerMapping it is a Map internally, which stores all details for
+   every controller, FC takes help of this Map to find our Controller method.
+
+                         example HandlerMapping
+    +-------------------------------+----------------------------+
+    |        KEY (URL+HTTP METHOD)  |  VALUE (CLASS/METHOD)      |
+    +-------------------------------+----------------------------+
+       /emp/save  + POST              EmployeeController#create()
+
+       /admin/export + GET            AdminController#exportExcel()
+
+    +-------------------------------+----------------------------+
+
+---> Programmer/Developer is writing Controller class
+---> Spring Container is creating Object.
+---> FrontController is execting controller method when request is received.
+
+*) Controller method is exuected by FC, Controller process the request
+  and returns ViewName (Only fileName, no Extension no Location)
+
+*) FC reads ViewName and uses ViewResolver Help to find full ViewPage name
+    
+    View Resolver provide prefix(file location) and suffix(file extension)
+
+   ex:  ViewPage  = prefix + viewName + suffix
+                   /mypages/  Welcome    .jsp
+
+*) Now, Finally executing ViewPage.
+   But View page reads data from Model Memory (Map) shared by Controller.
+
+   By using EL(+JSTL) ViewPage reads data and replace keys with values
+   (Data Rendering)
+==================================================================
+Q) Can browser understand
+    Java(Servlets/JSP) -- NO
+    .net(ASP/C#)    ---   NO
+
+    HTML/CSS/JS     ---- YES
+    Angular         ---- No
+      Code --> .ts ->JS-> Build + Minified
+
+
+Servlet --- CATALINA
+JSP     --- JASPER
+...etc
+==================================================================
+Q) Why not Controller is returning full Viewname?
+A) Controller wants be independent of UI technologies.
+   No need of Re-compile and build if we move from one 
+   UI concept to another one.
+   
+   
+   
+   
+-------------------------------------------------------------------------------
+							FOR ME
+-------------------------------------------------------------------------------
+Whenever we make request, request goes to front controller.FC behaves like entry 
+and exit gate.
+It is implemented by servlets concepts using Servelets named Dispatcher Servlet.
+
+Dispatcher servlet communicated with Handler Mapper to get the details of Controller method
+Dispatcher Servlet communicated the Controller. Controller Process the request and puts data in the model
+and returns viewName.
+DispatcherServelet takes the viewname and it communicate the viewResolver to get the prefix(view path) and
+suffix(extension)
+Then Dispatcher Servlet exexcutes View and returns Html format.

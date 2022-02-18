@@ -1,0 +1,276 @@
+				Date : 19-Aug-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	-------------------------------------------------------------------
+Web MVC:-
+https://www.youtube.com/watch?v=O8MtjB0Ru0E
+
+
+Check this link
+https://www.mediafire.com/file/w5x9w5vcmkwkkdv/RaghuSirNareshITJavaPdfs.zip/file
+
+		    @Query + @Modifying + @Transactional
+
+UPDATE SYNTAX(JPQL/HQL):
+
+UPDATE CLASSNAME
+SET  VARIABLE_NAME=VALUE
+WHERE <COnDitION>
+
+> return type can be void , int/Integer : shows no.of rows effected.
+
+> If we use only @Query for non-select operations, without @Modifying
+  exception is:
+  QueryExecutionRequestException: Not supported for DML operations [...]
+
+> if we did not specify : @Transactional Annotation then exception is:
+  TransactionRequiredException: Executing an update/delete query
+
+
+  @Transactional [org.springframework.transaction.annotation]
+
+=======================================================================
+Native Query (Pure SQL) : [no dialect involved]
+> These are database dependent Queries
+> use below sytnax at Repository Interface
+
+@Query(value ="SQL",nativeQuery = true)
+void/int  method();
+
+=========Code================================================
+Name : SpringBoot2DataJpaCustomQueryTwo
+Dep  : Lombok, DataJpa, MySQL.
+
+a. application.properties
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot630pm
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+
+b. Model class
+package in.nareshit.raghu.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="employee")
+public class Employee {
+	@Id
+	@Column(name="eid")
+	private Integer empId;
+	@Column(name="ename")
+	private String empName;
+	@Column(name="edeg")
+	private String empDesg;
+	@Column(name="edpt")
+	private String empDept;
+	@Column(name="esal")
+	private Double empSal;
+	
+}
+
+c. Repository interface
+package in.nareshit.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
+
+import in.nareshit.raghu.model.Employee;
+
+public interface EmployeeRepository 
+	extends JpaRepository<Employee, Integer>
+{
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE Employee SET empSal=:sal WHERE empName=:name")
+	//@Query(value = "UPDATE EMPLOYEE SET ESAL=:sal WHERE ENAME=:name", nativeQuery = true)
+	int updateEmployeeSalByName(Double sal, String name);
+	
+	@Query("DELETE Employee WHERE empName=:ename")
+	@Modifying
+	@Transactional
+	Integer removeEmployeeByName(String ename);
+}
+
+d. Runner for Insert#1
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+
+import in.nareshit.raghu.model.Employee;
+import in.nareshit.raghu.repo.EmployeeRepository;
+
+//@Component
+public class EmployeeDataInsertRunner implements CommandLineRunner {
+
+	@Autowired
+	private EmployeeRepository erepo;
+	
+	public void run(String... args) throws Exception {
+		erepo.save(new Employee(101, "A", "SE", "DEV", 200.0));
+		erepo.save(new Employee(102, "B", "TE", "QA", 300.0));
+		erepo.save(new Employee(103, "C", "BE", "BA", 400.0));
+	}
+
+}
+
+e. Runner for Custom Query
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.repo.EmployeeRepository;
+
+@Component
+public class EmployeeTestQueryRunner implements CommandLineRunner {
+
+	@Autowired
+	private EmployeeRepository erepo;
+	
+	public void run(String... args) throws Exception {
+		//int result = erepo.updateEmployeeSalByName(900.0, "A");
+		int result = erepo.removeEmployeeByName("A");
+		System.out.println(result);
+	}
+
+}
+======================================================================
+Q) What will happen if we apply @Transactional annotation over method?
+A) Spring F/w internally uses Spring AOP
+
+   By using Proxy Pattern, one Dynamic Class is generated for Repository
+   and using AOP advices,
+
+      before advice  : Begin Transaction
+      after Retuning Advice : On success, commit transaction
+      after throwing advice(SQLException): on fail, rollback transaction
+==============================================================================
+		 Database Concept : Procedures 
+
+Procedures : It is a named block which has set of SQLs and logics to be
+              executed when ever we call it.
+
+*) It is like our java methods.
+
+> Database Migration, Procedure Code,Syntax may get changed.
+> It runs at Database Serve, not at App. So, we need more HardWare configuration
+	even for Db server.
+> All Dbs may not supports Procedures.
+> If we even upgrade to latest version, syntax may get changed.
+
+Oracle: + , join
+--------------------------------------------------------------------------------
+			Procedures Creation at Database
+--------------------------------------------------------------------------------
+https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_6009.htm
+https://www.plsqltutorial.com/plsql-procedure/
+
+a. Create Employee table 
+b. insert data
+INSERT INTO EMPLOYEE VALUES(10,'SAM','LEAD','DEV',600.0);
+INSERT INTO EMPLOYEE VALUES(11,'KHAN','MGR','QA',800.0);
+INSERT INTO EMPLOYEE VALUES(12,'SYED','ACE','QA',700.0);
+INSERT INTO EMPLOYEE VALUES(13,'AJAY','LEAD','QA',500.0);
+INSERT INTO EMPLOYEE VALUES(14,'AHMED','ASE','DEV',600.0);
+
+
+--------STORED PROCEDURE#1--------------------------------------------------------
+a. No Input and No Output
+
+DELIMITER $$
+
+CREATE PROCEDURE GETALLEMPS()
+    
+	BEGIN
+		SELECT * FROM EMPLOYEE;
+	END$$
+
+DELIMITER ;
+--------STORED PROCEDURE#2--------------------------------------------------------
+B. in param, but no out param
+
+DELIMITER $$
+
+CREATE PROCEDURE GETEMPSBYDEPT(IN EMP_DEPT VARCHAR(20))
+    
+	BEGIN
+		SELECT * FROM EMPLOYEE E WHERE E.EDPT=EMP_DEPT;
+	END$$
+
+DELIMITER ;
+
+--------STORED PROCEDURE#3--------------------------------------------------------
+C. in param, OUT PRAMETER
+
+DELIMITER $$
+
+CREATE PROCEDURE GETEMPSCOUNTBYDESG(IN EMP_DESG VARCHAR(20), OUT DESG_COUNT INT)
+    
+	BEGIN
+		SELECT COUNT(*) INTO DESG_COUNT FROM EMPLOYEE E WHERE E.edeg=EMP_DESG;
+	END$$
+
+DELIMITER ;
+
+--------------------------------------------------------------------------------
+			Procedures Calls at Spring Data JPA
+--------------------------------------------------------------------------------
+Notes:
+a. Autowire EntityManager(em)
+b. create StoredProcedureQuery using em
+c. set input param if exist
+   setParameter("name",value)
+d. If out param is exist then register as OutParam
+   registerStoredProcedureParameter(position,type,mode)
+e. Execute StoredProcedure.
+
+--code-------------------------------------------
+a. Model (same as before) 
+b. Runner
+package in.nareshit.raghu.runner;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.StoredProcedureQuery;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.Employee;
+
+@Component
+public class StoredProcRunnerTest implements CommandLineRunner {
+
+	@Autowired
+	private EntityManager em;
+	
+	public void run(String... args) throws Exception {
+		//System.out.println(em.getClass().getName());
+		StoredProcedureQuery query = em.createStoredProcedureQuery("GETALLEMPS", Employee.class);
+		List<Employee> list = query.getResultList();
+		list.forEach(System.out::println);
+	}
+
+}

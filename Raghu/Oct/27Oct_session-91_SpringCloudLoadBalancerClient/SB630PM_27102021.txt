@@ -1,0 +1,196 @@
+				Date : 27-10-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	-----------------------------------------------------------------
+			MS# Intracommunication
+
+*) DiscoveryClient(I) :
+=> This is used to fetch all ServiceInstances based on
+   ServiceId given.
+=> In case of multiple instance, we must get single instance
+	that has lessload factor.
+
+=> Impl class is : CompositeDiscoveryClient(C)
+   [org.springframework.cloud.client.discovery.composite]
+
+
+*)LoadBalancerClient(I)
+=> This client is used to fetch single ServiceInstance from Eurerka Server
+   using serviceId which has less load factor.
+
+=> Impl class name:
+  BlockingLoadBalancerClient(C)
+[org.springframework.cloud.loadbalancer.blocking.client]
+
+  RibbonLoadBalancerClient(C)
+  [It is removed now -- 2.2.x was there..]
+
+=> To work with Client, we must add Cloud Loadbalancer Dependency.
+=> incase of multiple instances, providing Instance-id is must.
+
+  eureka.instance.instance-id=<any-string>
+
+=> ${random.value} -- It will generate one Random HexaDecimal value
+    RandomValuePropertySource(C) internally used.
+    UUID.randomUUID().toString() - is always unique.
+-------------------------------------------------------
+Q) How can run multiple instances?
+A) Run same project at different systems
+  (or) in same system with different port number multiple times.
+-------------------------------------------------------
+
+==Full code==========(LBC-LoadBalancerClient)=============================
+1. Eureka Server
+Name : SpringCloudLBCEurekaServer
+Dep  : Eureka Server
+
+> At main class : @EnableEurekaServer
+---application.properties----
+server.port=8761
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+_________________________________________________________________
+2. Course Service
+Name : SpringCloudLBCCourseService
+Dep  : Eureka Discovery Client, web
+
+> At main class : @EnableEurekaClient
+----application.properties-------------
+server.port=9900
+
+#ServiceId
+spring.application.name=COURSE-SERVICE
+
+#InstanceId
+eureka.instance.instance-id=${spring.application.name}:${random.value}
+
+#Eureka location
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+-----------------------------------
+
+> Rest Controller
+package in.nareshit.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/course")
+public class CourseRestController {
+	
+	@Value("${server.port}")
+	private String port;
+
+	@GetMapping("/msg")
+	public String showMsg() {
+		return "FROM COURSE ==> " + port;
+	}
+	
+}
+
+
+_________________________________________________________________
+3. Student Service
+Name : SpringCloudLBCStudentService
+Dep  : Eureka Discovery Client, web, Cloud LoadBalancer
+
+> At main class: @EnableEurekaClient
+
+---application.properties-----------------
+server.port=8686
+
+#serviceId
+spring.application.name=STUDENT-SERVICE
+
+#Eurekalocation
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka 
+------------------
+
+>** Consumer code:-
+package in.nareshit.raghu.consumer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+public class CourseRestConsumer {
+
+	@Autowired
+	private LoadBalancerClient client;
+
+	public String getCourseData() {
+		System.out.println(client.getClass().getName());
+		
+		//fetch one SI from Eureka which has Less LF.
+		ServiceInstance si = client.choose("COURSE-SERVICE");
+
+		//read URI and add path
+		String url = si.getUri() + "/course/msg";
+
+		//make Request Call
+		RestTemplate rt= new RestTemplate(); 
+		ResponseEntity<String > response = rt.getForEntity(url, String.class);
+
+		//return response
+		return response.getBody();
+	}
+}
+
+
+>> RestController
+package in.nareshit.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.nareshit.raghu.consumer.CourseRestConsumer;
+
+@RestController
+@RequestMapping("/student")
+public class StudentRestController {
+
+	@Autowired
+	private CourseRestConsumer consumer;
+	
+	@GetMapping("/data")
+	public ResponseEntity<String> getData() {
+		return new ResponseEntity<String>(
+				"STUDENT==>" + consumer.getCourseData(), 
+				HttpStatus.OK);
+	}
+}
+====================Execution Order=============================
+1. Run Eureka Server
+2. Run Course Service (3 time -- by modifing port number)
+3. Run Student Service 
+4. click on Student link
+5. Modify URL as: 
+	http://192.168.0.9:8686/student/data
+
+
+---------------Eureka Server Register--------------------------
+  ServiceId   InstanceId       HOST       PORT    LF
+---------------------------------------------------------------
+  COURSE      COURSE:1100    192.168.0.1  9090   0/200
+  COURSE      COURSE:9685    192.168.0.1  8585   0/200
+  COURSE      COURSE:7410    192.168.0.1  9112   0/200
+-------------------------------------------------------------
+
+=> If No.of ServiceInstance having same LF then any one Instance is selected
+   (Randome). Else less LF instance is selected. At same time it will update
+   LoadFactor value. For below code:
+
+ ServiceInstance si = client.choose("COURSE");
+
+=> Here, in above example Eureka Discovery client is used to Register our MS#
+	with Erueka server.

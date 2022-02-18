@@ -1,0 +1,253 @@
+				Date : 20-Jul-21
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	--------------------------------------------------------------
+			      Hibernate using JPA
+
+a. Maven Project
+b. Entity/Model class
+c. XML Configuration
+d. Test class
+
+https://github.com/javabyraghu/HibernateWithJPA
+
+[javax.persistence]
+@Entity : Over class level, it maps java class with database table.
+@Id     : Over variable, It indicates PK Variable.
+
+@Table (optional) : To provide table name, if we did not specify this
+			class name is taken as table name.
+
+@Column (optional) : To provide column name, if we did not specify this
+			variable name is taken as column name.
+
+*) SQL QUERIES are case-insensitive (ie table name, column name, ..etc)
+SQL> select * from roles_tab;
+SQL> SELECT * FROM ROLES_TAB;
+
+
+Oracle 10g XE:
+https://www.mediafire.com/file/roc48z1i6iitpu4/OracleXE.exe/file
+
+MySQL 8 :
+https://dev.mysql.com/downloads/installer/
+
+==============================================================
+a. Maven Project
+> File > new > Other > Search with Maven > Choose Maven Project
+> Next > select checkbox [v] Create Simple Project
+> next > Enter details
+
+Group    : in.nareshit
+Artifact : MyHibernateJpaFirstEx
+Version  : 1.0
+
+> Finish
+
+open pom.xml, add 
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.4.30.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.23</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.20</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+
+> Right click on Project > Maven > Update Project
+
+----------------------------------------------------------------
+MySQL:
+> create database boot630pm;
+> use boot630pm;
+> show tables;
+> select * from prodtab;
+-----------------------------------------------------------------
+b. Entity/Model class
+
+package in.nit.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name="prodtab")
+public class Product {
+	
+	@Id
+	@Column(name="pid")
+	private Integer prodId;
+	
+	@Column(name="pcode")
+	private String prodCode;
+	
+	@Column(name="pcost")
+	private Double prodCost;
+	
+}
+
+
+c. XML Configuration
+
+---persistence.xml----------
+
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+        http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="AppDB">
+    	<properties>
+    		<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+    		<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/boot630pm"/>
+    		<property name="javax.persistence.jdbc.user" value="root"/>
+    		<property name="javax.persistence.jdbc.password" value="root"/>
+    		<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+    		<property name="hibernate.show_sql" value="true"/>
+    		<property name="hibernate.hbm2ddl.auto" value="create"/>
+    	</properties>
+    </persistence-unit>
+</persistence>    
+
+---------------------------------------------------------------
+d. Test class
+
+package in.nit.test;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+import in.nit.model.Product;
+
+public class Test {
+
+	public static void main(String[] args) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("AppDB");
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		try {
+			tx.begin();
+			//operation
+			Product pob = new Product();
+			pob.setProdId(101);
+			pob.setProdCode("PEN");
+			pob.setProdCost(200.0);
+			
+			em.persist(pob); //INSERT
+			
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		}
+		em.close();
+		factory.close();
+	}
+}
+
+
+*) @Entity and @Id annotation are must.
+*) EntityManagerFactory -- Loads Driver class, creates Database Connection,
+       supports creating Statement objects.
+*) EntityManager : Used to perform database operations.
+*) EntityTransaction : It is must for non-select (INSERT, UPDATE, DELETE).
+*) em.persist(obj) : INSERT SQL.
+
+---------------------------------------------------
+Oracle Example
+<dependency>
+	<groupId>com.jslsolucoes</groupId>
+	<artifactId>ojdbc6</artifactId>
+	<version>11.2.0.1.0</version>
+</dependency>
+
+SQL> select * from global_name;     ---> XE`
+SQL> create user sample identified by sample;
+SQL> grant dba to sample;
+
+cmd> tnsping XE    --- > to find the port number
+---------------------------------------------------
+a. Model class same
+b. 
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+        http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="AppDBOracle">
+    	<properties>
+    		<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
+    		<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+    		<property name="javax.persistence.jdbc.user" value="sample"/>
+    		<property name="javax.persistence.jdbc.password" value="sample"/>
+    		<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+    		<property name="hibernate.show_sql" value="true"/>
+    		<property name="hibernate.hbm2ddl.auto" value="create"/>
+    	</properties>
+    </persistence-unit>
+</persistence>    
+
+c. Test class:
+package in.nit.test;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+import in.nit.model.Product;
+
+public class Test {
+
+	public static void main(String[] args) {
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("AppDBOracle");
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		try {
+			tx.begin();
+			//operation
+			Product pob = new Product();
+			pob.setProdId(101);
+			pob.setProdCode("PEN");
+			pob.setProdCost(200.0);
+			em.persist(pob); //INSERT
+			
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		}
+		em.close();
+		factory.close();
+	}
+}
+
+*) Old Hibernate F/w ex: 3.x, 4.x, 5.0,5.1 are not following JPA Standard.
+  As Per Oracle Rules, every ORM framework must implement JPA Standard.
+

@@ -1,0 +1,110 @@
+				Date : 22-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+		--------------------------------------------------
+Ref Videos:
+https://www.youtube.com/watch?v=fvG7FEU1Rt8
+https://www.youtube.com/watch?v=tX1Wtv8Gdpo
+
+
+				Spring Boot - ReST
+			[ ReST - Representation State Trasfer]
+
+=> It is a Architecture Solution used to integrate two different application
+   which are implemented using diff languages and domains.
+
+Webservices: Integrate two different applications.
+
+> There can be 2 apps min
+  a. Producer (Providing service)
+  b. Consumer (using service)
+
+> They are implemented in diff languages
+> Communicates using HTTP protocol and XML/JSON as Data.
+
+===================================================================
+*) Producer application is implemented using Spring Boot Rest webservices.
+
+Case#1 (must be done)
+  We must use either POSTMAN client (swagger) to check application is
+  working fine or not.
+
+Case#2 Integrate with other apps (one project linked with another project)
+
+   Consumer                 Producer
+    PayTM  ---------------- BookMyShow
+    SBI    ---------------- ICIC
+    XYZ    ---------------- Amazon
+
+Case#3***** Fullstack development.
+    1 App ----> Frontend and Backend
+  Hospital App ---> Frontend (Angualr) + BackEnd (Spring Boot ReST)
+-------------------------------------------------------------------------------
+API : Application Programming Interface
+(set of code files which can used to execute some task/re-usable)
+
+Set of classes + interfaces + enum + annotations
+
+Collections API [List,ArrayList,Set,Map...] 
+          --> Data Management(Store/Sort/Send b/w layers)
+
+JDBC API [ Connection,Statement,...]
+         --> Database Operations (insert,update, delete..etc)
+
+Servlets API [ Servlet, ServletRequest,..]
+         ---> Dynamic web pages and apps
+
+...etc
+-----------------------------------------------------------------------------
+ReST API / Restful API :-
+   For a Module/Project Developing a backend service and providing
+   Endpoint details to be integrated with any client.
+
+=> Write one BackEnd Application (No user interface)
+=> Provide App URL, HttpMethod, DataFormat, Header Information..etc
+   to client app team (Endpoint details)
+=>** ReST API is not for Endclient/EndUsers. This is for other Developers
+   to link with their applications.
+=> No user Interface.
+------------------------------------------------------------------------
+Webservices
+SOAP : Fully XML, SOA Architecture, tight coupled design.[WSDL -Document]
+ReST*** : HTTP + Global Data formats, loose couple  (No Such Document)
+---------------------------------------------------------------------------
+*) By using webservices we are linking existed projects
+   (or already implemented apps)
+*) But in Spring Boot used for Fullstack (Backend --Spring boot, FrontEnd-UI)
+
+
+RequestMethod (enum)
+GET, POST, PUT, DELETE, 
+
+PATCH, HEAD
+
+TRACE, OPTIONS
+----------------------
+CONNECTE
+------------------------------------------
+HttpStatus (Enum)
+1xx  -- Information
+2xx  -- Success
+3xx  -- Redirect
+4xx  -- Client Side Error
+5xx  -- Server Side Error
+================================================================
+Spring Web:-
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+*) Default JACKSON API is provided. Object--JSON
+*) No default support is given for JAXB/Object--XML.
+
+*) These :
+@ModelAttribute (HTML Form-->Object-->Controller)
+and Model(I)  (Object-->UI)
+are replaced by
+  @RequestBody
+  @ResponseBody
+----------------------------------------------------------------

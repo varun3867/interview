@@ -1,0 +1,338 @@
+				Date : 18-11-2021
+				 Spring Boot 6PM
+				  Mr. RAGHU
+	-------------------------------------------------------------------
+
+Security Videos:
+https://www.youtube.com/watch?v=XTyQIrlyWfQ (done)
+https://www.youtube.com/watch?v=7wA46kRh2u8 (done)
+https://www.youtube.com/watch?v=oLlSs-p6OEs [today]
+https://www.youtube.com/watch?v=cnrJ-Nnvoik [today]
+https://www.youtube.com/watch?v=rgG2_T-OB8g
+
+
+JWT:
+https://www.youtube.com/watch?v=feETfZbvu-k
+https://www.youtube.com/watch?v=Hzkw846jIOU
+https://www.youtube.com/watch?v=bJAsHOH4lMk
+
+			Spring Boot Security - JDBC Authentication
+
+*) Use Database to Store User details and read for login validation using SQLs.
+*) User password recomanded to store in encoded format.
+   'PasswordEncoder'
+
+
+JDBC Authentication = DataSource + PasswordEncoder 
+		+ SQL1(userUsernameQuery) + SQL2(authoritiesByUsername)
+
+
+                        user_tab	
+      -----------------------------------------------			
+	uid    uname   upwd    uenable   urole
+      -----------------------------------------------
+         1      SAM  GasDaea@    true    ADMIN
+
+      -----------------------------------------------   
+
+========MySQL============================================
+CREATE TABLE user_tab (uid INT, uname VARCHAR(20), upwd VARCHAR(70),
+                        uenable INT, urole VARCHAR(20));
+
+INSERT INTO user_tab VALUES(1,'SAM','$2a$10$XRzqddmlabO88d2L/Mr.9.m6VPkDaKwFnIkok9WZegleG0Ii8oMAq',1,'ADMIN');
+INSERT INTO user_tab VALUES(2,'SYED','$2a$10$aeW1SAGqxmIUpS4x2LFNyOqBNbo7IKwK/zK5NNBJHyJW95go5AZLW',1,'EMPLOYEE');
+INSERT INTO user_tab VALUES(3,'AJAY','$2a$10$6zgHuHPjwSSMei3sGQJdmei69ov5nyEEWseO/XNUkIvjoaaow0ibO',1,'STUDENT');
+
+=====Test class for Pwd=====================================================
+package in.nareshit.raghu;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+public class Test {
+
+	public static void main(String[] args) {
+		String pwd = "AJAY";
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encPwd = encoder.encode(pwd);
+		System.out.println(encPwd);
+	}
+}
+======================================================================
+
+
+    Controller Paths - UI Pages - Access level
+ +---------------+-----------------+------------------+
+ | URLs             Pages               AccessType    |
+ +---------------+-----------------+------------------+
+   /welcome      WelcomePage.html       permitAll
+				   (every one can see)
+
+   /home         HomePage.html          Authenticated
+				 ( only after login + any role)
+
+   /emp          EmpPage.html           hasAuthority[EMPLOYEE]
+				( after login with Role EMPLOYEE)
+
+   /adm          AdminPage.html       hasAuthority[ADMIN]
+				( after login with Role ADMIN)
+
+   /std          StudentPage.html  hasAuthority[STUDENT]
+				( after login with Role STUDENT)
+
+   /denied       DeniedPage.html      Login + invalid role access
+					(403 Status)
+
+
+-------code-------------------------------------------------
+Name : SpringBootSecurityJdbcAuthEx
+Dep  : Web, Devtools, Thymeleaf, JDBC API, Security, MySQL
+
+*) Controller:-
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HomeController {
+
+	@GetMapping("/welcome")
+	public String showWelcomePage() {
+		return "WelcomePage";
+	}
+	
+	@GetMapping("/home")
+	public String showHomePage() {
+		return "HomePage";
+	}
+	
+	@GetMapping("/emp")
+	public String showEmpPage() {
+		return "EmpPage";
+	}
+	
+	@GetMapping("/adm")
+	public String showAdminPage() {
+		return "AdminPage";
+	}
+	
+	@GetMapping("/std")
+	public String showStdPage() {
+		return "StudentPage";
+	}
+	
+	@GetMapping("/denied")
+	public String showDeniedPage() {
+		return "DeniedPage";
+	}
+	
+}
+
+
+b. UI Pages
+-------AdminPage.html---------
+<html>
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>WELCOME TO ADMIN</h3>
+	<a href="logout">CLICK TO LOGOUT</a>
+</body>
+
+</html>
+--------DeniedPage.html--------------------
+<html>
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>YOU CAN NOT ACCESS THIS!!</h3>
+	<a href="logout">CLICK TO LOGOUT</a>
+</body>
+
+</html>
+---------------EmpPage.html---------------
+<html>
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>WELCOME TO EMPLOYEE</h3>
+	<a href="logout">CLICK TO LOGOUT</a>
+</body>
+
+</html>
+-----------------HomePage.html------------
+<html 
+   xmlns:th="https://www.thymeleaf.org/" 
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>WELCOME TO HOME AFTER LOGIN</h3>
+	<span sec:authentication="name"></span>
+	<span sec:authentication="principal.authorities"></span>
+	<hr/>
+	<a th:href="@{/signout}">CLICK TO LOGOUT</a>
+</body>
+
+</html>
+-----------------StudentPage.html----------
+<html>
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>WELCOME TO STUDENT</h3>
+	<a href="logout">CLICK TO LOGOUT</a>
+</body>
+
+</html>
+----------------WelcomePage.html----------
+<html>
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>WELCOME TO ALL</h3>
+</body>
+
+</html>
+
+*) application.properties
+----------------------------------
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot630pm
+spring.datasource.username=root
+spring.datasource.password=root
+----------------------------------
+
+*) AppConfig:-
+package in.nareshit.raghu.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@Configuration
+public class AppConfig {
+
+	@Bean
+	public BCryptPasswordEncoder encoder() {
+		return new BCryptPasswordEncoder();
+	}
+}
+
+
+*) SecurityConfig:-
+package in.nareshit.raghu.config;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Autowired
+	private DataSource dataSource;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.jdbcAuthentication()
+		.dataSource(dataSource)
+		.usersByUsernameQuery("SELECT uname, upwd, uenable FROM user_tab WHERE uname=?")
+		.authoritiesByUsernameQuery("SELECT uname, urole FROM user_tab WHERE uname=?")
+		.passwordEncoder(passwordEncoder)
+		;
+	}
+	
+	
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+		// Access level
+		.antMatchers("/welcome").permitAll()
+		.antMatchers("/emp").hasAuthority("EMPLOYEE")
+		.antMatchers("/adm").hasAuthority("ADMIN")
+		.antMatchers("/std").hasAuthority("STUDENT")
+		
+		.anyRequest().authenticated()
+		
+		//Form Details
+		.and()
+		.formLogin()
+		.defaultSuccessUrl("/home", true)
+		
+		//logout
+		.and()
+		.logout()
+		.logoutRequestMatcher(new AntPathRequestMatcher("/signout"))
+		
+		//exception handling
+		.and()
+		.exceptionHandling()
+		.accessDeniedPage("/denied")
+		;
+	}
+}
+=============Task===============================================
+1. What is State management / Session Management / Http Session?
+
+2. How can we work on HTTP Session using Servlets API?
+  a. Creating new Session
+  b. Reading existed Session
+  c. Destroy the Session
+  d. Store data in Session
+  e. Read/Modify data from Session
+
+3. What is JWT (JSON Web Token) ? Why it is used?
+
+4. How can we create JWT Token using java and How can read/validate it?
+
+5. What is Open Authorization ? Where is it used?
+
+--To Show User and Roles at Thymeleaf------------------------
+S#1 at pom.xml
+<dependency>
+	<groupId>org.thymeleaf.extras</groupId>
+	<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+</dependency> 
+
+S#2 At HTML file
+<html 
+   xmlns:th="https://www.thymeleaf.org/" 
+   xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+--Ref Notes:--
+https://github.com/thymeleaf/thymeleaf-extras-springsecurity
+The sec:authentication attribute is used to print logged user name and roles:
+Logged user: <span sec:authentication="name"></span>
+Roles: <span sec:authentication="principal.authorities"></span>
+--------
+
+S#3 Print username:
+<span sec:authentication="name"></span>
+    Print User roles:
+<span sec:authentication="principal.authorities"></span>

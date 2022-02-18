@@ -1,0 +1,122 @@
+			 Date : 10/11/2021
+			 Spring Boot 6:15PM
+			     Mr. RAGHU
+	----------------------------------------------------
+Apache kafka:-
+https://kafka.apache.org/quickstart
+https://data-flair.training/blogs/apache-kafka-tutorial/
+
+			Apache Kafka
+
+*) Open Source API used for Message Queues.
+*) Multi-Broker System
+  > Here multiple brokers / Message Brokers are exist
+  > Even if one Broker is down, still data exchange is possible
+     using other brokers
+*) Data Partitions
+  > Data can be sent by making it into multiple parts/packets
+    [we can specify partitions size, default is 1]
+*) It is language independent and supports different technologies
+   [Database, FileSystem, Language APIs]
+*) Runs on Scala and Zookeeper software.
+*) Topics only. No concept of P2P.
+  > Topics supports sending data to 1..n consumers
+     based on replication factor (no.of copies to be created)
+*) Kafka supports any protocol, protocol independent.
+=======================================================
+*) One Message Broker is used to send data to one conusmer at a time.
+*) There can be multiple brokers created/handled for load balace
+   (to communicate with multiple consumers)
+*) Cluster = Collection of Message Brokers.
+*) Topics = It will store data in key=val format,
+	where KEY= TopicName, VAL = Data
+*) Producer will send data to Kafka Software in Serialized format.
+*) Consumer will read this in Deserialized.
+*) Topic Partitions can be created only one Serialized data.
+*) All Topics and Cluster is controlled by Zookeeper.
+*) The complete Kafka s/w is called as EcoSystem
+   
+    || EcoSystem = Topics + Zookeeper + Cluster ||
+
+*) We should request to Zookeeper to create topic with
+   details (topicName, replication factor, partitions)
+      replication factor = No.of message copies
+      partitions  = one mesage is made into multiple parts
+
+*) Every Partition gets one index value called as offset.
+   Starts from zero.
+
+*) MR : Message Replica reads our input ' replication factor'
+   and creates no.of copies.
+
+*) One message broker is allocated to one consumer and pointed
+   to Topic Section using MR, by using 'topicName'.
+
+*) Zookeeper Controls all message brokers [creation/allocate/remove]
+   and topics [creation/alter/remove].
+
+*) When we Start this setup zookeeper handles default brokers
+   setup [default count = 1 ] such process is called as 
+   bootstrap.
+
+Q) Which component will send data to consumer?
+A) Message Broker (or) Broker Server
+
+Q) How Message Broker and Consumer are connected?
+A) Connection details + mainly TopicName
+
+Q) Who will create Topic in Topic Section?
+A) Zookeeper.
+
+Q) To create a topic what are input give to zookeeper?
+A)
+   TopicName, Partitions, Replication factor.
+
+=> Topic is memory / destination exist in Kafka s/w to store data
+
+Q) Who will create a copy of actual message to send to consumer?
+A) Message Replica, based on Replication factor 
+    (or based on no.of consumers connected/groupId)
+
+Q) Data is sent (from Producer) in what format?
+   Data is received (at Consumer) in what format?
+A) K=V, Serialized at Producer and Deserialized at Consumer.
+
+===========Kafka Setup==================================================
+1. Goto:
+https://kafka.apache.org/downloads
+2. Click on:
+  Under  Binary downloads:
+   Scala 2.12  - kafka_2.12-2.8.0.tgz (asc, sha512)
+
+3. Extract to a folder
+4. Copy to root location (or c:/ Drive)
+=============Kafka Commands=====================================
+For non-windows :
+  https://kafka.apache.org/quickstart
+
+Root Folder:-
+C:\kafka_2.12-2.8.0
+
+1. Zookeeper
+C:\kafka_2.12-2.8.0>.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+*) It runs on port number : 2181
+
+2. Kafka Server/Cluster
+C:\kafka_2.12-2.8.0>.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+*) It runs with full setup on port : 9092
+
+3. Create a new topic
+C:\kafka_2.12-2.8.0>.\bin\windows\kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic nitonea
+
+*) Topic creation is given to Zookeeper.
+
+4. Producer
+C:\kafka_2.12-2.8.0>.\bin\windows\kafka-console-producer.bat --bootstrap-server localhost:9092 --topic nitonea
+
+5. Consumer
+C:\kafka_2.12-2.8.0>.\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic nitonea --from-beginning
+
+--from-beginning : Even message sent before consumer starting by producer can read after starting consumer.

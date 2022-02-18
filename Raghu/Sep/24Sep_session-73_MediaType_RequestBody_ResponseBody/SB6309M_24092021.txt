@@ -1,0 +1,230 @@
+				Date : 24-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+		-----------------------------------------------
+
+Q) How can we implement one Rest API in Spring Boot?
+A) Take one Module
+   Define RestController class
+   write methods 
+   Link with Paths, http Methods
+   Use Annotations
+     @GetMapping
+     @ResponseBody
+     @PathVariable..etc
+
+Q) What is endpoint ? how can we implement?
+A) Endpoint : Details of a REST API to make Http call
+		URL, MethodType, Input/Output
+    
+
+		-----------------------------------------------
+			MediaTypes -- JSON / XML
+
+@RequestBody  : Input / Method Parameter / Http Request
+
+         JSON / XML ---------------> Object ----> method Parameter
+
+@ResponseBody : Output / Method ReturnType / Http Response
+
+        Method ReturnType --------> Object -----> JSON/ XML
+
+-----------------------------------------------------------------------------
+@ResponseBody :-
+
+> By default when we apply @RestController then internally @ResponseBody
+  also applied.
+
+> @ResponseBody works on ReturnType of Controller methods.
+
+> @ResponseBody convert data into XML/JSON , if returntype is non-String type.
+  Ex:
+    Employee, List<String> , Admin ----> JSON/XML
+
+> ***** Spring Boot default supports only JSON.
+       For XML we need to add one additional dependency.
+
+<dependency>
+    <groupId>com.fasterxml.jackson.dataformat</groupId>
+    <artifactId>jackson-dataformat-xml</artifactId>
+</dependency>
+
+--JSON Formats---------------
+
+Object :
+ {
+   "key" : value,
+ }
+
+Nested/HAS-A Relation:
+ { //parent
+    "hasAvariable": {
+        "key" : value,  //child
+    }
+ }
+
+List/Set/Array :
+[ data, data, data ]
+
+Map/Properties:
+{
+  "mapKey" : "mapValue",
+  "mapKey" : "mapValue",
+  "mapKey" : "mapValue"
+}
+
+*) JDK 9 has provided ImmutableCollections creation using of() overloaded
+   method.
+
+   By using this we create a Collection object in short format
+   processing also bit faster result another Collection as it is 
+   ImmutableCollection.
+
+---------------------MediaType Example code --------------------------
+1.
+ Name : SpringBoot2RestMediaTypeEx
+ Dep  : Web, Lombok, Devtools
+
+2. Models
+package in.nareshit.raghu.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Exam {
+
+	private String subName;
+	private String result;
+	private Integer marks;
+}
+----------
+package in.nareshit.raghu.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Student {
+
+	private Integer sid;
+	private String sname;
+	private Double sfee;
+}
+---------
+package in.nareshit.raghu.model;
+
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ExamResult {
+
+	private Integer id;
+	private String result;
+	private String grade;
+	private Integer totalMarks;
+	
+	private List<Exam> data;
+	
+	private Student student;
+}
+
+3. RestController
+package in.nareshit.raghu.rest;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.nareshit.raghu.model.Exam;
+import in.nareshit.raghu.model.ExamResult;
+import in.nareshit.raghu.model.Student;
+
+@RestController
+@RequestMapping("/student")
+public class StudentRestController {
+
+	@GetMapping("/fetch")
+	public Student findOneStudent() {
+		return new Student(101,"AA", 200.0);
+	}
+	
+	@GetMapping("/all")
+	public List<Student> findAllStudent() {
+		return Arrays.asList(
+				new Student(101,"AA", 200.0),
+				new Student(102,"BB", 300.0),
+				new Student(103,"CC", 400.0),
+				new Student(104,"DD", 500.0)
+				);
+	}
+	
+	@GetMapping("/result")
+	public ExamResult getStudentResult() {
+		return new ExamResult(
+				550, "PASS", "A+", 360, 
+				Arrays.asList(
+							new Exam("MATHS", "PASS", 80),
+							new Exam("SCIENCE", "PASS", 90),
+							new Exam("CHEM", "PASS", 100),
+							new Exam("BOI", "PASS", 90)
+						), 
+				new Student(98601, "AJAY KUMAR", 200.0)
+				);
+	}
+	
+	@GetMapping("/info")
+	public Map<String,Student> getAllStudentsByCodes() {
+		return Map.of(
+					"SA-001-51200-TY",new Student(101,"AA", 100.0),
+					"SA-001-51201-TR",new Student(102,"BB", 300.0),
+					"SA-001-51202-TE",new Student(103,"CC", 400.0)
+				);
+	}
+	
+}
+
+*) Run Application and Enter URL like: (Browser/POSTMAN)
+http://localhost:8080/student/fetch
+http://localhost:8080/student/all
+http://localhost:8080/student/result
+http://localhost:8080/student/info
+
+-----------------------------------------------------------------
+Task: Create ReST API for  Product Module
+  that provides output for
+  one Product object
+  List of Product objects
+  Map of Product objects
+
+> Product (id,code,name, vendors:List<String>, cost, Set<String> colors)
+-----------------------------------------------------------------
+
+For XML Support
+S#1 in pom.xml
+
+<dependency>
+    <groupId>com.fasterxml.jackson.dataformat</groupId>
+    <artifactId>jackson-dataformat-xml</artifactId>
+</dependency>
+
+S#2 Provider Header Param in Request
+  Accept : application/xml
+
+*) No code changes required. No additional annotations required 

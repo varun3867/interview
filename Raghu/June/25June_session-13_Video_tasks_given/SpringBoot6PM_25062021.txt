@@ -1,0 +1,35 @@
+				Date : 25-Jun-21
+				Spring Boot 6PM
+				   Mr. RAGHU
+			------------------------------------
+Maven Videos(3):
+https://www.youtube.com/watch?v=9eJAvApRAI0
+https://www.youtube.com/watch?v=jOykBjSl1X0
+https://www.youtube.com/watch?v=iLwuhbnFPqo
+
+JUnit:
+https://www.youtube.com/watch?v=PT9WQ_Rz1ew
+https://www.youtube.com/watch?v=Rue28g3reRI
+
+Mockito Overview:
+https://youtu.be/6hmx--O8PYE
+https://youtu.be/pFLFKrCknB0
+https://youtu.be/GgWuE-k1_nI
+http://youtu.be/tWdqtEXE47A
+
+Git:
+https://www.youtube.com/watch?v=T2UHpsxJ-2o
+https://www.youtube.com/watch?v=38UGVeXuj3Q
+
+
+AGILE
+https://www.youtube.com/watch?v=MoxspPivr_Q
+
+
+Debug:
+https://www.youtube.com/watch?v=HwwF4pvYWws
+
+
+Log4J
+https://www.youtube.com/watch?v=mblGoKU1aKo
+https://www.youtube.com/watch?v=5oLfHiP_iJc

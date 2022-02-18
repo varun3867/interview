@@ -1,0 +1,418 @@
+				Date : 31-08-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	----------------------------------------------------------
+			Rule to write Controller
+
+1. Class must have @Controller
+
+> @Controller Creates object to our controller class and Supports HTTP protocol
+> If we apply @Component it supports object creation.
+   But HTTP protocol is not supported.
+
+> Result is : 404-Not Found, if this @Controller is not applied.
+
+--Sample code-------------------------------
+Name : Springboot2WeMvcControlelrRules
+Dep  : Spring Web
+
+a. Controller class
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class EmployeeController {
+
+	public EmployeeController() {
+		System.out.println("OBJ IS CREATED");
+	}
+	
+	@RequestMapping("/home")
+	public String showPage() {
+		return "EmpHome";
+	}
+}
+
+b. application.properties
+server.port=9090
+
+spring.mvc.view.prefix=/WEB-INF/pages/
+spring.mvc.view.suffix=.jsp
+
+c. Create below folder system
+ src
+  |-main
+     |-webapp
+         |- WEB-INF
+	     |-pages
+	        |-EmpHome.jsp
+
+d. EmpHome.jsp
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE HOME </h3>
+</body>
+</html>
+
+e. Run App and Enter URL:
+http://localhost:9090/home
+________________________________________________________________________
+2. @RequestMapping must be applied at method level inside controller.
+    browser makes request using URL/PATH only.
+   Controller method returns ViewName (PageName, no extension and no location)
+
+
+> This @RequestMapping method executed once per request.
+
+_________________________________________________________________________
+3. URL is case-sensitive. /show, /SHOW, /ShoW are different
+
+--sample code------
+*) Controller class
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class EmployeeController {
+
+	public EmployeeController() {
+		System.out.println("OBJ IS CREATED");
+	}
+
+	@RequestMapping("/home")
+	public String showPage() {
+		System.out.println("EXECUTED NOW....");
+		return "EmpHome";
+	}
+	
+	@RequestMapping("/HOME")
+	public String showPageB() {
+		System.out.println("EXECUTED NOW....");
+		return "EmpDashboard";
+	}
+}
+
+*) UI pages:
+-------EmpHome.jsp------------------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE HOME </h3>
+</body>
+</html>
+-------EmpDashboard.jsp-------------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE DASHBOARD </h3>
+</body>
+</html>
+________________________________________________________________________
+4. Every Java Method must be connected with GET/POST.
+
+Syntax: 
+   @RequestMapping(value="/path",method=RequestMethod.GET)
+   @RequestMapping(value="/path",method=RequestMethod.POST)
+   
+
+*) If we did not specify RequestMethod, then default is GET.
+
+Below two are same:
+@RequestMapping("/login")
+@RequestMapping(value = "/login",method = RequestMethod.GET)
+
+--Sample code--------------
+*) Controller
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class EmployeeController {
+
+	@RequestMapping("/login")//GET
+	//@RequestMapping(value = "/login",method = RequestMethod.GET)//GET
+	public String showPage() {
+		System.out.println("/login with GET is called");
+		return "EmpLogin";
+	}
+	
+	@RequestMapping(value = "/home",method = RequestMethod.POST)//POST
+	public String showPageB() {
+		System.out.println("/home with POST is called");
+		return "EmpDashboard";
+	}
+}
+
+*) UI pages:
+---EmpLogin.jsp-----------------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE LOGIN </h3>
+<hr/>
+<form action="home" method="POST">
+	<button type="submit">View Home</button>
+</form>
+</body>
+</html>
+
+---EmpDashboard.jsp-------------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE DASHBOARD </h3>
+<a href="login">Logout</a>
+</body>
+</html>
+
+Q) how can we make call to GET method using browser?
+A) Enter URL in address bar, HyperLink(<a>), FORM with GET
+
+Q) how can we make call to POST method using browser?
+A) FORM with POST
+
+_______________________________________________________________
+5. Path Can be duplicated but Combination of HttpMethod + Path must be unique
+
+--sample code-----------
+*) Controller class
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class EmployeeController {
+
+	@RequestMapping("/home")//GET
+	public String showPage() {
+		System.out.println("/home with GET is called");
+		return "EmpLogin";
+	}
+	
+	@RequestMapping(value = "/home",method = RequestMethod.POST)//POST
+	public String showPageB() {
+		System.out.println("/home with POST is called");
+		return "EmpDashboard";
+	}
+}
+
+*) UI pages:
+------------EmpLogin.jsp--------------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE LOGIN </h3>
+<hr/>
+<form action="home" method="POST">
+	<button type="submit">View Home</button>
+</form>
+</body>
+</html>
+----------EmpDashboard.jsp----------
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE DASHBOARD </h3>
+<a href="home">Logout</a>
+</body>
+</html>
+
+
+*) if we provide same combination multiple times
+
+IllegalStateException: Ambiguous mapping. 
+Cannot map EmployeeController#showPageB() to {POST [/home]}
+There is already EmployeeController#showPageA() mapped.
+
+--Sample code for above error-----------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class EmployeeController {
+
+	@RequestMapping(value = "/home",method = RequestMethod.POST)//GET
+	public String showPageA() {
+		System.out.println("/home with GET is called");
+		return "EmpLogin";
+	}
+	
+	@RequestMapping(value = "/home",method = RequestMethod.POST)//POST
+	public String showPageB() {
+		System.out.println("/home with POST is called");
+		return "EmpDashboard";
+	}
+}
+
+___________________________________________________________________
+6. We can link multiple URLs/Paths with one Java method
+
+---sample code-----------------
+*) Controller
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class EmployeeController {
+
+	@RequestMapping({
+		"/home",
+		"/login",
+		"/welcome"
+	})
+	public String showPageA() {
+		System.out.println("IT IS CALLED...");
+		return "EmpLogin";
+	}
+	
+	
+}
+
+*) UI : EmpLogin.jsp
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE LOGIN </h3>
+</body>
+</html>
+
+________________________________________________________________
+7. We can link one Path with multiple HTTP Method types
+ex:
+   /login + GET ---> home.html
+   /login + POST --> home.html
+
+*) use HttpServletRequest#getMethod() to find Request Method type at runtime
+
+---Sample code------------
+*) Controller class
+package in.nareshit.raghu.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class EmployeeController {
+
+	@RequestMapping(value = "/login", method = {
+			RequestMethod.GET,
+			RequestMethod.POST
+	})
+	public String showPageA(HttpServletRequest request) {
+		System.out.println(request.getMethod()+" + /login  IS CALLED...");
+		return "EmpLogin";
+	}
+	
+	
+}
+
+*) UI : EmpLogin.jsp
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE LOGIN </h3>
+<hr/>
+<form action="login" method="POST">
+	<button type="submit">View Home</button>
+</form>
+</body>
+</html>
+_____________________________________________________________
+8. We can not provide two or more times @RequestMapping to one java method
+
+Compile time error:
+Duplicate annotation of non-repeatable type @RequestMapping.
+
+--sample controller code--------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class EmployeeController {
+	//compile time error.
+	@RequestMapping(value = "/login")
+	@RequestMapping(value = "/home",method = RequestMethod.POST)
+	public String showPageA() {
+		return "EmpLogin";
+	}
+}
+______________________________________________________
+9. Multiple URLs/Paths for one Java method can not be mixed with
+   specific combinations.
+
+ex:   /search + GET , /find + POST  ---> showData() //not possible
+
+--sample code-------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class EmployeeController {
+
+	@RequestMapping(value = "/login",method = RequestMethod.GET)
+	@RequestMapping(value = "/home",method = RequestMethod.POST)
+	public String showPageA() {
+		return "EmpLogin";
+	}
+	
+	
+}
+__________________________________________________________
+10. Multiple URLs/Paths using Multiple Method types is valid.
+
+--sample code-----------
+package in.nareshit.raghu.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class EmployeeController {
+
+	@RequestMapping(value = {
+			"/login",
+			"/home"
+	},method = { 
+			RequestMethod.GET,
+			RequestMethod.POST
+	})
+	public String showPageA(HttpServletRequest request) {
+		System.out.println(request.getRequestURI() +"-"+request.getMethod()+" is called");
+		return "EmpLogin";
+	}
+
+	
+}
+
+*) UI : EmpLogin.jsp
+<html>
+<body>
+<h3>WELCOME TO EMPLOYEE LOGIN </h3>
+<hr/>
+<form action="login" method="POST">
+	<button type="submit">View LOGIN POST</button>
+</form>
+<form action="home" method="POST">
+	<button type="submit">View HOME POST</button>
+</form>
+</body>
+</html>
+____________________________________________________________________

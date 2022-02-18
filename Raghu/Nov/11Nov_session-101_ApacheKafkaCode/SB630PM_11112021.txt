@@ -1,0 +1,276 @@
+			Date : 11/11/2021
+			Spring Boot 6:30PM
+			  Mr. RAGHU
+	------------------------------------------------
+Apache kafka:-
+https://kafka.apache.org/quickstart
+https://data-flair.training/blogs/apache-kafka-tutorial/
+
+		Spring Boot ReST + Apache Kafka
+
+*) KafkaTemplate<K,V> to send data from Producer to Kafka S/w
+   using data in Serialized format.
+
+*) Here, K=TopicName and V=Data are sent using send(k,v)
+   method, in-built serializers are used.
+
+*) You must connect application with bootstrap server
+    localhost:9092
+
+*) We can use groupId to specify no.of consumers for given topic
+   so, that no.of replicas are created.
+
+*) At Consumer @KafkaListener(topics="",groupId="").
+======================code==================================
+Name : SpringBootApacheKafkaEx
+Dep  : Lombok, Data Jpa, MySQL, Web, Spring for Apache Kafka
+
+a. application.properties
+server.port=8686
+
+spring.kafka.producer.bootstrap-servers=localhost:9092
+spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer
+
+spring.kafka.consumer.bootstrap-servers=localhost:9092
+spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.group-id=sample-nit
+
+my.app.kafka.tpc-name=nit-raghu
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot630pm
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=create
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+----------
+b. Entity and Repository
+package in.nareshit.raghu.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name="stock_quote_tab")
+public class StockQuote {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="sid")
+	private Integer id;
+	
+	@Column(name="scode")
+	private String stockCode;
+	
+	@Column(name="samt")
+	private Double stockCost;
+}
+--------
+package in.nareshit.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.nareshit.raghu.entity.StockQuote;
+
+public interface StockQuoteRepository 
+	extends JpaRepository<StockQuote, Integer> {
+
+}
+------
+c. JSON UTIL
+package in.nareshit.raghu.util;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import in.nareshit.raghu.entity.StockQuote;
+
+public class JsonUtil {
+
+	public static StockQuote jsonToObject(String message) throws Exception{
+		return new ObjectMapper().readValue(message, StockQuote.class);
+	}
+
+	public static String objToJson(StockQuote quote) {
+		try {
+			return new ObjectMapper().writeValueAsString(quote);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+}
+----------------
+d. MessageStore
+package in.nareshit.raghu.store;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.entity.StockQuote;
+import in.nareshit.raghu.repo.StockQuoteRepository;
+
+@Component
+public class MessageStore {
+
+	@Autowired
+	private StockQuoteRepository repo;
+	
+	public void create(StockQuote quote) {
+		repo.save(quote);
+	}
+	
+	public List<StockQuote> fetchAll() {
+		return repo.findAll();
+	}
+}
+------------------
+e. consumer
+package in.nareshit.raghu.consumer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.entity.StockQuote;
+import in.nareshit.raghu.store.MessageStore;
+import in.nareshit.raghu.util.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class ConsumerService {
+	
+	@Autowired
+	private MessageStore store;
+
+	@KafkaListener(topics = "${my.app.kafka.tpc-name}",groupId = "sample-nit" )
+	public void readMessage(String message) {
+		try {
+			StockQuote quote = JsonUtil.jsonToObject(message);
+			log.info("Data at Consumer {}",quote);
+			store.create(quote);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("Problem at consumer {}",e.getMessage());
+		}
+	}
+}
+---------------------
+f. Producer
+package in.nareshit.raghu.producer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class ProducerService {
+	
+	@Autowired
+	private KafkaTemplate<String, String> template;
+	
+	@Value("${my.app.kafka.tpc-name}")
+	private String topic;
+	
+	public void sendData(String data) {
+		log.info("SENDING DATA TO KAFKA {}",data);
+		template.send(topic, data);
+	}
+}
+------------------
+g. RestController
+package in.nareshit.raghu.rest;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.nareshit.raghu.entity.StockQuote;
+import in.nareshit.raghu.producer.ProducerService;
+import in.nareshit.raghu.store.MessageStore;
+import in.nareshit.raghu.util.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
+
+@RestController
+@RequestMapping("/stock")
+@Slf4j
+public class KafkaNitRestController {
+
+	@Autowired
+	private ProducerService service;
+	
+	@Autowired
+	private MessageStore store;
+	
+	@GetMapping("/create/{code}/{cost}")
+	public ResponseEntity<String> createQuote(
+			@PathVariable String code,
+			@PathVariable Double cost
+			) 
+	{
+		//object created
+		StockQuote quote = new StockQuote();
+		quote.setStockCode(code);
+		quote.setStockCost(cost);
+		//JSON
+		String json = JsonUtil.objToJson(quote);
+		log.info("SENT TO PRODUCER {}",json);
+		service.sendData(json);
+		
+		return new ResponseEntity<>("SUCCESS!",HttpStatus.CREATED);
+	}
+	@GetMapping("/all")
+	public ResponseEntity<List<StockQuote>> viewAll() {
+		log.info("FETCH CALL TO KAFKA CONTROLLER!!");
+		return ResponseEntity.ok(store.fetchAll());
+	}
+}
+
+
+=========Execution order==================================================
+1. Zookeeper
+C:\kafka_2.12-2.8.0>.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+*) It runs on port number : 2181
+
+2. Kafka Server/Cluster
+C:\kafka_2.12-2.8.0>.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+*) It runs with full setup on port : 9092
+
+3. Create a new topic
+C:\kafka_2.12-2.8.0>.\bin\windows\kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic nit-raghu
+
+4. Run your application starter class
+5. Enter below URLs
+http://localhost:8686/stock/create/ERP/250.0
+http://localhost:8686/stock/create/GTR/9690
+http://localhost:8686/stock/create/ACRT/550
+http://localhost:8686/stock/all
+
+---Task------------------

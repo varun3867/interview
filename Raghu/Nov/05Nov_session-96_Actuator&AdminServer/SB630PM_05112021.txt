@@ -1,0 +1,177 @@
+				Date : 05-11-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	--------------------------------------------------------------
+			Spring Boot - Actuator
+
+1. beans :-
+http://localhost:8686/actuator/beans
+
+=> This is used to fetch all objects details from Spring container and display.
+=> We can find here, is our required class object is created or not?
+
+2. env :-
+http://localhost:8686/actuator/env
+
+=> From Different sources KEY-VAL data is loaded into Spring container.
+  Such data is stored inside Environment Memory. We can find all here.
+
+ Sources: Option args, VM Args, OS/System properties, JDK details,
+             application properties, YAML files..etc
+
+3. configprops :-
+http://localhost:8686/actuator/configprops
+=> Keys which are loaded using annotation @ConfigurationProperties
+   can be find here.
+
+4. health :-
+http://localhost:8686/actuator/health
+=> If application is started without any issues and able to access all
+   services. ie UP.
+
+=> Its connected services are not working then it may give different exceptions.
+
+Case-study:-
+ Stop DB server, after application started
+ Throw Some exception, inside service layer.
+ Enable cache and disable Database(RedisDB)
+
+[org.springframework.boot.actuate.health] : Status
+
+#Display Disk and Ping details without security
+management.endpoint.health.show-details=always
+
+#Display Disk and Ping details only after login
+management.endpoint.health.show-details=when-authorized
+
+# Never Display Disk and Ping details. 
+management.endpoint.health.show-details=never
+
+#Disable a specific endpoint
+management.endpoint.health.enabled=false
+management.endpoint.<name>.enabled=false
+
+#To disable all endpoints
+management.endpoints.enabled-by-default=false
+
+-----------------------------------------------------------------------
+5. info :-
+http://localhost:8686/actuator/info
+ This is used to provide application, vendor/client, version, module
+ information in key=val. It is called as Meta-Data.
+
+
+#Metadata
+info.my.app.name=TEST-APP
+info.my.app.client=NIT
+info.my.vendor.name=TEST-ABC
+info.my.uat.version=3.2GA
+=======================================================================
+6. mapping:-
+http://localhost:8686/actuator/mappings
+=> To find out Mapping details : Http method Type, URL with what resources.
+
+
+7. scheduledtasks:-
+http://localhost:8686/actuator/scheduledtasks
+=> To find all jobs scheduling details (ex: cron..etc) we can find here.
+
+VM Software:-
+https://visualvm.github.io/download.html
+
+8. heapdump:-
+http://localhost:8686/actuator/heapdump
+=> It gives information of heap information currently creates as result object.
+
+https://stackoverflow.com/questions/2064427/recommendations-for-a-heap-analysis-tool-for-java
+
+9. threaddump:-
+http://localhost:8686/actuator/threaddump
+=> Current no.of threads exist in JVM.
+==============================================================================
+			Spring Boot Admin Server
+
+=> codecentric.de has provided 3rd party library for Spring Boot Admin Server
+   and client integrations for Visualizing Actuator Result.
+
+=> Create one application as admin Server
+=> All other Applications (MS#) should have admin client
+   and link with admin server.
+
+----code--------------------------------
+Name : SpringBootAdminSever
+Dep  : Spring Boot Admin server
+
+1. application.properties
+server.port=9009
+
+2. At main class : @EnableAdminServer
+
+3. Run app and enter URL:
+http://localhost:9009/applications
+
+---
+Name : (Any MS# application)
+Dep  : web, lombok, actuator, admin client
+
+2. application.properties
+server.port=8686
+
+spring.application.name=EMP-SERVICE
+
+management.endpoints.web.exposure.include=*
+#management.endpoint.health.show-details=when-authorized
+#management.endpoint.health.enabled=false
+#management.endpoints.enabled-by-default=false
+
+#Metadata
+info.my.app.name=TEST-APP
+info.my.app.client=NIT
+info.my.vendor.name=TEST-ABC
+info.my.uat.version=3.2GA
+
+#location of admin server
+spring.boot.admin.client.url=http://localhost:9009
+
+
+3. AppConfig
+package in.nareshit.raghu.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class AppConfig {
+    @Bean
+	public RestTemplate rt() {
+		return new RestTemplate();
+	}
+}
+
+
+4. restController
+package in.nareshit.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+@RestController
+@RequestMapping("/employee")
+public class EmployeeRestController {
+	
+	@Autowired
+	private RestTemplate rt;
+
+	@GetMapping("/data")
+	public String showData() {
+		return "FROM - EMP";
+	}
+	
+}
+
+5. Run application and check at Admin Server
+http://localhost:9009/applications

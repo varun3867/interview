@@ -1,0 +1,60 @@
+				Date : 25-10-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	------------------------------------------------------------------
+			Microservices Intra-Communication
+
+*) One MS# wants to communicate with another MS# and exchange data
+   ie called as Intra-Communication.
+
+*) Monolithic application this is called as Modules Integration.
+
+*) Do not use Direct IP/PORT of other MS# for communication.
+   Take such details from Eureka Server.
+
+*) For Intra-communication, MS# are given 3 concepts/consumers:
+  a. DiscoveryClient (old)
+  b. LoadBalancerClient
+  c. Feign Client (****)
+
+ ServiceInstance = ServiceId + InstanceId + HOST + PORT + LoadFactor
+ If we run/register one MS# then one ServiceInstance is created inside Eureka.
+
+
+ -----Eureka Server Register -----------------------------------------
+     ServiceId        InstanceId         HOST         PORT        LF
+------------------------------------------------------------------------
+   Vendor-Service   Vendor-Service   192.168.10.1     8080       0/200
+   Product-Service  Product-Service  192.168.12.10    9090       0/200
+------------------------------------------------------------------------
+
+ServiceId = spring.application.name (fixed)
+InstanceId = A Number given for current instance. Not required incase of
+                 one instance.
+
+HOST = domain name or IP address 
+
+=====================================================================
+*) in URL always URI is dynamic and paths are static.
+*) These URI details exist inside Eureka Server as ServiceInstance
+  ServiceInstance(serviceId + InstanceId + URI)
+*) select any one client to get ServiceInstance-->Read URI
+
+Q) Why DiscoveryClient is used?
+A) It is a Consumer code, used to fetch ServiceInstance data from eureka
+   based on ServiceId given. So, that one MS# can make request to another MS#.
+
+ @Autowired
+ private DiscoveryClient client;
+
+ List<ServiceInstance>  list = client.getInstances(serviceId);
+
+ ServiceInstance si = list.get(0);
+
+ URI uri = si.getUri();
+-------
+ String url = uri + "/path";
+
+ RestTemplate rt = new RestTemplate();
+
+ ResponseEntity<String> response =  rt.getForEntity(url,String.class); 

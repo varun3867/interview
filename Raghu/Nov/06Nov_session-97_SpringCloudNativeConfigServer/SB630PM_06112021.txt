@@ -1,0 +1,95 @@
+				Date : 06-11-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	-----------------------------------------------------------
+			Native Config Server
+
+*) External Config Server:- using git locations to store our common properties
+
+*) Native Config Server:- Used in Dev/Test Environments [profile=native]
+=> It is recomanded to use store common properties file in local machine.
+=> Provide properties file native location.
+
+   spring.cloud.config.server.native.search-locations=<<local_location>>
+
+<<local_location>> it can be inside system 
+  ex: "file://C:/config"
+  ex: "classpath:/config"   [inside project src/main/resources ]
+
+========================================================================
+1. Eureka Server
+Name : SpringCloudCsEurekaServer
+Dep  : Eureka Server
+
+> At main class : @EnableEurekaServer
+--application.properties-------
+server.port=8761
+
+eureka.client.fetch-registry=false
+eureka.client.register-with-eureka=false
+___________________________________________________________________________
+2. Config Server(Native)
+Name : SpringCloudCsNativeConfigServer
+Dep  : Config Server
+
+> At main class: @EnableConfigServer
+//src/main/resources
+---application.properties---------------------------------
+server.port=8888
+
+spring.cloud.config.server.native.search-locations=classpath:/my-config
+#spring.cloud.config.server.native.search-locations=file://D:/my-config
+spring.profiles.active=native
+-------------------------------------------------------------
+
+> create a folder 'my-config' inside 'src/main/resources'
+> create application.properties inside 'my-config' folder
+
+
+//src/main/resources/my-config
+---application.properties---------------------------------
+my.app.title=SAMPLE-LOCAL-CS
+__________________________________________________________________
+
+3. MS# Application
+Name : SpringCloudEmployeeService
+Dep  : web, Eureka Client, Config Client
+
+> At main class : @EnableEurekaClient
+---application.properties-----------------------
+server.port=9696
+
+spring.application.name=EMPLOYEE-SERVICE
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+spring.config.import=optional:configserver:http://localhost:8888
+
+management.endpoints.web.exposure.include=*
+------------------------------------------------
+
+> Rest Controller
+package in.nareshit.raghu.rest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/employee")
+@RefreshScope
+public class EmployeeRestController {
+
+	@Value("${my.app.title}")
+	private String title;
+	
+	@GetMapping("/info")
+	public String showData() {
+		return "FROM MS#-CS-==>" + title;
+	}
+}
+
+=========Execution Order===================================================
+1. Eureka Server
+2. Config Server
+3. MS# Application

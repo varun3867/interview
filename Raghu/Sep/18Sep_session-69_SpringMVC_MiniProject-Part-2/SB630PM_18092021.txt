@@ -1,0 +1,166 @@
+				Date : 18-09-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	-----------------------------------------------------------
+https://www.w3schools.com/bootstrap4/default.asp
+
+				Mini Project
+> setup
+> insert
+> display
+------------------------------
+> Delete and Edit operations
+
+URL Rewriting :-
+ creating one URL using static path + dynamic path is called as URL Rewriting.
+
+ex:
+   /employee/delete?id=<someValue>
+
+<a th:href="@{/employee/delete(id=${ob.empId})}">
+   DELETE
+</a>
+
+http://localhost:9090/employee/delete?id=1
+http://localhost:9090/employee/delete?id=2
+http://localhost:9090/employee/delete?id=3
+---------------------------------------------------------------
+Enter URL, HyperLink ---> GET
+Form Submit --> POST
+---------------------------------------------------------------
+https://getbootstrap.com/docs/4.5/getting-started/introduction/
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" >
+
+
+--ToDo validation--------------
+Step#1
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+
+Step#2 at Model class use annotations
+
+@NotNull
+@NotBlank (for String only)
+@Min @Max (For Numbers)
+@Pattern
+@Size (For String)
+
+package in.nareshit.raghu.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="emptab")
+public class Employee {
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="eid")
+	private Integer empId;
+	
+	@Column(name="ename")
+	@NotEmpty(message="Name can not be empty")
+	@Size(min = 3,max = 5,message = "Name must be 3-5 chars")
+	private String empName;
+	
+	@Column(name="esal")
+	@NotNull(message="Salary can not be empty")
+	@Min(value = 1,message = "Salary must be +Ve number")
+	private Double empSal;
+	
+	@Column(name="egen")
+	@NotEmpty(message="Please choose any one Gender")
+	private String empGen;
+	
+	@Column(name="edept")
+	@NotEmpty(message="Please choose any one Dept")
+	private String empDept;
+	
+	@Column(name="eaddr")
+	@NotEmpty(message="Please Enter Address")
+	private String empAddr;
+}
+
+
+
+Step#3 At @ModelAttribute use @Valid and take Errors as next Param
+  @ModelAttribute @Valid Employee employee,Errors errors,
+
+  if(!errors.hasErrors()) {
+		Integer id = service.saveEmployee(employee);
+		model.addAttribute("message", "Employee '"+id+"' is created");
+  }
+
+Step#4 print error at UI if exist
+
+<div class="bg-warning" th:if="${#fields.hasErrors('variableName')}" th:errors="*{variableName}"></div>
+Ex:
+<div class="bg-warning" th:if="${#fields.hasErrors('empGen')}" th:errors="*{empGen}"></div>
+
+--Example--
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>Register</title>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" ></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" >
+
+	</head>
+	<body>
+	  <div class="container">
+		<h3>EMPLOYEE REGISTER PAGE</h3>
+		<form th:action="@{/employee/save}" method="POST" th:object="${employee}">
+			<label>NAME :</label>
+				 <input type="text" name="empName" class="form-control"/>
+				 <div class="bg-warning" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
+			<label>SAL :</label>
+				 <input type="text" name="empSal" class="form-control"/>
+				 <div class="bg-warning" th:if="${#fields.hasErrors('empSal')}" th:errors="*{empSal}"></div>
+			<label>GENDER</label>
+			  
+			     <input type="radio" name="empGen" value="Male"/> Male
+			     <input type="radio" name="empGen" value="Female"/> Female
+			     <div class="bg-warning" th:if="${#fields.hasErrors('empGen')}" th:errors="*{empGen}"></div>
+			     <br/>
+			<label>DEPT</label>
+			   <select name="empDept" class="form-control">
+			   				<option value="">-SELECT-</option>
+			   				<option value="DEV">DEV</option>
+			   				<option value="QA">QA</option>
+			   				<option value="BA">BA</option>
+			   			</select>
+					<div class="bg-warning" th:if="${#fields.hasErrors('empDept')}" th:errors="*{empDept}"></div>			   			
+			 <label>ADDR</label> <textarea name="empAddr" class="form-control"></textarea>
+			 <div class="bg-warning" th:if="${#fields.hasErrors('empAddr')}" th:errors="*{empAddr}"></div>
+			 <br/>
+			   		<button type="submit" class="btn btn-success">Create</button>
+			
+		</form>
+		<div th:text="${message}" class="bg-success text-white"></div>
+      </div>		
+	</body>
+</html>
+

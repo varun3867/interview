@@ -1,0 +1,333 @@
+				Date : 21-Jun-21
+				Spring Boot 6PM
+				  Mr. RAGHU
+		------------------------------------------------
+			Working with @ConfigurationProperites
+
+-=-=-=-=-=-=-=-=-=-=-=-=- Working with Collection Types -=-=-=-=-=-=-=-=-=-=-=-=-
+I) List/Set/Array Format
+
+ Syntax for key: 
+   prefix.variable[index]=<value>
+
+II) Map/Properties
+
+Syntax:
+  prefix.variable.mapKey=mapValue
+  prefix.variable.propsKey=propsValue
+
+--(code)-----------------------------------------------
+S#1 Create Spring Starter Project
+> File > new > Spring Starter Project
+> Name : SpringBoot2ConfigPropsExOne
+> Next > Finish
+
+S#2 Model class
+package in.nareshit.raghu.model;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+
+@Component //obj is created for your class
+@ConfigurationProperties(prefix = "my.app")
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	
+	private List<String> empPrjs;
+	//private Set<String> empPrjs;
+	//private String[] empPrjs;
+	
+	private Map<String,String> clients; //String,<type>
+	//private Properties clients; //String,String
+
+	public Integer getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
+	}
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+
+	
+	public List<String> getEmpPrjs() {
+		return empPrjs;
+	}
+
+	public void setEmpPrjs(List<String> empPrjs) {
+		this.empPrjs = empPrjs;
+	}
+
+	public Map<String, String> getClients() {
+		return clients;
+	}
+
+	public void setClients(Map<String, String> clients) {
+		this.clients = clients;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", empName=" + empName + ", empPrjs=" + empPrjs + ", clients=" + clients
+				+ "]";
+	}
+}
+
+S#3 application.properties
+my.app.empId=101
+my.app.empName=ABC
+
+my.app.empPrjs[0]=P-HTC
+my.app.empPrjs[1]=P-NIT
+my.app.empPrjs[2]=P-ORCL
+
+my.app.clients.CA=ABC
+my.app.clients.CB=XYZ
+my.app.clients.CC=IJK
+
+S#4 Modified Main class
+
+package in.nareshit.raghu;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+import in.nareshit.raghu.model.Employee;
+
+@SpringBootApplication
+public class SpringBoot2ConfigPropsExTwoApplication {
+	//ctrl+F11 / ctrl+Fn+F11 (Run main method)
+	public static void main(String[] args) {
+		ApplicationContext ac = SpringApplication.run(SpringBoot2ConfigPropsExTwoApplication.class, args);
+		Employee ob = (Employee) ac.getBean("employee");
+		//Impl class
+		//System.out.println(ob.getEmpPrjs().getClass().getName());
+		//System.out.println(ob.getClients().getClass().getName());
+		
+	}
+
+}
+
+
+---FAQs----------------------
+Q) What is the Output?
+ String[] arr= {"A","B","C"};
+ System.out.println(arr);
+ System.out.println(Arrays.toString(arr));
+
+A)
+--------------------------------------------------------------
+Q) Are List,Set, Map, Properties (java.util) classes/interfaces?
+A) 
+Interfaces       Spring Container using
+---------        ------------------  
+  List                ArrayList
+  Set                 LinkedHashSet
+  Map                 LinkedHashMap
+
+ class
+ ------------------------------------ 
+  Properties           ---NA---
+
+-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-
+			Working with a class type
+-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-
+Spring container supports creating object and inject data to child type also.
+
+*) If we use a class as HAS-A Variable then syntax must be
+    prefix.hasAvariable.variable=value
+
+
+Q) Do we need to use @Autowired for @ConfigurationProperites using complex type?
+A) No. This is not linking two existed objects concept.
+   It is creating object and loading data if keys are exist in properties file.
+
+  @Autowired : if two objects exist(or child object exist), link them.
+
+------------------------------------------------------------------------
+Spring Core#1
+https://www.youtube.com/watch?v=xusQhpQuODk&list=PLVlQHNRLflP9XSWeY4x4FLwnL3UOIxnTr&index=12
+Spring Core#1 (Autowired)
+https://www.youtube.com/watch?v=-FlszP92JVM&list=PLVlQHNRLflP9XSWeY4x4FLwnL3UOIxnTr&index=14
+
+Search here: Spring Core Session 1, 2
+https://www.youtube.com/watch?v=EA43S5R8LSc&list=PLVlQHNRLflP9XSWeY4x4FLwnL3UOIxnTr
+
+
+--(code)-------------
+1. Model classes
+
+package in.nareshit.raghu.model;
+
+public class Address {
+
+	private Integer hno;
+	private String loc;
+	
+	public Integer getHno() {
+		return hno;
+	}
+	public void setHno(Integer hno) {
+		this.hno = hno;
+	}
+	public String getLoc() {
+		return loc;
+	}
+	public void setLoc(String loc) {
+		this.loc = loc;
+	}
+	
+	@Override
+	public String toString() {
+		return "Address [hno=" + hno + ", loc=" + loc + "]";
+	}
+	
+	
+}
+--
+package in.nareshit.raghu.model;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+
+@Component //obj is created for your class
+@ConfigurationProperties(prefix = "my.app")
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	
+	private List<String> empPrjs;
+	//private Set<String> empPrjs;
+	//private String[] empPrjs;
+	
+	private Map<String,String> clients; //String,<type>
+	//private Properties clients; //String,String
+	
+	private Address addr;//HAS-A Relation
+
+	public Integer getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
+	}
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+
+	
+	public List<String> getEmpPrjs() {
+		return empPrjs;
+	}
+
+	public void setEmpPrjs(List<String> empPrjs) {
+		this.empPrjs = empPrjs;
+	}
+
+	public Map<String, String> getClients() {
+		return clients;
+	}
+
+	public void setClients(Map<String, String> clients) {
+		this.clients = clients;
+	}
+
+	public Address getAddr() {
+		return addr;
+	}
+
+	public void setAddr(Address addr) {
+		this.addr = addr;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", empName=" + empName + ", empPrjs=" + empPrjs + ", clients=" + clients
+				+ ", addr=" + addr + "]";
+	}
+	
+	
+	
+	
+}
+-----------------
+2. properties file
+my.app.empId=101
+my.app.empName=ABC
+
+my.app.empPrjs[0]=P-HTC
+my.app.empPrjs[1]=P-NIT
+my.app.empPrjs[2]=P-ORCL
+
+my.app.clients.CA=ABC
+my.app.clients.CB=XYZ
+my.app.clients.CC=IJK
+
+my.app.addr.hno=33
+my.app.addr.loc=HYD
+
+3. Main class
+package in.nareshit.raghu;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+import in.nareshit.raghu.model.Employee;
+
+@SpringBootApplication
+public class SpringBoot2ConfigPropsExTwoApplication {
+	//ctrl+F11 / ctrl+Fn+F11 (Run main method)
+	public static void main(String[] args) {
+		ApplicationContext ac = SpringApplication.run(SpringBoot2ConfigPropsExTwoApplication.class, args);
+		Employee ob = (Employee) ac.getBean("employee");
+		System.out.println(ob);
+		//Impl class
+		//System.out.println(ob.getEmpPrjs().getClass().getName());
+		//System.out.println(ob.getClients().getClass().getName());
+		
+	}
+
+}
+====Task#1(21/06/2021)==================================================
+class Product{
+   int pid;
+   String pcode;
+}
+class Vendor{
+   int vid;
+   String vcode;
+
+   List<String> models;
+   Map<String,String> locations;
+
+   Product pob;
+}
+*)Inject any dummy data using application.proprties to Vendor class.
+expected output is : Vendor object with data
+

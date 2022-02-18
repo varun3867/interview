@@ -1,0 +1,179 @@
+				Date : 28-09-2021
+				Spring Boot 6:30PM
+				    Mr. RAGHU
+		--------------------------------------------------
+
+*) Request Parameters: passing data using URL in key=val format.
+Syntax:
+  URL?key=val&key=val&key=val ....
+
+> We can pass data in key=val format
+> These are given as method params
+> Default key=val are String type (Type conversion supported for value)
+> To read this syntax is:
+   @RequestParam DataType keyName
+> No need to follow order while sending multiple keys
+> Additional param/keys are ignored.
+
+-------------------------------------------------------------------------
+@PathVariable :-
+
+> This concept is used to send data using URL.
+> ** clean URL. No Symbols like ? & = (not used)
+> Syntax to send Data
+    URL/path/value/value
+> While sending data using URL no key is used.
+   But while reading data at Controller, key is required.
+> Must follow order while sending multiple values.
+> We can not send additional or less params, count must match
+> Syntax to Read
+   @PathVariable DataType key
+
+----------------------------------------------------------
+MediaTypes: XML/JSON ---> Object/Collections [input/output]
+----------------------------------------------------------
+
+Path :- location/place where resource exist.
+
+> here Path means URL part given to controller method.
+> 2 types 
+
+a. Static Path  : /path
+b. Dynamic Path : /{key}  (sending data along with path)
+> These are called as Pathvariables.
+
+Ex:
+ @GetMapping("/data/{code}/one/{id}")
+
+ Req URL http://......./data/TEST/one/201
+
+
+
+==========================================================
+Name: SpringBoot2RestPathVarEx
+Dep : Web, devtools, lombok
+
+*) RestController
+
+package in.nareshit.raghu.rest;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+
+	/**
+	 * /{key} and @PathVariable DataType key
+	 * Here Path must be matching
+	 */
+	@GetMapping("/fetch/{code}")
+	public String getOneProduct(
+			@PathVariable String code
+			) 
+	{
+		return "Data is => " + code;
+	}
+	/**
+	 * Must pass id and code in same order
+	 */
+	@GetMapping("/get/{id}/{code}")
+	public String getDescProduct(
+			@PathVariable Integer id,
+			@PathVariable String code
+			) 
+	{
+		return "FIND => "+ id +"-"+code;
+	}
+}
+URL#1
+http://localhost:8080/product/fetch/PEN
+URL#2
+http://localhost:8080/product/get/10/ABC
+--------------------------------------------------------
+a. ReqParam (Default concept from servlets)
+http://localhost:8080/emp/get?sid=10&sname=A
+
+b. PathVariable (latest webservices)
+http://localhost:8080/emp/get/10/A
+
+*) Note:
+>> PathVariable can be used in web applications (WEB MVC) also
+   But recomanded in Webservices based apps mostly.
+>> If two or more methods having same path count
+    in that case static mathing is 1st priority.
+
+ex:
+*) Controller
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+
+	@GetMapping("/test/name")
+	public String getDataA() 
+	{
+		return "Data is NONE";
+	}
+	
+	@GetMapping("/test/{name}")
+	public String getDataB(
+			@PathVariable String name
+			) 
+	{
+		return "Data is => " + name;
+	}
+}
+URL
+http://localhost:8080/product/test/name   ==> getDataA()
+http://localhost:8080/product/test/AA     ==> getDataB()
+--------------------------------------------------------------
+
+> While working on Path variables  count and order matters 
+   not PathVariable name/keys.
+   Else IllegalStateException: Ambiguous handler methods mapped 
+
+*) RestController code:
+@RestController
+@RequestMapping("/product")
+public class ProductRestController {
+
+	@GetMapping("/test/{code}")
+	public String getDataA(
+			@PathVariable String code
+			) 
+	{
+		return "Data is " + code;
+	}
+	
+	@GetMapping("/test/{name}")
+	public String getDataB(
+			@PathVariable String name
+			) 
+	{
+		return "Data is => " + name;
+	}
+}
+URL: 
+ http://localhost:8080/product/test/AA
+=========================================
+Examples
+
+a. m1() -- /find/mno/xyz
+b. m2() -- /find/{mno}/xyz
+c. m3() -- /find/{mno}/{xyz}
+d. m4() -- /{find}/{mno}/{xyz}
+
+1. Req URL:  /find/101/AA
+  method : m3(), m4() 
+  selected: m3()
+
+2. Req URL: /aa/bb/cc
+  method: m4()
+
+3. Req URL : /find/nmo/xyz
+   method  : m2(), m3(), m4()
+   selected: m2() 
+-------------------------------------------------------------------------

@@ -1,0 +1,100 @@
+				Date :10-Jun-21
+			Spring Boot and Microservices
+			         Mr. RAGHU
+				  Demo#1
+	--------------------------------------------------------
+1. Introduction
+2. Course Content
+3. Project Structure
+4. FAQs
+------------------------------------------------------------------------------
+Spring F/w (5.x):-		
+a. Spring Bean
+b. Spring Configuration File
+c. Maven/Gradle( JARs)
+
+-- database Spring XML Configuration File----
+<bean id="dsObj" class="DriverManagerDataSource">
+   <property name="driverClassName" value="__"/>
+   <property name="url" value="__"/>
+   <property name="username" value="__"/>
+   <property name="password" value="__"/>
+</bean>
+-- database Spring JAVA Configuration File----
+@Configuration
+class AppConfig {
+   @Bean
+   public DataSource dsObj(){
+      DriverManagerDataSource ds = new DriverManagerDataSource();
+      ds.setDriverClassName("");
+      ds.setUrl("");
+      ds.setUsername("");
+      ds.setPassword("");
+      return ds;
+   }
+}
+-----------------------------------------------------------------
+				Spring Boot
+
+Spring Boot :-
+It is a Spring Based Framework.
+It behaves like parent project.
+It provides Auto-Configuration that reduces coding lines compared to Spring F/w
+
+For every concept one ready made jar is given by Spring Boot Parent.
+Prvide them using Maven/Gradle
+pom.xml(Maven)/build.gradle(Gradle)
+Ex:
+spring-boot-start-jdbc [JAR--Setup/code]
+spring-boot-start-email
+spring-boot-start-web
+spring-boot-start-security
+spring-boot-start-data-jpa
+spring-boot-start-aop
+spring-boot-start-data-mongodb
+spring-boot-start-batch
+..etc
+
+--application.properties---
+key=val
+driver=Oracle
+url=jdbc:oracle:..
+un=
+pwd=
+
+-----------------------------------------------------
+> Every Application, created using Spring boot , contains parent project.
+> Parent project is given by Pivotal Team.
+> Auto-Configuration, Embedded Databases (H2, Derby, HSQL),
+    Embedded Servers (Tomcat*, Jetty, Undertow)
+> No XML Configuration.
+
+------------------------------------------------------
+Pre-Req:
+a. Core Java (OOPs) --Good knowledge
+b. Adv Java -- (Basics)--- JDBC/Servlets
+c. ORM/Hibernate (basics)  --- I'll cover
+d. Spring Core (basics) -- I'll cover
+
+Duration : 4 Months. / 3 major subject, tools apps
+
+** No Recording for regular classes
+Major concepts: Security, JWT, ...(20 recordings), tools
+
+Regular class notes
+PDFs
+https://www.mediafire.com/file/w5x9w5vcmkwkkdv/RaghuSirNareshITJavaPdfs.zip/file
+
+Mini Projects
+Spring Boot Security , MS
+Angular, ReatJS, Heroku Cloud Deployment.
+
+Core Java Main --Java 8.
+---------------------------------------------------------------
+Payment ?
+Timing : 6:05PM - 7:50 PM (No class on sunday)
+
+Email:
+javabyraghu@gmail.com
+FB:
+https://www.facebook.com/groups/thejavatemple

@@ -1,0 +1,71 @@
+				Date : 05-10-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	--------------------------------------------------------------------
+Logging Examples
+https://www.youtube.com/watch?v=mblGoKU1aKo
+https://www.youtube.com/watch?v=5oLfHiP_iJc
+
+ELK:
+https://www.youtube.com/watch?v=uSYExRWbC9Y
+
+All PDFs
+https://www.mediafire.com/file/w5x9w5vcmkwkkdv/RaghuSirNareshITJavaPdfs.zip/file
+
+		    Implementing Logging in ReST Application
+
+Logging : To track all messages from application while running in server
+	 into a file [to find : success/warning/error/exceptions].
+
+Tool: LOG4J-SLF4J.
+
+Log4J - is a logging tool used to track all messages from app.
+Slf4J - Simple Logging Facade for Java is a abstract f/w which makes
+	your application independent of logging tool.
+
+-> Logger Object inside RestController.
+-> Appender(File) and Layout (Pattern)
+
+TRACE : FIND RESOURCE PATH
+DEBUG : PRINT SUCCESS MESSAGES
+INFO  : PRINT CURRENT STATUS
+WARN  : PRINT APP WARNINGS
+ERROR : PRINT EXCEPTIONS/PROBLEMS
+FATAL : PRINT HIGH LEVEL PROBLEMS (CLASS NOT FOUND/ NETWORK ISSUES)..etc
+
+-------------------------------------------------------------
+### To provide log file name
+logging.file.name=D:/mylogs/sample.log
+
+### Max size of one log file then, take a backup as ZIP (Default 10 MB)
+logging.file.max-size=25MB
+
+### Max no.of days to keep log files  (default 7 days)
+logging.file.max-history=90
+
+### on server restart , do you want to delete all log files?
+logging.file.clean-history-on-start=false
+
+### Customized pattern
+#logging.pattern.file=%d [%t] %C- %M ----------- %m%n
+
+### default priority is set to INFO, we can modify here
+logging.level.in.nareshit.raghu=DEBUG
+#logging.level.org.springframework=ERROR
+#logging.level.org.hibernate=ERROR
+
+***) RollingFileAppender :
+  A Log file is created with a max size limit. 
+  Once log file is reached to that limit, then backup is created.
+  Log file starts with line 1 again (empty/new).
+
+ex: sample.log.2021-10-05.0.gz
+===========================================================================
+*) We need to create Logger Object inside the Controller classes generally
+  example code like
+
+  private static final Logger log = LoggerFactory.getLogger(T.class);
+
+=> The same can be generated using Lombok annotation: @Slf4j
+============================================================================
+

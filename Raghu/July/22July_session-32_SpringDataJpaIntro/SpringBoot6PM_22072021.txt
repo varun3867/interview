@@ -1,0 +1,58 @@
+				Date: 22-Jul-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+		------------------------------------------------
+Spring Boot-Multiple Databases
+https://www.youtube.com/watch?v=nzszxQbQ5WU
+Capctha Example
+https://www.youtube.com/watch?v=P_zqWKvOi54
+https://www.youtube.com/watch?v=fcRs5pgtJYQ
+
+PDF Link: 
+https://www.mediafire.com/file/w5x9w5vcmkwkkdv/RaghuSirNareshITJavaPdfs.zip/file
+CHAPTER#2: SPRING BOOT DATA JPA
+
+Spring Data JPA
+
+ORM - Theory
+JPA - Specification
+Hibernate - Implementaion
+
+*) Data JPA Generates Database Operations code.
+*) We need to pass only Model class, Primary Key DataType.
+
+*) Pre-defined Interfaces
+a. CrudRepository
+b. PagingAndSortingRepository
+c. JpaRepository
+
+-------------------------------------------
+spring-boot-starter-data-jpa
+
+SimpleJpaRepository
+EntityManagerFactory
+
+
+pre-defined methods
+having logic here
+
+
+Embeeded Database (3)
+H2
+HyperSQL (HSQL)
+Apache Derby
+
+*) Completely comes with auto-configuration
+
+---------------------------------------
+External Database can also be used
+MySQL
+Oracle
+Postgress
+..etc
+
+
+*) Key-vals for external dbs.
+
+========================================
+

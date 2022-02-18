@@ -1,0 +1,226 @@
+				Date : 17-Aug-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+		--------------------------------------------
+Workspace#1 Link:
+https://www.mediafire.com/file/uohy7f55mhq3vqi/SpringBoot630PM_WS_1_AUG_2021.zip/file
+
+JPQL/HQL Joins
+Syntax:
+
+SELECT p.<variable>, <c>.variable
+
+FROM ParentClass p
+     [JoinType]
+    p.hasAVariable as c
+
+WHERE <conditions>
+
+
+Q) Why cant we execute Full JOIN at Few Databases? Ex: MySQL.
+A) 
+
+SQL:
+select  e.ename ,  d.dcode 
+from emptab e 
+full outer join 
+depttab d
+on  e.did_fk= d.did;
+================code=======================================================
+1. Name :SpringBoot2DataJpaJoinsEx
+   Dep : Lombok, MySQL, Data JPA
+
+2. application.properties
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot630pm
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+
+3. Model classes
+package in.nareshit.raghu.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="depttab")
+public class Department {
+	@Id
+	private Integer did;
+	private String dcode;
+	private String admin;
+}
+----------
+package in.nareshit.raghu.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="emptab")
+public class Employee {
+	@Id
+	private Integer eid;
+	private String ename;
+	private Double esal;
+
+	@ManyToOne
+	@JoinColumn(name="didFk")
+	private Department dept;//HAS-A
+}
+
+4. Repository
+package in.nareshit.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.nareshit.raghu.model.Department;
+
+public interface DepartmentRepository 
+	extends JpaRepository<Department, Integer> {
+
+}
+-----------------
+package in.nareshit.raghu.repo;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import in.nareshit.raghu.model.Employee;
+
+public interface EmployeeRepository 
+	extends JpaRepository<Employee, Integer> {
+
+	@Query("SELECT E.ename, D.dcode FROM Employee E INNER JOIN E.dept as D WHERE E.esal>:empSal")
+	public List<Object[]> getEmpNameAndDeptCode(Double empSal);
+	
+	//@Query("SELECT E.ename, D.dcode FROM Employee E LEFT OUTER JOIN E.dept as D WHERE E.esal>:empSal")
+	@Query("SELECT E.ename, D.dcode FROM Employee E LEFT JOIN E.dept as D WHERE E.esal>:empSal")
+	public List<Object[]> getEmpNameAndDeptCodeB(Double empSal);
+	
+	
+	//@Query("SELECT E.ename, D.dcode FROM Employee E RIGHT OUTER JOIN E.dept as D WHERE D.admin IS NOT NULL")
+	@Query("SELECT E.ename, D.dcode FROM Employee E RIGHT OUTER JOIN E.dept as D WHERE D.admin IS NOT NULL")
+	public List<Object[]> getEmpNameAndDeptCodeC();
+	
+	
+	@Query("SELECT E.ename, D.dcode FROM Employee E FULL JOIN E.dept as D ")
+	public List<Object[]> getEmpNameAndDeptCodeD();
+}
+
+5. Runner for Insert
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+
+import in.nareshit.raghu.model.Department;
+import in.nareshit.raghu.model.Employee;
+import in.nareshit.raghu.repo.DepartmentRepository;
+import in.nareshit.raghu.repo.EmployeeRepository;
+
+//@Component
+public class DataInsertRunner implements CommandLineRunner {
+
+	@Autowired
+	private DepartmentRepository drepo;
+	
+	@Autowired
+	private EmployeeRepository erepo;
+	
+	public void run(String... args) throws Exception {
+		Department d1 = new Department(5501, "DEV", "AJAY");
+		Department d2 = new Department(5502, "QA", "VIJAY");
+		Department d3 = new Department(5503, "BA", "JAY");
+		
+		drepo.save(d1);
+		drepo.save(d2);
+		drepo.save(d3);
+		
+		Employee e1 = new Employee(110, "SYED", 200.0, d2);
+		Employee e2 = new Employee(111, "SAM", 300.0, null);
+		Employee e3 = new Employee(112, "RAM", 500.0, d1);
+		
+		erepo.save(e1);
+		erepo.save(e2);
+		erepo.save(e3);
+		
+	}
+
+}
+
+6. Runner for Fetch
+package in.nareshit.raghu.runner;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.repo.EmployeeRepository;
+
+@Component
+public class FetchDataRunner implements CommandLineRunner {
+
+	@Autowired
+	private EmployeeRepository erepo;
+	
+	public void run(String... args) throws Exception {
+		/*List<Object[]> list = erepo.getEmpNameAndDeptCode(100.0);
+		list.stream()
+		.map(ob->ob[0]+"-"+ob[1])
+		.forEach(System.out::println);*/
+		
+		
+		List<Object[]> list = erepo.getEmpNameAndDeptCodeB(100.0);
+		list.stream()
+		.map(ob->ob[0]+"-"+ob[1])
+		.forEach(System.out::println);
+		
+		/*List<Object[]> list = erepo.getEmpNameAndDeptCodeC();
+		list.stream()
+		.map(ob->ob[0]+"-"+ob[1])
+		.forEach(System.out::println);*/
+		
+		/*List<Object[]> list = erepo.getEmpNameAndDeptCodeD();
+		list.stream()
+		.map(ob->ob[0]+"-"+ob[1])
+		.forEach(System.out::println);*/
+	}
+
+}
+========================================================================
+Task :        
+Student-------<> Branch (bid, bcode, hod)
+ sid
+ sname
+ sfee
+ bob:Branch
+
+#1. Create Models and prepare data
+#2. Fetch data using joins

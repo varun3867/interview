@@ -1,0 +1,115 @@
+				Date : 16-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	----------------------------------------------------------
+			Spring Web MVC : Thymeleaf Forms 
+
+> HTML Forms are uni-directional forms by default.
+ On Click Form Submit, Form Data is converted into Object Format.
+ But Object data can not be loaded into Form.
+
+> Thymeleaf Forms are bi-directional.
+  Form Data <----> Object
+
+--Points------------------
+a. Send one object to UI(FORM) From Controller
+   using Model memory
+
+   model.addAttribute("objectName",_____);
+
+b. Bind object with Form
+   <form  ........... th:object="${objectName}">
+
+c. Bind/Link every Form Input with variable
+    <input  type=""  th:field="*{variableName}"  ...>
+
+d. On submit, we can read again using @ModelAttribute
+   at Controller.
+
+---------------------------------------------
+Note: * indicates calling set/get methods for data reading and modifying.
+
+--code----------
+Name : SpringBoot2ThymeleafFormBasic
+Dep  : Web, lombok, Devtools, thymeleaf
+
+1. Model
+package in.nareshit.raghu.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Student {
+
+	private Integer sid;
+	private String sname;
+	private Double sfee;
+}
+
+2. Controller
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import in.nareshit.raghu.model.Student;
+
+@Controller
+@RequestMapping("/student")
+public class StudentController {
+
+	@GetMapping("/edit")
+	public String showEditForm(
+			Model model
+			) 
+	{
+		Student sob = new Student(9999,"AA",200.0);
+		model.addAttribute("student", sob);
+		return "StudentEdit";
+	}
+	
+	@PostMapping("/update")
+	public String updateData(
+			@ModelAttribute Student student,
+			Model model
+			) 
+	{
+		System.out.println(student);
+		model.addAttribute("sob", student);
+		return "StudentInfo";
+	}
+	
+}
+
+3. UI Pages
+--StudentEdit.html--------
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head></head>
+	<body>
+		<h3>STUDENT EDIT FORM</h3>
+		<form th:action="@{/student/update}" method="POST" th:object="${student}" >
+		<pre>
+			Id   : <input type="text" th:field="*{sid}"/>
+			Name : <input type="text" th:field="*{sname}"/>
+			Fee  : <input type="text" th:field="*{sfee}"/>
+			<button type="submit">Update Student</button>
+		</pre>
+		</form>
+	</body>
+</html>
+---------StudentInfo.html-----------------------
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head></head>
+	<body> DATA FROM EDIT FORM IS : [[${sob}]]	</body>
+</html>	
+
+4. Start app and enter URL
+http://localhost:8080/student/edit

@@ -1,0 +1,47 @@
+				Date : 11-12-2021
+				 Spring Boot 6PM
+				  Mr. RAGHU
+	----------------------------------------------------------------
+PCF:-
+https://www.youtube.com/watch?v=QOwgiJWmZ9k
+Heroku:-
+https://www.youtube.com/watch?v=Bn2kF-g504k
+
+Redis DB:-
+https://www.youtube.com/watch?v=HBmlNMGh9O0
+https://www.youtube.com/watch?v=IwYEdZOmY6g
+
+			Reactive Programming using Spring Boot
+			--------------------------------------
+
+Blocking Process:-
+=> Every Server allocates one Thread for one Request
+=> If Thread needs NIO call (Network-Input-Output) ex: Database
+   then it has to be in waiting mode (ie called BLOCKED THREAD)
+    for a period of time.
+=> In this period of time, if any new Request comes, server will not use
+   this thread, allocates new one.
+
+
+Non-Blocking Process:-
+=> Server uses a thread for a new request if it is in waiting mode.
+   ie maintain one even loop.
+=> It means do not keep any thread in silent mode.
+=> Either same thread or new thread may give response.
+
+=> Spring Web Flux is added by Spring 5.x and used in Spring Boot 2.x
+   for Reactive Programming
+
+=> Normal Tomcat server is not used here. Netty Server is used as default.
+=> Direct output is not used like MVC/REST here.
+   ie ResponseEntity<T> is not used now.
+   insted use publishers: Mono<T>, Flux<T>
+
+=> Our backend is called as Publisher application 
+	and Frontend is called as subscriber.
+
+  Mono<T>  ---> 0/1 Element     (like Optional<T>)
+  Flux<T>  ---> 0..n Elements   (like List<T>)
+ These are DB outputs to be sent to client application.
+
+=> All other annotations and coding is same like ReST.

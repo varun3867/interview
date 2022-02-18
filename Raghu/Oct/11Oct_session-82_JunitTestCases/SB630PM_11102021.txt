@@ -1,0 +1,122 @@
+				Date : 11-10-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	-----------------------------------------------------------------
+https://javadoc.io/doc/org.mockito/mockito-core/3.12.4/org/mockito/Mockito.html
+
+
+		  Test Rest endpoints using JUnit with Mockito
+
+*) JUnit : it is used to validate code, by executing with inputs.
+        It compares expected result and actual result, are they same or not?
+
+*) Mockito : creates required objects to run applications.
+          Such objects are called as Proxies.
+	  Dummy Container, Dummy Connection pool,...
+	  Dummy Request..etc
+
+*) Spring Boot application provides one dependency : spring-boot-starter-test
+ which provides : JUnit 5 API [junit-jupiter], Mockito 3 API [mockito-core]
+   and integration support "mockito-junit-jupiter".
+
+*) by using MockMvc we have to,
+
+a. Prepare Container setup
+=> Execute like main method
+   (basePackage, Properties, banner,runners, servers...etc)
+
+  @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+
+=> Create Required objects and link with each other (AutoConfigured)
+
+ @AutoConfigureMockMvc
+
+=> Loading Properties file: by default (default profile is active)
+    application.properties is loaded. To modify and provide your own
+    then use @TestPropertySource("file name with location")
+   
+=> Read Container Reference to execute request.
+
+ @Autowired
+ private MockMvc mockMvc ;
+
+
+b. Create Http Request and give it to Junit test
+
+MockHttpServletRequestBuilder request =
+	MockMvcRequestBuilders
+	    .post("/student/save")
+	    .contentType("application/json")
+	    .content("{"sname":"A","sfee":300.0}");
+===========================================================================
+1. Activate Runtime as Web-Environment using Mockito
+2. Create all Required objects in container
+  (Auto-Configuration)
+3. Load if you have specific properties file for testing
+4. Read Web Application Container Reference.
+
+
+--For every test method---
+1. Create one HTTP REQUEST
+2. execute and get result
+3. Read response
+4. Assert/Validate Response
+
+
+*) MvcResult = Request + Response + other details
+===test class==============
+package in.nareshit.raghu;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
+@AutoConfigureMockMvc
+@TestPropertySource("classpath:application-test.properties")
+public class SpringBoot2RestMySqlCrudExApplicationTests {
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	@Test
+	@Order(1)
+	@DisplayName("CREATING ONE PRODUCT")
+	public void testCreateProduct() throws Exception {
+		//1. Create one HTTP REQUEST
+		MockHttpServletRequestBuilder request = 
+				MockMvcRequestBuilders.post("/rest/product/save")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{\"prodCode\": \"PEN\", \"prodCost\": 200.0,\"prodVendor\": \"SAMPLE\"}");
+
+		//2. execute and get result
+		MvcResult result = mockMvc.perform(request).andReturn();
+
+		//3. read response
+		MockHttpServletResponse response = result.getResponse();
+
+		//4. assert/validate it.
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+		assertNotNull(response.getContentAsString());
+		if(!response.getContentAsString().contains("created")) {
+			fail("May not be saved");
+		}
+	}
+
+}

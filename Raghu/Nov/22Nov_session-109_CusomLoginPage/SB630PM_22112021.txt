@@ -1,0 +1,169 @@
+				Date : 22-11-2021
+				 Spring Boot 6PM
+				   Mr. RAGHU
+	------------------------------------------------------------
+
+https://www.w3schools.com/jsref/prop_win_localstorage.asp
+https://www.w3schools.com/jsref/prop_win_sessionstorage.asp
+
+		 Spring Security using ORM (UserDetailsService)
+============================================================================
+Stage#1 UserRegister Process (done)
+Stage#2 User Login and PasswordEncoder (done)
+Stage#3 Custom Login Page
+Stage#4 Session Management and CSRF Token
+
+----------------------------------------------------------------------------
+		    Stage#3 Custom Login Page
+
+*) Pre-defined login validation code is given by Spring Boot Security
+   that we can not modify.
+
+*) We can only customize Login Page.
+*) Main code of Login Page looks like:
+
+ <form method="post" action="/login">
+    <input type="text" name="username" >
+    <input type="password" name="password">
+    <button  type="submit">Login In</button>
+ </form>
+===Internal flow=====================================================
+S#1 There must be one HTML Form with below details
+   
+ Form  action       /login
+ Form method        POST
+ input#1 name       username
+ input#2 name       password
+
+S#2 Enter un/pwd and click on login button
+ Then WebSecurityConfigurerAdapter#configure(HttpSecurity)
+ is called
+
+S#3 It internally redirects to FormLoginConfigurer() 
+	There it will read username, password
+
+ and redirect to one filter ' UsernamePasswordAuthenticationFilter'
+
+S#4 This : UsernamePasswordAuthenticationFilter 
+  calls attemptAuthentication() method
+  that read form details and makes Database call
+  using :
+    UserDetailsService#loadUserByUsername()
+
+  If User exist then continue,
+  else throw exception that makes 
+  Http call to '/login?error'
+
+S#5 If user exist, try to check is he alread logged-in or not?
+    else create new HttpSession, 
+  code exist inside:
+AbstractSessionFixationProtectionStrategy#onAuthentication
+   
+S#6  Current HttpSession is linked with
+    current user (Authentication) object
+
+
+   Principal (I)
+       IS-A
+  Authentication (I)
+        IS-A
+  UsernamePasswordAuthenticationToken(C)
+
+  created.
+
+>> To read Current Authentication object
+   Use SecurityContext(I)
+
+>> To Read Current SecurityContext(I)
+    use SecurityContextHolder
+
+SecurityContext context = SecurityContextHolder.getContext();
+Authentication auth = SecurityContext.getAuthentication()
+
+S#7 On click Logout
+  LogoutConfigurer#setInvalidateHttpSession()
+  is called.
+
+  That makes call to SecurityContextLogoutHandler#logout()
+
+  Which reads current session and invalidates(destory it)
+
+  also destory the Authentication
+  Like:
+  SecurityContext context = SecurityContextHolder.getContext();
+  context.setAuthentication(null);
+
+
+
+===Custom Login Page Coding Steps============================================================================
+S#1 Define one Login HTML File
+-------LoginPage.html------------
+<html 
+   xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>WELCOME TO LOGIN PAGE</h3>
+	<form method="post" th:action="@{/login}">
+	<pre>
+		 Email: <input type="text" name="username" />
+		 Pass : <input type="password" name="password"/>
+		<button  type="submit">Login In</button>
+	</pre>
+    </form>
+    <div th:if="${param.error}">Invalid Login details Found! </div>
+    <div th:if="${param.logout}">Logout Success!! </div>
+</body>
+
+</html>
+
+S#2 Define a method in Controller to show this page
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+		....///other methods.....
+
+	@GetMapping("/login")
+	public String showLoginPage() {
+		return "LoginPage";
+	}
+}
+
+S#3 Configure Custom URL at Security Config
+
+.antMatchers("/user/register","/user/save","/user/login","/welcome","/login").permitAll()
+
+
+.and()
+.formLogin()
+.loginPage("/user/login") //GET -- to Show Login page
+.loginProcessingUrl("/login") //POST -- ToDo Login Check
+.defaultSuccessUrl("/home",true) // On Login success
+.failureUrl("/user/login?error=true")//Login Failed
+		
+.and()
+.logout()
+.logoutRequestMatcher(new AntPathRequestMatcher("/signout"))//URL -ToDo Logout
+.logoutSuccessUrl("/user/login?logout=true") //On Logout success
+
+
+								Old values				new Values
+	----------------------------------------------------------------
+ To see login page(GET)           /login               /user/login
+
+ To do login checking         /login + POST              --------
+
+ On Login Failed              /login?error            /user/login?error=true
+
+ On Logout success            /login?logout           /user/login?logout=true
+
+ URL for Logout                 /logout                  /signout
+
+------------------------------------------------------------------------------
+=> Old values are applied for pre-defined login page
+   and new values are applied to Custom Login page.
+

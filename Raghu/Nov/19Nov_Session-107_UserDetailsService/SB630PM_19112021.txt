@@ -1,0 +1,266 @@
+				Date : 19-11-2021
+				 Spring Boot 6PM
+				   Mr. RAGHU
+	----------------------------------------------------------------
+Video:
+https://www.youtube.com/watch?v=rgG2_T-OB8g
+Full Code:
+https://github.com/javabyraghu/SpringBoot2SecurityOrmEx
+
+
+		   Spring Security using ORM (UserDetailsService)
+
+*) InMemoryAuthentication : Storing data inside RAM
+*) JdbcAuthentication : Storing data inside Database and validate using SQLs
+*) ORM/UserDetailsservice: Storing data inside Database and validate using ORMs
+
+============================================================================
+Stage#1 UserRegister Process
+Stage#2 User Login and PasswordEncoder
+Stage#3 Custom Login Page
+Stage#4 Session Management and CSRF Token
+=============================================================================
+*)Note:
+a. One user can have 1..n roles (multiple roles allowed)
+b. When we use a Collection (of Primitives) [ex: List<String> ]
+   then ORM creates a child table (@ElementCollection)
+   such table is created with 3 columns (key[FK],index, element)
+
+------------------------------------------------------------------------------
+		Stage#1 UserRegister Process
+
+>> In this stage we just implement User Register Page.
+>> NO Password Encoding in this case. It comes in Stage#2
+>> Need to define one Entity class and map with database table.
+
+>> To use Multiple Roles , use a collection variable and map with
+	@ElementCollection.
+
+>> To use single Role, just define String variable and map with one column.
+
+>> Form Data is converted into ModelClass object by Spring container
+   we can read it in Controller using @ModelAttribute.
+
+-------coding---------------------------------------------------------
+Name : SpringBoot2SecurityOrmEx
+Dep  : Web, Lombok, Devtools, Thymeleaf, DataJPA, MySQL, Security
+
+1. application.properties
+----------------------
+# server
+server.port=9696
+
+# Database connection
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot630pm
+spring.datasource.username=root
+spring.datasource.password=root
+
+# ORM Details
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=create
+----------------------
+
+2. Entity class
+
+package in.nareshit.raghu.entity;
+
+import java.util.Set;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name="usertab")
+public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
+	private Integer id;
+	
+	@Column(name="uname")
+	private String name;
+	
+	@Column(name="umail")
+	private String email;
+	
+	@Column(name="upwd")
+	private String pwd;
+	
+	@ElementCollection
+	@CollectionTable(
+			name="user_roles_tab",
+			joinColumns = @JoinColumn(name="uid")
+			)
+	@Column(name="urole")
+	private Set<String> roles;
+}
+-----------------------------
+3. Repository interface
+
+package in.nareshit.raghu.repo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import in.nareshit.raghu.entity.User;
+
+public interface UserRepository extends JpaRepository<User, Integer> {
+	Optional<User> findByEmail(String email);
+}
+---------------------------
+4. Service Interface
+package in.nareshit.raghu.service;
+
+import java.util.Optional;
+import in.nareshit.raghu.entity.User;
+
+public interface IUserService {
+
+	Integer saveUser(User user);
+	Optional<User> findUserByEmail(String email);
+}
+--------------------------
+5. User ServiceImpl
+package in.nareshit.raghu.service.impl;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.nareshit.raghu.entity.User;
+import in.nareshit.raghu.repo.UserRepository;
+import in.nareshit.raghu.service.IUserService;
+
+@Service
+public class UserServiceImpl implements IUserService {
+
+	@Autowired
+	private UserRepository repo;
+	
+	public Integer saveUser(User user) {
+		return repo.save(user).getId();
+	}
+
+	public Optional<User> findUserByEmail(String email) {
+		return repo.findByEmail(email);
+	}
+
+}
+---------------------------------------
+6. Controller
+package in.nareshit.raghu.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import in.nareshit.raghu.entity.User;
+import in.nareshit.raghu.service.IUserService;
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+	
+	@Autowired
+	private IUserService service;
+
+	@GetMapping("/register")
+	public String showRegisterPage() {
+		return "UserRegister";
+	}
+	
+	@PostMapping("/save")
+	public String saveUser(
+			@ModelAttribute User user,
+			Model model
+			) 
+	{
+		Integer id = service.saveUser(user);
+		String message = "User '"+id+"' created!";
+		model.addAttribute("message", message);
+		return "UserRegister";
+	}
+}
+
+7. UI
+---UserRegister.html---------
+<HTML xmlns:th="https://www.thymeleaf.org/">
+	<HEAD>
+		<title>WELCOME TO SECURITY ORM</title>
+	</HEAD>
+	<BODY>
+	<pre>
+		<h3> USER REGISTER PAGE </h3>
+		<form th:action="@{/user/save}" method="POST">
+			NAME : <input type="text" name="name"/>
+			EMAIL: <input type="text" name="email"/>
+			PASS : <input type="password" name="pwd"/>
+			ROLES: 
+				<input type="checkbox" name="roles" value="ADMIN"/>ADMIN
+				<input type="checkbox" name="roles" value="EMPLOYEE"/>EMPLOYEE
+				<button type="submit">Register</button>				
+		</form>
+		[[${message}]]
+	</pre>
+	</BODY>
+</HTML>
+================================================================================
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+======UserRegister.html===================================
+<HTML xmlns:th="https://www.thymeleaf.org/">
+
+<HEAD>
+	<title>WELCOME TO SECURITY ORM</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</HEAD>
+
+<BODY>
+	<div class="container">
+
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h3> USER REGISTER PAGE </h3>
+			</div>
+			<div class="card-body">
+				<form th:action="@{/user/save}" method="POST">
+					NAME : <input type="text" name="name" class="form-control" />
+					EMAIL: <input type="text" name="email" class="form-control"/>
+					PASS : <input type="password" name="pwd" class="form-control"/> <br/>
+					ROLES:
+					<input type="checkbox" name="roles" value="ADMIN" />ADMIN
+					<input type="checkbox" name="roles" value="EMPLOYEE" />EMPLOYEE
+					<br/>
+					<button type="submit" class="btn btn-success">Register</button>
+				</form>
+
+			</div>
+			<div class="card-footer bg-info text-white">
+				[[${message}]]
+			</div>
+		</div>
+	</div>
+</BODY>
+
+</HTML>

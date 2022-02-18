@@ -1,0 +1,75 @@
+			      Additional Concepts
+			           6PM-6:30PM
+				   Mr. RAGHU
+		--------------------------------------------------
+*) Functional Interface (FI):- (SAM-single abstract method)
+
+=> an interface that contains only one abstract method.
+   These are used in functional programming 
+   [lambda expressions and method references]
+   and Stream API.
+
+=> Functional Interface = 
+      1 abstract method + 0-n default methods + 0-n static methods
+
+--Example-------------------------------
+1. //valid FI
+   interface Sample {
+       void test();
+   }
+
+2. Including Parent interface, current interface must have 
+		only one abstract method
+ interface Sample {   //valid FI
+       void test();
+ }
+ interface Process extends Sample {  }  //valid FI
+
+3.** //Valid FI = It can have Object class methods as abstract methods.
+		These are just indication to sub class to implement these 
+		methods in your class.
+
+interface Sample {
+  void test();
+  String toString();
+  boolean equals();
+  int hashCode();
+}
+
+4.
+ interface Test {}  // Not a FI
+ interface Sample extends Test { // Valid FI
+    void show();
+ }
+ interface Process extends Sample{} //Valid FI
+ interface Model extends Process{ //Not a FI
+     void info();
+ }
+
+5. Functional Interface can have static and default methods also
+
+interface Sample {
+  void test();
+
+  default void info() {
+	  System.out.println("HELLO");
+  }
+  
+  static void display() {
+	  System.out.println("OK");
+  }
+}
+
+*)Note: we can use @FunctionalInterface to test/check given interface
+      is FI or not? Java Compiler will throw error if not a valid FI.
+
+=>*** FI need not to have @FunctionalInterface annotation.
+      But recomanded approch is add @FunctionalInterface annotation.
+
+
+Java 8 : has provided one package 'java.util.function'
+         has in-built Functional Interfaces.
+
+*) If we add Object(C) methods as abstract methods in FI,
+   for impl class either programmer or Object(C) gives Impl code.
+

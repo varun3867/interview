@@ -1,0 +1,139 @@
+				Date : 03-11-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	----------------------------------------------------------
+*) Actuator :- Production Ready Endpoints.
+
+=> For any type of Spring Boot application, we need few additional services.
+  Ex: Health Check, Log Levels, Beans, Cache, Env, Configprops..etc.
+
+=> All these additional services are pre-defined concepts [Endpoints].
+=> These are mainly used in Production Server.
+
+  [ Production Server - Server used for EndUsers ]
+
+=> In simple Actuator means pre-defined code for additional services.
+
+**** JSONView Chrome Plugin.*********
+
+=======================================================================
+S#1 In your project add Spring Boot Actuator.
+   ( spring-boot-starter-actuator )
+pom.xml:-
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+
+S#2 Expose Endpoints to Project
+=> We can expose all services or selected services
+
+management.endpoints.web.exposure.include=*
+		(or)
+management.endpoints.web.exposure.include=beans,health,env,mappings
+
+====================================================================
+*) By default only one Endpoint 'health' is exposed using base-path /actuator,
+   by a class EndpointLinksResolver.
+
+ex URL:
+    http://localhost:8686/actuator/health
+
+*) To see all exposed endpoints URL is: http://localhost:8686/actuator
+
+*) Upto Spring Boot 2.4.x, default exposed endpoints are 2 health, info.
+
+*) We can modify base-path even, using key: management.endpoints.web.base-path
+ ex: management.endpoints.web.base-path=/sample
+ then URL is:
+         http://localhost:8686/sample
+
+*) Every endpoint(service) is a class annotated with @Endpoint(id="path").
+   Spring boot has given few endpoints, we can create our own endpoint.
+
+*) Endpoint(class) can have any logic, can read any object from container.
+   It supports 3 types of operations.
+     Read(GET), Write(POST), Delete(DELETE).
+
+
+*) RestController supports API for Client-Applications/End-Users.
+   These are project based Implementations.
+
+   Actuator Supports Services creation for Support/Project Management Team.
+   These are generic services, so implemented using a new concept.
+
+---code--------------------------------------------
+Name : SpringBoot2ActTestEx
+Dep  : Web, Actuator, Lombok, Devtools
+
+
+*) Endpoint class:-
+package in.nareshit.raghu.endpoint;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.boot.actuate.endpoint.annotation.DeleteOperation;
+import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
+import org.springframework.boot.actuate.endpoint.annotation.WriteOperation;
+import org.springframework.stereotype.Component;
+
+@Endpoint(id="sample")
+@Component
+public class SampleEndoint {
+
+	//GET   http://IP:PORT/basePath/sample
+	@ReadOperation
+	public Map<String,String> showData() {
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("S1", "ABC");
+		map.put("S2", "XYZ");
+		return map;
+	}
+
+	//POST  http://IP:PORT/basePath/sample
+	@WriteOperation
+	public String showDataB() {
+		return "HELLO FROM POST";
+	}
+
+	//DELETE  http://IP:PORT/basePath/sample
+	@DeleteOperation
+	public String showDataC() {
+		return "HELLO FROM DELETE";
+	}
+}
+
+*) Dummy Rest Controller
+package in.nareshit.raghu.rest;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/employee")
+public class EmployeeRestController {
+
+	@GetMapping("/data")
+	public String showData() {
+		return "FROM - EMP";
+	}
+	
+}
+
+*) application.properties
+server.port=8686
+
+spring.application.name=EMP-SERVICE
+
+management.endpoints.web.exposure.include=health,sample
+#management.endpoints.web.base-path=/sample
+#management.endpoints.web.exposure.include=*
+#management.endpoints.web.exposure.include=beans,health,env,mappings
+
+*) Run app and enter URL using POSTMAN
+  GET   http://localhost:8686/actuator/sample
+  POST  http://localhost:8686/actuator/sample
+  DELETE http://localhost:8686/actuator/sample

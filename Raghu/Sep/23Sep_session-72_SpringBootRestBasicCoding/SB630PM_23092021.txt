@@ -1,0 +1,196 @@
+				Date : 23-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+		------------------------------------------------
+				Spring Boot - ReST
+
+a. Producer Application
+   @RestController = @Controller + @ResponseBody
+
+   ReturnType Possibles are :
+      String
+      ClassType/CustomType (Employee,Admin,Product..etc)
+      CollectionType (List,Set...etc)
+
+
+   ***  ResponseEntity<T>  (T=String/Class/Collection)
+        [ Http Header, Http Status, Body(Data in Global Format) ]   
+
+   
+   Http Method Annotation + path
+   @GetMapping          -- Fetch Resource from Producer to Consumer
+ex:  getEmployeeById()
+
+   @PostMapping         -- creating a new Resource at Producer
+ex: createNewEmployee()
+
+   @PutMapping          -- Modify Existed Resource at Producer
+ex: modifyEmployee()
+
+   @DeleteMapping       -- Remove Existed Resource at Producer
+ex: removeEmployee()
+
+   @PatchMapping        -- Partially Modify existed Resource at Producer.
+ex : updateEmployeeEmail()
+
+
+*) Resource : File, Database, Image, PDF, Doc ..etc
+*) Web Browser (ex: Chrome, Firefox) supports only GET and POST Http Methods.
+*) But Other HTTP methods (PUT, PATCH,DELETE) can be made by a HTTP Client Code/App
+   
+
+b. Consumer Application (No Code yet! POSTMAN Tool )
+
+POSTMAN, Swagger, Angular http Client (https://angular.io/guide/http)
+ReactJS - axios (https://www.npmjs.com/package/axios)
+
+---------------------------------------
+Postman is a Http Client, this is used to make Http Request
+and display response. In simple It is Testing Tool.
+
+> To test our Producer application use this s/w.
+
+POSTMAN DOWNLOAD AND INSTALL
+> goto https://www.postman.com/downloads/
+> Click on "Download the App option"
+> Choose OS based Bit (64 bit)
+> Double click to install "Postman-win64-8.11.1-Setup"
+> Run Option
+> Skip Login option if it is showing (In bottom)
+
+=====Setup App================================================================
+1. Name : SpringBoot2RestProducerBasic
+   Dep  : Spring Web
+
+2. application.properties
+   server.port=8080
+
+3. RestController class
+package in.nareshit.raghu.rest;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController //@Controller + @ResponseBody
+@RequestMapping("/employee")
+public class EmployeeRestController {
+
+	@PostMapping("/save")
+	public String createEmployee() {
+		return "EMPLOYEE-POST";
+	}
+	
+	@GetMapping("/show")
+	public String fetchEmployee() {
+		return "EMPLOYEE-GET";
+	}
+	
+	@PutMapping("/modify")
+	public String updateEmployee() {
+		return "EMPLOYEE-PUT";
+	}
+	
+	@DeleteMapping("/remove")
+	public String removeEmployee() {
+		return "EMPLOYEE-DELETE";
+	}
+	
+	@PatchMapping("/modifyEmail")
+	public String updateEmployeeEmail() {
+		return "EMPLOYEE-PARTIAL UPDATE";
+	}
+}
+
+*) @ResponseBody : ReturnType itself output. There is no viewResovler and View.
+
+*) Note:
+a. If Entered URL exist and processed successfully then http status is 200 OK
+b. If entered URL is not exist in Producer then http status is 404 Not Found
+c. if entered URL is exist but http method (GET/POST/PUT) not matching
+	then http status code is 405 - Method Not Allowed.
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+*) All Problems/Errors are default handled by 'BasicErrorController'
+   method error() which returns Map and converted into JSON Format
+
+Eclipse Debugging
+https://www.youtube.com/watch?v=HwwF4pvYWws
+
+Error and Exception handling:-
+https://www.youtube.com/watch?v=AFq9eK2OoGU
+https://www.youtube.com/watch?v=tBVAybXMKzY
+https://www.youtube.com/watch?v=M-LRfrYHWrk
+
+d. If a producer application is throwing any exception then
+	http status code is : 500 - internal server error
+
+--sample code--
+@RestController //@Controller + @ResponseBody
+@RequestMapping("/employee")
+public class EmployeeRestController {
+
+	@GetMapping("/show")
+	public String fetchEmployee() {
+		if(new Random().nextInt(100)<100)
+			throw new RuntimeException("DUMMY");
+		return "EMPLOYEE-GET";
+	}
+}
+
++-----+---------------POSTMAN-----------------+------+
+| GET |  http://localhost:8080/employee/show  | SEND |
++-----+---------------------------------------+------+
+
+ ===========================================================================
+		    MediaType | Global Data Formats
+		          [ JSON | XML ]
+
+=> Spring boot by default supports JSON, but not XML.
+=> Consumer App might be .net, PHP, python, Angualr...etc
+   So sending java object over response/fetch java object over request
+   is not possible.
+
+
+ JSON - Java Script Object Notation
+
+ ----------------------------------------------------
+     Java                             Javascript
+ ----------------------------------------------------
+  int id=10                         var id=10;
+  String s="A"			    var s="A";
+
+  Employee e = new Employee();      var e = { 
+  e.setId(10);				"id" : 10, 
+  e.setName("A");			"name" : "A", 
+  e.setSal(200.0);			"sal": 200.0 
+				    }
+-------------------------------------------------------
+
+*) For Spring Boot Web Dependeny default JACKSON API is provided 
+  which supports converting JSON to Object and Object to JSON.
+
+
+> @RequestBody | @ResponseBody are used for conversion in Boot.
+
+a. @RequestBody : Reads data from Http Request Body Section (ex: JSON/XML)
+		  and converts into Object given as method parameter
+		  (input/request/parameter)
+
+b. @ResponseBody : Reads output/return type from Controller method
+		  and convert into JSON/XML Format, placed in Http Response
+			body section.
+		  (output/response/return)
+
+
+JSON --> @RequestBody ---> Parameter (Employee)
+class A {
+ Admin show(Employee code)  {
+ 
+ }
+}
+Admin(ReturnType)--@ResponseBody--->JSON 

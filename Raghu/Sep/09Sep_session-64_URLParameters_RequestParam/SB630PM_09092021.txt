@@ -1,0 +1,295 @@
+				Date : 09-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+		--------------------------------------------
+	  URL Parameters (Request Parameters/ Query Parameters)
+
+*) To pass primitive data using URL as input in format:
+       URL?key=val&key=val&key=val
+
+Ex:#1 (Google Search)
+https://www.google.com/search
+? q=india
+& rlz=1C1GIVA_enIN967IN967
+& oq=india
+& aqs=chrome
+
+Ex#2 (FB Search)
+https://www.facebook.com/groups/search
+? q=jpa
+
+Q) Why These are?
+A) To execute one task, we may need some inputs.
+   Those are passed using URL parameters
+
+   These are not to store in DB.
+
+ex: fetchOneEmployee (input-empId=10/empName=AA)
+    searchAppointment (input-doctorId=5506)
+    viewMovies (locaction=HYD)
+
+
+------In servlets-------------------------------------------------------------
+ Ex URL: http://localhost:8080/MyApp/data?sid=10
+
+Step#a) Read data based on key name
+ String sid =  request.getParameter("sid");
+
+Step#b) Parse Data 
+  int id = Integer.parseInt(sid);
+
+------In WebMVC-------------------------------------------------------------------
+Syntax to read data at Controller#method (Param)
+   @RequestParam("key") DataType localVariableName
+
+ex:
+   @RequestParam("sid") int  id
+  //It supports reading data and parsing data
+
+====Notes========================================================
+a. Data is sent using URL
+   So, all types (GET/POST) are supported
+
+b. Data is sent using FORMAT:
+     URL?key=val&key=val&key=val
+
+c. Here key and value are default String type.
+d. Value auto-parsing support is provided.
+   [based on datatype provided]
+
+e. We can pass multiple key=vals
+   Need not to follow order while sending in URL
+   (or) reading in code
+
+f. Syntax to read 
+        @RequestParam("key") DataType localVariableName
+
+g. Every Request Parameter must be sent. They are not optional
+   if you miss key=val in URL
+     type=Bad Request, status=400
+  Ex:
+     http://localhost:9090/books/search
+     Required request parameter 'book' for method parameter type String is not present
+
+h. We can make Parameter Optional by adding  'required=false' to annotation
+  ex:
+     @RequestParam(value = "book", required = false) String bookName
+   Now default value is present(null) if we do not pass any key=val
+ Ex:
+     http://localhost:9090/books/search
+     Output : null (check at console)
+
+i. We can provide our own default value for optional parameters
+   (to avoid NPE)
+   @RequestParam(
+        value = "book",
+	required = false, 
+	defaultValue = "NONE") 
+	          String bookName
+   Ex:
+     http://localhost:9090/books/search
+     Output : NONE 
+   Ex:
+     http://localhost:9090/books/search?book=Java
+     Output: Java
+
+===(example)====================================================
+*)Name : SpringBoot2WebMvcReqParamsExOne
+Dep    : web, lombok, devtools
+
+
+*) Controller code
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+@RequestMapping("/books")
+public class BookController {
+
+	//..../books/search?book=ABC
+	
+	@GetMapping("/search")
+	public String searchBookByName(
+			//@RequestParam("book") String bookName,
+			//@RequestParam(value = "book", required = false) String bookName,
+			@RequestParam(value = "book", required = false, defaultValue = "AA") String bookName,
+			Model model
+			)
+	{
+		System.out.println("DATA IS => " + bookName );
+		model.addAttribute("sf1", bookName);
+		return "BookSearchPage";
+	}
+}
+
+*) UI: BookSearchPage.jsp
+<html>
+	<head>
+		<title>REGISTER </title>
+	</head>
+	<body>
+		<h1> WELCOME TO BOOK SEARCH PAGE </h1>
+		<b> Search Content: ${sf1} </b>
+	</body>
+</html>
+
+*) application.properties
+server.port=9090
+
+spring.mvc.view.prefix=/WEB-INF/pages/
+spring.mvc.view.suffix=.jsp
+===============================================
+*) Run app and Enter URL
+ http://localhost:9090/books/search?book=Java
+ http://localhost:9090/books/search?book=Boot
+
+------(int/Integer example)---------------------------------------------------------------
+j. By default key=val are String type. So, optional param(any datatype)
+   default value is given as null.
+   
+   But we if declare optional + primitive (not wrapper) variable
+   and we did not pass key=val data 
+   then Internal Server Error, status=500
+
+Message:
+Optional int parameter 'bid' is present but cannot be translated into 
+ a null value due to being declared as a primitive type. 
+ Consider declaring it as object wrapper for the corresponding primitive type.
+
+Code:
+   @RequestParam(value = "bid", required = false) int id
+URL:
+  http://localhost:9090/books/find
+  
+
+Sol#1 (given by Web MVC) Replace int with Integer
+--old code--
+  @RequestParam(value = "bid", required = false) int id
+--new code--
+  @RequestParam(value = "bid", required = false) Integer id
+
+Sol#2 (given by Raghu Sir) modify default value from null to any int value
+--old code--
+  @RequestParam(value = "bid", required = false) int id
+--new code--
+ @RequestParam(value = "bid", required = false , defaultValue = "-1") int id
+			
+---controller code-------------
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+@RequestMapping("/books")
+public class BookController {
+
+	//..../books/find?bid=10
+	
+	@GetMapping("/find")
+	public String searchBookById(
+			//@RequestParam("bid") int id,
+			//@RequestParam(value = "bid", required = false) Integer id,
+			@RequestParam(value = "bid", required = false , defaultValue = "-1") int id,
+			Model model
+			)
+	{
+		System.out.println("Data is => " + id);
+		model.addAttribute("sf1", id);
+		return "BookSearchPage";
+	}
+}
+(same UI Page)
+*) Run app and enter URL:
+ http://localhost:9090/books/find?bid=101
+ http://localhost:9090/books/find
+
+================================================================================
+k. If we are reading multiple params need not to follow order to send/read. 
+
+http://localhost:9090/books/view?bid=10&bcode=AA&bcost=96.0
+http://localhost:9090/books/view?bcode=AA&bcost=96.0&bid=10
+
+l. if we pass additional key=vals which are not present in code
+   they are ignored. (No Error, No Exception)
+
+http://localhost:9090/books/view?bid=10&bcode=AA&bcost=96.0&author=SAM
+
+ex: author is ignored
+
+m. If we send data with key and wrong dataType value then 
+   Output is : Bad Request, status=400.
+   NumberFormatException
+
+ex:
+http://localhost:9090/books/view?bid=AAA&bcode=AA&bcost=96.0
+http://localhost:9090/books/view?bid=11&bcode=AA&bcost=BB
+
+*) Controller code:
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+@RequestMapping("/books")
+public class BookController {
+
+	//..../books/view?bid=10&bcode=AA&bcost=96.0
+	
+	@GetMapping("/view")
+	public String getBookDetails(
+			@RequestParam("bid") Integer bid,
+			@RequestParam("bcode") String bcode,
+			@RequestParam("bcost") Double bcost,
+			Model model
+			)
+	{
+		System.out.println(bid+"-"+bcode+"-"+bcost);
+		model.addAttribute("sf1", bid+"-"+bcode+"-"+bcost);
+		return "BookSearchPage";
+	}
+
+	
+}
+*) (UI SAME CODE)
+======================================================================
+n. Some times one key may be having multiple values to read
+
+ex: languages, marks, authors, versions ..etc
+
+*) Such type we can read as List type in RequestParam
+
+-code-----------------
+@Controller
+@RequestMapping("/books")
+public class BookController {
+	
+	//........books/auths?author
+	@GetMapping("/auths")
+	public String getBookAuthorDetails(
+			@RequestParam("author") List<String> authors,
+			Model model
+			)
+	{
+		System.out.println(authors);
+		model.addAttribute("sf1", authors);
+		return "BookSearchPage";
+	}
+
+}
+--(UI SAME)
+Request URL:
+http://localhost:9090/books/auths?author=SAM&author=SYED&author=RAM
+

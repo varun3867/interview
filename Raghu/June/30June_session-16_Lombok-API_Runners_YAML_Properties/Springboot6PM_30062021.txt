@@ -1,0 +1,209 @@
+			Date : 30/06/2021
+			Spring Boot 6PM
+			  Mr. RAGHU
+	-----------------------------------------------
+Eclipse Debugging:-
+https://www.youtube.com/watch?v=HwwF4pvYWws
+
+@Data : It provides internally @RequiredArgsConstrcutor
+ It works only if no external @___ArgsConstrcutor is added.
+
+Ex#1
+@Data
+public class Employee {
+	@NonNull
+	private Integer empId;
+	@NonNull
+	private String empName;
+}
+*) Here @Data provides @RequiredArgsConstrcutor so generated code is
+public class Employee {
+	private Integer empId;
+	private String empName;
+
+	public Employee(Integer empId,String empName) {
+	  super();
+	  this.empId = empId;
+	  this.empName = empName;
+	}
+}
+
+Ex#2 If we add any @___ArgsConstructor annotation along with @Data
+   then @RequiredArgsConstrcutor not given default.
+
+@Data
+@NoArgsConstructor
+public class Employee {
+	@NonNull
+	private Integer empId;
+	@NonNull
+	private String empName;
+}
+
+Generated code
+public class Employee {
+	private Integer empId;
+	private String empName;
+	public Employee() {
+	    super();
+	}
+}
+
+Ex#3
+@Data
+@AllArgsConstructor
+public class Employee {
+	@NonNull
+	private Integer empId;
+	private String empName;
+}
+Generated Code
+public class Employee {
+	private Integer empId;
+	private String empName;
+	public Employee(Integer empId,String empName) {
+	    super();
+	    this.empId = empId;
+	    this.empName = empName;
+	}
+}
+----------------------------------------------------------------
+Runners:- Execute any logic only once
+a. CommandLineRunner(I)
+b. ApplicationRunner(I)
+
+> We can define multiple runner classes
+> Default execution order is name based (Unicode)
+> We can provide our own order using @Order annotation
+> if we do not provide any order then executed at last.
+  ie default order is set to : 2147483647 (Integer.MAX_VALUE)
+> if two runners are set with same order then again naming rule
+   is applied.
+
+---Example---------------
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+@Component
+@Order(11)
+public class EmailSetupRunner implements CommandLineRunner {
+
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println("FROM EMAIL RUNNER!!");
+	}
+
+}
+-------------------------
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+@Component
+@Order(11)
+public class MessageRunner implements CommandLineRunner {
+
+	@Override
+	public void run(String... args) throws Exception {
+		System.out.println("FROM MESSAGE RUNNER!");
+	}
+}
+
+Q) Where the logic for calling Runners?
+A) SpringApplication#run() method having logic to scan all
+   classes and check type, is that implementing Runner interface
+   then it is called while starting application
+
+[ctrl+shft+T] 
+(P) org.springframework.boot
+(C) SpringApplication
+(M) callRunner() 
+
+[cltr+L ] goto line number : 790
+---Problem?------------------------------------------
+*)  Ctrl + Shft  + T shows No source attached
+> Right click on Project > Maven > Download Source
+-----------------------------------------------------
+
+==(code)=====================================
+Name : SpringBoot2ConfigPropsTestRunner
+
+1. Model
+package in.nareshit.raghu.model;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+@Component
+@Data
+@ConfigurationProperties(prefix = "my.app")
+public class MyDataSource {
+
+	private String driver;
+	private String url;
+	private String username;
+	private String password;
+}
+2. application.properties
+my.app.driver=oracle
+my.app.url=jdbc-orcl
+my.app.username=nit
+my.app.password=raghu
+
+3. Runner class
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.MyDataSource;
+
+@Component
+public class MyTestRunner implements CommandLineRunner {
+
+	@Autowired
+	private MyDataSource ds;
+	
+	public void run(String... args) throws Exception {
+		System.out.println(ds);
+	}
+
+}
+===========================================================
+@Autowired : Reading/linking existed object from Spring container
+	   to our class code.
+-----------------------------------------------------------
+              YAML (.yml) YAMaliant Language
+
+*) Java supports storing key:val and passing as input to app
+    using Properties only
+
+*) but in Spring Boot , new API support is added 'Snake YAML'
+  that supports storing reading data from YAML (.yml) file 
+  in key:val format.
+
+---application.properties---------------
+spring.datasource.driver-class-name=Oracle
+spring.datasource.url=jdbc-orcl
+spring.datasource.username=nit
+spring.datasource.password=tiger
+-----------------------------------------
+
+---application.yml--------------------
+spring:
+  datasource:
+    driver-class-name: Oracle
+    url: jdbc-orcl
+    username: nit
+    password: tiger
+---------------------------------------
+API:
+https://www.javadoc.io/doc/org.yaml/snakeyaml/1.19/org/yaml/snakeyaml/Yaml.html

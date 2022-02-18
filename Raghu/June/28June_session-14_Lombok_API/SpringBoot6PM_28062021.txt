@@ -1,0 +1,109 @@
+				Date : 28-Jun-21
+				Spring Boot 6PM
+				  Mr. RAGHU
+			------------------------------
+*) native method : Method heading is define in Java and body exist in 
+       non-java (ex: C Language ).
+Added as Headers: C:\Program Files\Java\jdk1.8.0_291\include
+
+*) @EqualsAndHashCode :-
+
+HashCode - It is a number given to one object.
+=> this method is defined in java.lang.Object(C)
+   we can override this method.
+
+
+String object hashcode is generated using:
+   s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
+
+Q) What is the diff b/w equals() and == operator?
+A) same. equals() exist in java.lang.Object(C) using == operator.
+   Few classes overriden equals() method like String(C), to compare data.
+
+=======================================================================
+@EqualsAndHashCode :- this annotation is used to override equals() and
+	 hashCode() methods in class.	
+
+equals will check
+> references pointed to same object?
+> two references related to same class type?
+> are they null or not?
+> data of every variable in two objects matching or not?
+
+
+Geneated Sample code:
+	
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		if (sid == null) {
+			if (other.sid != null)
+				return false;
+		} else if (!sid.equals(other.sid))
+			return false;
+		if (sname == null) {
+			if (other.sname != null)
+				return false;
+		} else if (!sname.equals(other.sname))
+			return false;
+		return true;
+	}
+
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((sid == null) ? 0 : sid.hashCode());
+		result = prime * result + ((sname == null) ? 0 : sname.hashCode());
+		return result;
+	}
+	
+--Example code--------------
+package in.nareshit.raghu.bean;
+
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+public class Student {
+
+	private Integer sid;
+	private String sname;
+	
+}
+--Test class---
+package in.nareshit.raghu;
+
+import in.nareshit.raghu.bean.Student;
+
+public class Test {
+
+	public static void main(String[] args) {
+		Student s1 = new Student(10,"A");
+		Student s2 = new Student(10,"A");
+		Student s3 = s2;
+		
+		System.out.println(s1.equals(s2)); //false
+		System.out.println(s2.equals(s3)); //true
+		System.out.println(s1.hashCode());
+		System.out.println(s2.hashCode());
+	}
+}
+------------------------------------------------------
+Task: 
+Spring Boot Runners
+https://www.youtube.com/watch?v=8P5x4DH2WHA
+Project Lombok
+https://www.youtube.com/watch?v=kSceQH4fFi4

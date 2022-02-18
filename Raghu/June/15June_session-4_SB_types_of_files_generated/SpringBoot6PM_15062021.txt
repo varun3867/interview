@@ -1,0 +1,112 @@
+				Date:15-Jun-21
+				Spring Boot 6PM
+				  Mr. RAGHU
+	------------------------------------------------------------
+		email:	javabyraghu@gmail.com
+ 	FB : https://www.facebook.com/groups/thejavatemple
+		-------------------------------------------
+
+All PDFs:
+ https://www.mediafire.com/file/w5x9w5vcmkwkkdv/RaghuSirNareshITJavaPdfs.zip/file
+
+Maven :
+ https://www.youtube.com/watch?v=9eJAvApRAI0
+ https://www.youtube.com/watch?v=jOykBjSl1X0
+ https://www.youtube.com/watch?v=iLwuhbnFPqo
+
+List:-
+https://www.youtube.com/watch?v=EA43S5R8LSc&list=PLVlQHNRLflP9XSWeY4x4FLwnL3UOIxnTr
+
+		Spring Boot Application : Files/Folder System
+
+-3 File----------
+a. Start class / Main class
+b. Input file [ application.properties / application.yml]
+c. Build Files (pom.xml [Maven] / build.gradle [Gradle])
+
+*) Above 3 file are generated when we create new Spring Boot Project
+    using IDE(Eclipse/STS/IntelliJ) or Starter Site(https://start.spring.io/).
+
+*) Spring Container are two types
+  1. BeanFactory (I) old container : Supports XML Configuration
+       |- XmlBeanFactory(C)
+  2. ApplicationContext(I) new Container [XML/Java and Annotation]
+       |-ClassPathXmlApplicationContext (C)  [XML]
+       |-FileSystemXmlApplicationContext (C) [XML]
+       |-AnnotationConfigApplicationContext(C) [Java and Annotation]***
+--------------------------------------------------------------------------
+a. Start class / Main class:-
+	It has a run method that can create a spring container
+=> This class is used to Create Spring containe when we start app.
+=> It will use internally new Container [ApplicationContext(I)]
+    by choosing Impl class : AnnotationConfigApplicationContext(C)
+=> This new Container Impl supports only Java and Annotation configuration.
+
+=>** Above code will be generated. Need not write it manually.
+---------------------------------------------------------------
+@SpringBootApplication
+public class DemoApplication {
+   public static void main(String[] args) {
+	SpringApplication.run(DemoApplication.class,args);
+   }
+}
+__________________________________________________________________
+b. Input file [ application.properties / application.yml]
+
+*) Spring Boot provides lots of code as pre-defined
+   also called as AutoConfiguration
+   [spring-boot-starter-(___) ]
+
+ => But we need to pass inputs using properties/yml file
+ => Here we use mostly pre-defined keys.
+https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html
+
+--application.properties---
+spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:XE
+spring.datasource.username=system
+spring.datasource.password=root
+-----------------------------
+
+--application.yml[latest projects]--------------------
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    username: system
+    password: root
+----------------------------------------
+*) all pre-defined key
+https://docs.spring.io/spring-boot/docs/current/reference/html/features.html
+
+______________________________________________________________________
+c. Build Information File
+
+   pom.xml [Maven] / build.gradle [Gradle]
+
+   => Parent Project
+   => Your Project Details
+   => Properties (version details)
+   => Dependencies (JARs)
+   => Plugins (Compile,Clean, build..etc)
+------------------------------------------------------------------------
+Q) Why Starter class/Main class?
+A) Spring Container 
+    |- ApplicationContext(I)
+        |- AnnotationConfigApplicationContext(C) {Java & Annotation}
+
+Q) How can we pass input to Spring container?
+A)
+   properties [ application.properties]** [default /high priority]
+   YAML       [ application.yml]  
+
+Q) What are build tools supported for Spring Boot Project creation?
+A)
+   Maven*** : pom.xml
+   Gradle   : build.gradle
+
+   ?? Jars download, comiple project, build project(jar/war),..etc
+
+*) Spring XML Configuration is not supported.
+  <bean> <property> <ref> ....
+------------------------------------------------------------------------

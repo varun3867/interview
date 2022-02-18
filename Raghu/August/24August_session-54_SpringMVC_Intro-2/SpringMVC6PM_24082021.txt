@@ -1,0 +1,125 @@
+				Date : 24-08-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+		--------------------------------------------
+Webservices:-
+https://www.youtube.com/watch?v=fvG7FEU1Rt8
+https://www.youtube.com/watch?v=tX1Wtv8Gdpo
+
+Docker:
+https://www.youtube.com/watch?v=LmoLFcoaeQw
+https://www.youtube.com/watch?v=6_6MoohzdEI
+
+				Spring Web
+			 [spring-boot-starter-web]
+
+Archive : Group of files as a single unit
+
+Java 3 Archives
+a. JAR - Java Archive -- For Simple (Standalone) Java apps
+b. WAR - Web Archive  -- For Web Applications (using server)
+c. EAR - Enterprise Archive- For EJB Application (Not supported by Boot)
+
+*) Spring Boot Supports only 2 types
+ a. JAR  : Non-Web Applications  (Your Code --> .class --> sample.jar)
+ b. WAR  : Web Applications (Your Code --> .class --> sample.war)
+
+***** Spring Boot Web Applications can be implemented using JAR.
+It follows Embedded Server (Code + Server - No Download + No Install required)
+
+--Adv Java / Spring WEB MVC---------
+> We need to download Server (ex: Tomcat)
+> We need to install, configure ...
+------------------------------------
+
+Spring Boot has provided 3 Embedded Servers.
+a. Apache Tomcat
+b. JBoss Undertow
+c. Eclipse Jetty
+
+**Do you want deploy(Run app at your own) at your server then use WAR option.
+   [External Server]
+
+====================================================================
+*) When we use Spring Web Depedency by default Tomcat Embedded Server is added.
+*) Default port number is 8080 and default context path (empty - /)
+*) Tomcat comes with Light Weight Runtime Engine
+   [ External Tomcat  = Catalina + JASPER ]
+   [ Embedded Tomcat  = Catalina ]
+
+=> Catalina is a Servlet container 
+  -> reads Servlet configuration
+  -> Creates Servlet class object
+  -> call init,service, destory methods
+  ..etc
+
+=> JASPER is a JSP Runtime (.jsp -> .java -> .class)
+    Every JSP file internally again one Servlet.
+==================================================================
+*) ApplicationContext(I) which indicates spring container
+  Impl class used :
+    a. AnnotationConfigApplicationContext (For normal non web apps)
+    b. AnnotationConfigServletWebServerApplicationContext (For Spring web apps)
+    c. AnnotationConfigReactiveWebServerApplicationContext (For Spring Web Flux)
+
+Key : ctrl+shift+T : ApplicationContextFactory (open this interface)
+
+
+*) Port Number: For Every service one ID is provided by OS ie port.
+   Range : 0-65535 (Reserved : 0-1024)
+
+>> You can never run two services with same port number.
+>> If you have Oracle 10g/9i/12C in yor system that may use 8080
+   then goto application.properties use key : 
+		server.port=9999
+
+====================================================================
+*) When we add Spring Web Dependency even Tomcat (spring-boot-starter-tomcat)
+   added, looks like
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-tomcat</artifactId>
+    <version>2.5.4</version>
+</dependency>
+
+*) We can remove from our classpath using exclusions
+
+(old one)
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+(new one)
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+*) Now you can add any other embeeded or use external deployment also
+*) For JBoss Undertow
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+		</dependency>
+
+*) For Eclipse Jetty 
+	<dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>
+=======================================================================
+=> While creating project, if we use JAR as packing 
+   and run maven install, then you see .jar file under target folder
+
+=> if we choose WAR as packing
+   and run maven install, then you see .war file under target folder
+
+(Right click on project > Refresh to see output details)
+=====================================================================

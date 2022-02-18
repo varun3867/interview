@@ -1,0 +1,123 @@
+				Date : 14-Jun-21
+				Spring Boot 6PM
+				   Mr. RAGHU
+		----------------------------------------------------
+			Email: javabyraghu@gmail.com
+		FB: https://www.facebook.com/groups/thejavatemple
+
+Spring Boot & MicroServices @ 6.00 PM | by Mr. Raghu
+Day-1: https://youtu.be/AmeWLe-FNZQ
+	https://www.youtube.com/watch?v=AmeWLe-FNZQ
+Day-2: https://youtu.be/JS0GyLglB6o
+	https://www.youtube.com/watch?v=JS0GyLglB6o
+
+-----------------------------------------------------------------------------
+				Spring Boot 
+
+Spring Core : Spring container (Annotation | Java Configuration)
+
+Def : The container will create the objects, wire them together, configure them, and manage their complete life cycle from creation till destruction. 
+
+Spring container:-
+ a. Creating object to your class
+ b. Provide data to variables (injection)
+ c. Link one object with another
+ d. Destory the objects(while stopping application)
+
+*) Programmer has to 
+a. Provide one class (Spring Bean = class + Rules given By Spring Container)
+b. Spring Configuration File (Annotation/Java Configuration)
+-----------------------------------------------------------------------------
+			**Annotation Configuration**
+
+1. StereoType Annotation : An annotation that informs to Spring container
+			for creating object
+
+--5 types ----
+> @Component  :  Creating Object to your class  
+> @Repository :  Creating Object + Database Operations
+> @Service    :  Creating Object + Logics/Calculations, Tx Management..etc
+> @Controller :  Creating Object + HTTP Protocol (Web Application)
+> @RestController :  Creating Object + Webservices (JSON/XML Data Exchange)
+
+--ex--
+@Component
+class EmployeeExport {
+}
+
+=> Equal Core java code:
+EmployeeExport  employeeExport  = new EmployeeExport();
+
+*) if we do not provide object name then className 
+	first letter lowercase is taken as objectName.
+---------------------
+@Component("eob")
+class EmployeeExport {
+}
+=> Equal Core java code:
+EmployeeExport  eob  = new EmployeeExport();
+________________________________________________________________________
+2. Basic/Data Annotations : Provide data/link objects
+
+> @Value    
+	|-- hard coded (Direct value is assigned)
+	|-- **** Loading data from Properties File (key-val)
+	|-- SpEL : Spring Expression Language
+
+> @Autowired
+        |- Link two objects 
+> @Qualifier
+        |- choose one object manually if Autowiring is failed.
+        
+-------------------------------------------
+> PropertiySource
+> ComponentScan
+> PostConstruct
+> PreDestory
+> Resource, Inject ..etc
+
+*) In Spring f/w we may use our own keys (in properties),
+   in Spring boot we use mostly pre-defined keys are used,
+Link:
+  https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core
+
+__Examples______________________________________________________________________
+1.
+--application.properties---
+#key=val
+my.ds.driver=Oracle
+my.ds.url=jdbc-orcl
+my.ds.user=system
+my.ds.pwd=root
+--------------------------
+@Component("con")
+class MyDbConn {
+   @Value("${my.ds.driver}")
+   String driver;
+   @Value("${my.ds.url}")
+   String url;
+   @Value("${my.ds.user}")
+   String user;
+   @Value("${my.ds.pwd}")
+   String pwd;
+}
+*) Note: @Value("${key}") -> It will try to read data from
+		propertie file with given key
+-------------------------------------------------------------
+2.
+--application.properties---
+#key=val
+my.mail.host=gmail
+my.mail.port=587
+my.mail.type=smtp
+----------------------------
+@Component("eu")
+class EmailUtil {
+   @Value("${my.mail.host}")
+   String host;
+   @Value("${my.mail.port}")
+   int port;
+   @Value("${my.mail.type}")
+   String type;
+}
+------------------------------------------------------

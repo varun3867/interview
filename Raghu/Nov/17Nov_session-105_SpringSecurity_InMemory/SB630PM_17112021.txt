@@ -1,0 +1,288 @@
+		       Date : 17/11/2021
+		        Spring Boot 6PM
+			  Mr. RAGHU
+	------------------------------------------
+Security#1
+https://www.youtube.com/watch?v=XTyQIrlyWfQ
+Security#2
+https://www.youtube.com/watch?v=7wA46kRh2u8
+
+		Spring Security - InMemory
+
+=> Storing User details inside RAM(Random Access Memory)
+  (temp memory, no database concept is used.)
+
+=> User details means - Username, password and Role(Authority)
+=> It is used for local testing purpose only (Dev/QA Testing)
+
+		InMemory Authentication
+ +---------------+-----------------+------------------+
+ | username      |   password      |   authority      |
+ +---------------+-----------------+------------------+
+ |    SAM        |     SAM         |   ADMIN          |
+ |    SYED       |     SYED        |   EMPLOYEE       |
+ |    AJAY       |     AJAY        |   STUDENT        |
+ +---------------+-----------------+------------------+
+
+code sample:-
+   auth.inMemoryAuthentication()
+       .withUser("SAM")
+       .password("{noop}SAM")
+       .authorities("ADMIN");
+
+    Controller Paths - UI Pages - Access level
+ +---------------+-----------------+------------------+
+ | URLs             Pages               AccessType    |
+ +---------------+-----------------+------------------+
+   /welcome      WelcomePage.html       permitAll
+				   (every one can see)
+
+   /home         HomePage.html          Authenticated
+				 ( only after login + any role)
+
+   /emp          EmpPage.html           hasAuthority[EMPLOYEE]
+				( after login with Role EMPLOYEE)
+
+   /adm          AdminPage.html       hasAuthority[ADMIN]
+				( after login with Role ADMIN)
+
+   /std          StudentPage.html  hasAuthority[STUDENT]
+				( after login with Role STUDENT)
+
+   /denied       DeniedPage.html      Login + invalid role access
+					(403 Status)
+
+
+*) .antMatchers("/path").accessTypeMethod() 
+   It compares request URL with given path, if matching
+   execute accessType.
+==Security Coding Steps===========================
+1. Add Spring Security Dependency in pom.xml
+  <dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-security</artifactId>
+  </dependency>
+  <dependency>
+	<groupId>org.thymeleaf.extras</groupId>
+	<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+   </dependency>
+
+2. Create a class that extends WebSecurityConfigurerAdapter(AC)
+   and add : @EnableWebSecurity at class
+
+3. Override 2 methods configure()
+   configure(AuthenticationManagerBuilder):void
+   configure(HttpSecurity):void
+
+4. In first method provide user details(user/pwd/authority)
+
+5. In 2nd method provide URL-Access Level, 
+	Form Details, Logout details
+        and Exception handling
+
+6. To indicate No password Encoder, must use : {noop}
+   NoOperationPasswordEncoder. indicates no Password Encoding.
+
+*) Note:
+.defaultSuccessUrl("/home", false)
+=> You entered /emp => Login Page => login success => /emp
+=> You entered /admin => Login Page => login success => /admin
+=> Login Page => login success => /home
+
+----
+.defaultSuccessUrl("/home", true)
+=> You entered /emp => Login Page => login success => /home
+=> You entered /admin => Login Page => login success => /home
+
+*) in case of Role is not matching then error code is :
+	Forbidden - 403
+==========code===============================================
+Name : SpringSecurityInMemoryAuthEx
+Dep  : Web, Devtools, Security, Thymeleaf
+
+a. Controller
+package in.nareshit.raghu.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HomeController {
+
+	@GetMapping("/welcome")
+	public String showWelcomePage() {
+		return "WelcomePage";
+	}
+	
+	@GetMapping("/home")
+	public String showHomePage() {
+		return "HomePage";
+	}
+	
+	@GetMapping("/emp")
+	public String showEmpPage() {
+		return "EmpPage";
+	}
+	
+	@GetMapping("/adm")
+	public String showAdminPage() {
+		return "AdminPage";
+	}
+	
+	@GetMapping("/std")
+	public String showStdPage() {
+		return "StudentPage";
+	}
+	
+	@GetMapping("/denied")
+	public String showDeniedPage() {
+		return "DeniedPage";
+	}
+	
+}
+b. UI Pages
+-------AdminPage.html---------
+<html>
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>WELCOME TO ADMIN</h3>
+	<a href="logout">CLICK TO LOGOUT</a>
+</body>
+
+</html>
+--------DeniedPage.html--------------------
+<html>
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>YOU CAN NOT ACCESS THIS!!</h3>
+	<a href="logout">CLICK TO LOGOUT</a>
+</body>
+
+</html>
+---------------EmpPage.html---------------
+<html>
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>WELCOME TO EMPLOYEE</h3>
+	<a href="logout">CLICK TO LOGOUT</a>
+</body>
+
+</html>
+-----------------HomePage.html------------
+<html>
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>WELCOME TO HOME AFTER LOGIN</h3>
+	<a href="logout">CLICK TO LOGOUT</a>
+</body>
+
+</html>
+-----------------StudentPage.html----------
+<html>
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>WELCOME TO STUDENT</h3>
+	<a href="logout">CLICK TO LOGOUT</a>
+</body>
+
+</html>
+----------------WelcomePage.html----------
+<html>
+
+<head>
+	<title>WELCOME TO SECURITY</title>
+</head>
+
+<body>
+	<h3>WELCOME TO ALL</h3>
+</body>
+
+</html>
+
+==============================================
+c. Spring Security
+package in.nareshit.raghu.config;
+
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+@EnableWebSecurity
+public class SecurityConfig 
+	extends WebSecurityConfigurerAdapter
+{
+
+	protected void configure(AuthenticationManagerBuilder auth)
+				throws Exception {
+		auth.inMemoryAuthentication().withUser("SAM").password("{noop}SAM").authorities("ADMIN");
+		auth.inMemoryAuthentication().withUser("SYED").password("{noop}SYED").authorities("EMPLOYEE");
+		auth.inMemoryAuthentication().withUser("AJAY").password("{noop}AJAY").authorities("STUDENT");
+		
+	}
+	
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
+		.antMatchers("/welcome").permitAll()
+		.antMatchers("/home").authenticated()
+		.antMatchers("/emp").hasAuthority("EMPLOYEE")
+		.antMatchers("/adm").hasAuthority("ADMIN")
+		.antMatchers("/std").hasAuthority("STUDENT")
+		
+		.anyRequest().authenticated()
+
+		.and()
+		.formLogin() //Login Form + Login Validation + HttpSession
+		.defaultSuccessUrl("/home", true)
+		
+		.and()
+		.logout() // Logout code + Logout Path
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		
+		.and()
+		.exceptionHandling()
+		.accessDeniedPage("/denied")
+		;
+	}
+}
+==========================================================
+*) Run app and enter URL
+http://localhost:8080/emp
+http://localhost:8080/std
+
+*)Note:
+formLogin() will provide default
+   Login Form, Login validation code
+   and HttpSession creation code
+
+logout() will provide default logout configuration, path
+	and HttpSession invalidation
+
+exceptionHandling().accessDeniedPage("/denied")
+ By default it will show 403- Error Page, to show our custom
+ page we use this code.
+
+antMatchers("/path").accessType()
+  If Request URL is matched then given accessType is executed.
+

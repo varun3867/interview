@@ -1,0 +1,105 @@
+				Date : 13-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	-------------------------------------------------------------
+		    Spring Boot - WEB MVC - Thymeleaf
+
+JSP : Java Server Pages -- UI (Heavy weight)
+
+JSP --> Servlet --> HTML
+(HttpServletRequest,HttpServletResponse, HttpServletContext, HttpServletConfig
+   ..etc)
+=> Lot of objects are created inside server.
+=> Even static content is converted into dynamic format (Java code)
+
+----------------------------------------------------
+Thymeleaf : 
+> It is light weight UI technology.
+> It will not convert Static content
+   only Converts Dynamic Content into Java Format.
+> No Concept like Servlets.
+> Works using Render(Replace tags/expressions with dynamic data) and Execute.
+> It is a simple HTML File.
+====================================================
+*) ViewResolver exist in WEB-MVC.
+*) incase of JSP, we have added JASPER dependency 
+   and provided prefix and suffix
+*) but, coming to Thymeleaf just add
+   'spring-boot-starter-thymeleaf'
+   which provides auto-configuration
+
+  No need to provide prefix and suffix
+  prefix = classpath:/templates   (classpath-src/main/resources)
+  suffix = .html
+
+*) All required functions existe at thyemeleaf server. To access that location
+   use xml-namespace(where tags actual logic exist)
+
+<html  xmlns:th="https://www.thymeleaf.org/">
+
+</html>
+
+xml-namespace - it is a location where actual tag code is exist.
+prefix - (th-thymeleaf) - this prefix is used to separate HTML and thymeleaf tags.
+===============================================================
+Q) Can we write Java code inside (pure) HTML file?
+A) No
+
+Q) Can we write tags insidie HTML file?
+A) YES
+
+Q) can we write our own tag inside HTML file?
+A) Actually Not works.
+   If you add, what is the meaning of tag you must specify.
+
+   TagUse  -------------------- TagCode
+   functionsCall()              functionsBody{}
+
+First import then use it.
+<html xmlns:th="https://www.thymeleaf.org/">
+
+  <div> </div>
+  <div th:text=""> WElcome to All </div>
+</html>
+
+==============================================================
+Ex#1
+Name : SpringBoot2WebMvcThymeleafEx
+Dep  : Web, lombok, Thymeleaf, Devtools
+
+a. application.properties
+server.port=8686
+
+b. Controller
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HomeController {
+
+	@GetMapping("/show")
+	public String viewHome(Model model) 
+	{
+		model.addAttribute("sample", "NIT");
+		return "Home";
+	}
+}
+
+c. UI File:
+ src/main/resources
+    |-templates
+       |-Home.html
+
+--Home.html--
+<html xmlns:th="https://www.thymeleaf.org/">
+	<body>
+	WELCOME  [[${sample} ]]
+	<div th:text="${sample}"></div>
+	</body>
+</html>
+
+===================================================================
+

@@ -1,0 +1,287 @@
+				Date : 17-09-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	-------------------------------------------------------------
+Spring Boot Error and Exception Handling:
+https://www.youtube.com/watch?v=AFq9eK2OoGU
+https://www.youtube.com/watch?v=tBVAybXMKzY
+https://www.youtube.com/watch?v=M-LRfrYHWrk
+
+			 Mini Project : Spring Boot
+			 Web Mvc + Data JPA + MySQL
+
+Ex: Employee Module
+Layers Design = 3 layers
+a. Presentation Layer (PL)  : Web Mvc -- UI
+b. Service Layer      (SL)  : Calculations,Operations, Transaction Management
+c. Data Access Layer  (DAL) : Database Operations
+--------------------------------------------------------------------------------
+*) Normal @Controller class supports only java based UI technologies
+   JSP, Thymeleaf, ...etc
+*) For Angular, ReactJS.... must use @RestController ...etc
+======================================================================
+name : SpringBoot2WebMvcCrudEx
+Dep  : Data Jpa, MySQL, Lombok, Devtools, Web, thymeleaf
+
+1. application.yml
+server:
+  port: 9090
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: root
+    url: jdbc:mysql://localhost:3306/boot630pm
+    username: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+----------------------------------------
+2. Entity
+package in.nareshit.raghu.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="emptab")
+public class Employee {
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="eid")
+	private Integer empId;
+	
+	@Column(name="ename")
+	private String empName;
+	
+	@Column(name="esal")
+	private Double empSal;
+	
+	@Column(name="egen")
+	private String empGen;
+	
+	@Column(name="edept")
+	private String empDept;
+	
+	@Column(name="eaddr")
+	private String empAddr;
+}
+
+
+3. Repository
+package in.nareshit.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.nareshit.raghu.entity.Employee;
+
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+
+}
+
+
+4. Service
+package in.nareshit.raghu.service;
+
+import java.util.List;
+
+import in.nareshit.raghu.entity.Employee;
+
+public interface IEmployeeService {
+
+	Integer saveEmployee(Employee e);
+	void updateEmployee(Employee e);
+	void deleteEmployee(Integer id);
+	Employee getOneEmployee(Integer id);
+	List<Employee> getAllEmployees();
+}
+
+
+5. Service Impl
+package in.nareshit.raghu.service.impl;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.nareshit.raghu.entity.Employee;
+import in.nareshit.raghu.repo.EmployeeRepository;
+import in.nareshit.raghu.service.IEmployeeService;
+
+@Service
+public class EmployeeServiceImpl implements IEmployeeService {
+
+	@Autowired
+	private EmployeeRepository repo;
+	
+	@Override
+	public Integer saveEmployee(Employee e) {
+		return repo.save(e).getEmpId();
+	}
+
+	@Override
+	public void updateEmployee(Employee e) {
+		repo.save(e);
+	}
+
+	@Override
+	public void deleteEmployee(Integer id) {
+		repo.deleteById(id);
+	}
+
+	@Override
+	public Employee getOneEmployee(Integer id) {
+		Optional<Employee> opt = repo.findById(id);
+		if(opt.isPresent()) 
+			return opt.get();
+		else 
+			return null;
+	}
+
+	@Override
+	public List<Employee> getAllEmployees() {
+		return repo.findAll();
+	}
+
+}
+
+
+6. Controller
+package in.nareshit.raghu.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import in.nareshit.raghu.entity.Employee;
+import in.nareshit.raghu.service.IEmployeeService;
+
+@Controller
+@RequestMapping("/employee")
+public class EmployeeController {
+
+	@Autowired
+	private IEmployeeService service;
+	
+	//1. show register page
+	@GetMapping("/register")
+	public String showReg() {
+		return "EmployeeRegister";
+	}
+	
+	//2. save employee
+	@PostMapping("/save")
+	public String saveData(
+			@ModelAttribute Employee employee,
+			Model model
+			) 
+	{
+		Integer id = service.saveEmployee(employee);
+		model.addAttribute("message", "Employee '"+id+"' is created");
+		return "EmployeeRegister";
+	}
+	
+	//3. display all employees
+	@GetMapping("/all")
+	public String showData(Model model) {
+		List<Employee> list = service.getAllEmployees();
+		model.addAttribute("list", list);
+		return "EmployeeData";
+	}
+	
+	//4. delete employee by id
+	
+	//5. show edit page
+	
+	//6. do update
+}
+
+7. UI Pages
+   EmployeeRegister.html
+----------------------------------------------
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>Register</title>
+	</head>
+	<body>
+		<h3>EMPLOYEE REGISTER PAGE</h3>
+		<form th:action="@{/employee/save}" method="POST">
+			<pre>
+				NAME : <input type="text" name="empName"/>
+				SAL  : <input type="text" name="empSal"/>
+			  GENDER :
+			     <input type="radio" name="empGen" value="Male"/> Male
+			     <input type="radio" name="empGen" value="Female"/> Female
+			   DEPT  : <select name="empDept">
+			   				<option value="">-SELECT-</option>
+			   				<option value="DEV">DEV</option>
+			   				<option value="QA">QA</option>
+			   				<option value="BA">BA</option>
+			   			</select>
+			   	ADDR : <textarea name="empAddr"></textarea>
+			   		<button type="submit">Create</button>
+			</pre>
+		</form>
+		<div th:text="${message}"></div>
+	</body>
+</html>
+--------------------------------------------
+   EmployeeData.html
+------------------------------
+<html xmlns:th="https://www.thymeleaf.org/">
+	<head>
+		<title>Register</title>
+	</head>
+	<body>
+		<h3>EMPLOYEE DATA PAGE </h3>
+		<table border="1">
+			<tr>
+				<th>ID</th>
+				<th>NAME</th>
+				<th>SAL</th>
+				<th>GEN</th>
+				<th>DEPT</th>
+				<th>ADDR</th>
+				<th>OPERATIONS</th>
+			</tr>
+			<tr th:each="ob:${list}">
+				<td>[[${ob.empId}]]</td>
+				<td>[[${ob.empName}]]</td>
+				<td>[[${ob.empSal}]]</td>
+				<td>[[${ob.empGen}]]</td>
+				<td>[[${ob.empDept}]]</td>
+				<td>[[${ob.empAddr}]]</td>
+				<td>
+					<a>DELETE</a> | <a>EDIT</a>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>	
+-------------------------------------------------------------
+   EmployeeEdit.html
+   (pending)
+
+*) Run app and enter URL
+http://localhost:9090/employee/register
+http://localhost:9090/employee/all

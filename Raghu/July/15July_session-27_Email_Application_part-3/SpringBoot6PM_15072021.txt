@@ -1,0 +1,230 @@
+			       Date : 15-Jul-21
+			       Spring Boot 6:30PM
+			        Mr. RAGHU
+		---------------------------------------------
+			   Spring Boot - Email
+
+a. Creating one new Message Object (MimeMessage)
+      MimeMessage message  = javaMailSender.createMimeMessage();
+
+b. To fill data use Helper class , inputs(message,multipart[boolean])
+
+    multipart - true , if attachment exist
+                       else we have to provide false
+
+MimeMessageHelper  helper = new MimeMessageHelper(message, file!=null);
+
+c. Set details
+    setTo
+    setCc
+    setBcc
+    setSubject
+    setText
+
+d. Add Attachment : inputs(filename,file[resource])
+       addAttachment(file.getFilename(), file);
+
+
+
+*) Resource (I) [org.springframework.core.io]
+  To indicate a file to be loaded into application, use this.
+  Ex: PDF File, Image, Audio, video..etc
+
+> File can be at System Drives ( ex: D:/mydata/sample.txt)
+  then use  FileSystemResource
+
+Ex:
+Resource file = new FileSystemResource("D:/Images/SpringBoot630PM_1407021_2.png");
+
+> File can be at Poject class path (src/main/resources folder)
+  then use  ClassPathResource
+
+Ex:
+Resource file = new ClassPathResource("kola.jpg");
+
+> File can be in internet (URL) then use UrlResource
+
+Ex:
+Resource file = new UrlResource("https://www.realtrainings.com/assets/images/institutes/Naresh-i-Technologies-Logo.jpg");
+
+ ======================================================================
+		setText()  inside MimeMessageHelper(C)
+ ======================================================================
+There are overloaded methods for setText() given as
+
+#1
+ setText(String text,boolean html) {  ....  }
+
+#2
+ setText(String text) {
+    setText(text,false);
+ }
+
+=> 1st method is taking message body(Text) and boolean input(HTML or Plain Text)
+    if we send it as false, then text is plain text [print as it]
+
+    To send this as HTML Executed Output, specify true as 2nd pram
+
+
+a. setText("hell") ; //false --> sent as Plain text
+b. setText("<h1>hello</h1>",true); --> sent as HTML Text
+
+
+============(code)=============================================
+1. Spring Boot application
+Name: SpringBoot2EmailApp
+Dep : Java Mail Sender
+
+2. application.yml (same as before)
+
+3. Mail Util
+package in.nareshit.raghu.util;
+
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyMailUtil {
+	
+	@Autowired
+	private JavaMailSender mailSender;
+
+	public boolean send(
+			String[] to,
+			String[] cc,
+			String[] bcc,
+			String subject,
+			String text,
+			Resource[] files
+			) 
+	{
+		boolean flag = false;
+
+		try {
+			//1. create one Empty/new MimeMessage
+			MimeMessage message  = mailSender.createMimeMessage();
+			
+			//2. use Helper class and set details
+			MimeMessageHelper  helper = new MimeMessageHelper(message, files.length>0);
+			
+			helper.setTo(to);
+			
+			if(cc!=null && cc.length>0)
+				helper.setCc(cc);
+			
+			if(bcc!=null && bcc.length>0)
+				helper.setBcc(bcc);
+			
+			helper.setSubject(subject);
+			//helper.setText(text); //false //send as Plain Text
+			helper.setText(text,true);//send as HTML 
+			
+			if(files.length>0) {
+				//file name , resource object
+				for(Resource file:files)
+					helper.addAttachment(file.getFilename(), file);
+			}
+			
+			//3. send email 
+			mailSender.send(message);
+			
+			flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+}
+
+
+3. Runner class
+
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.util.MyMailUtil;
+
+@Component
+public class TestEmailRunner implements CommandLineRunner {
+
+	@Autowired
+	private MyMailUtil mailUtil;
+
+	public void run(String... args) throws Exception {
+		Resource file1 = new FileSystemResource("D:/Images/SpringBoot630PM_1407021_2.png");
+		Resource file2 = new ClassPathResource("kola.jpg");
+		Resource file3 = new UrlResource("https://www.realtrainings.com/assets/images/institutes/Naresh-i-Technologies-Logo.jpg");
+
+		boolean sent = mailUtil.send(
+				new String[] {  //to
+						"nitsample123@gmail.com",
+						"javabyraghu@gmail.com"
+				}, 
+				new String[] {  //cc
+						"vikashjava8@gmail.com",
+						"parag.varu@gmail.com",
+						"mahato.jayanta114@gmail.com"
+				}, 
+				new String[] { //bcc
+						"sethisritam1234@gmail.com",
+						"preddy7111@gmail.com",
+						"ashishjsr07@gmail.com",
+						"jagannivasac@gmail.com"
+
+				}, 
+				"TEST SUB",  //subject
+				"<html><body><h1>Hello</h1><b>abcd</b><i>IJKL</i></body></html>", //text as HTML
+				new Resource[] {file1,file2,file3} // multiple attachments
+				);
+		if(sent) 
+			System.out.println("SUCCESS");
+		else
+			System.out.println("FAILED");
+	}
+
+}
+====================================================================
+        	Apply Overloading in MailUtil class
+====================================================================
+	//overloaded method
+	public boolean send(String to,String subject, String text) {
+		return send(new String[] {to}, null, null, subject, text, null);
+	}
+	
+	//overloaded method
+	public boolean send(String[] to,String subject, String text, Resource[] files) {
+		return send(to, null, null, subject, text, files);
+	}
+=> adding overloaded method make easy to pick a method call by API user
+   without high level modifications.
+------------------------------------------------------------------------
+
+> Exceptions while sending email???
+a.*** Do not use personal Email account
+   Create new Email Account
+
+b. Disable 2-step verification and enable less secure apps
+
+> Login Gmail > Click on Name Icon on top right corner
+> Click on Manage your accounts > security > Goto Less secure app access
+> Turn on > Change to ON
+
+c. Disable anti-virus for few minutes (if it blocking only)
+
+d. JDK remove old version and install latest
+  (PIX PATH CERTIFICATE PROBLEM)
+
+
+

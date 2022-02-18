@@ -1,0 +1,167 @@
+				Date : 16-Jun-21
+				Spring Boot 6PM
+				  Mr. RAGHU
+		-------------------------------------------
+			email:	javabyraghu@gmail.com
+ 			FB : https://www.facebook.com/groups/thejavatemple
+		-------------------------------------------
+
+All PDFs:
+ https://www.mediafire.com/file/w5x9w5vcmkwkkdv/RaghuSirNareshITJavaPdfs.zip/file
+
+Maven :
+ https://www.youtube.com/watch?v=9eJAvApRAI0
+ https://www.youtube.com/watch?v=jOykBjSl1X0
+ https://www.youtube.com/watch?v=iLwuhbnFPqo
+
+List:-
+https://www.youtube.com/watch?v=EA43S5R8LSc&list=PLVlQHNRLflP9XSWeY4x4FLwnL3UOIxnTr
+
+
+			Spring Boot application (3)
+> Main class / Starter class
+> Input File (properties/yaml)
+> Maven(pom.xml)/Gradle(build.gradle)
+
+----------------------------------------------------------------
+			https://start.spring.io/
+If we use any IDE(Eclipse, STS, IntelliJIDea..etc) all those finally
+uses "Spring Initializer" Web site to create Project
+
+We have to provide all our project information here and download as Zip
+> Project (*)Maven ()Gradle
+> Language (*) Java ()Kotlin 
+> Spring Boot ()2.5.x ()2.4.x (*)2.3.x
+> Project Metadata
+        Groupid    : in.nareshit
+	ArtifactId : MyFirstApp
+	Version    : 0.0.1-SNAPSHOT
+        Name       : <ArtifactId is copied Here>
+	Package    : in.nareshit.raghu        [all your java classes must be inside this]
+	Packaging  : (*)JAR ()WAR
+	Java Version: () Latest (*)11 ()8
+> Dependencies : Jars/concepts required for project
+
+> Click on Generate Project > Extract to a Folder
+> Open Location where you can find pom.xml/ build.gradle
+   Copy that location
+   Ex: C:/Downloads/FirstApp/
+
+> Now Open Eclipse > File > Import 
+> Search Maven > Existing Maven Project 
+> Search Gradle > Existing Gradle Project 
+> Enter copied location > Next > Finish
+
+---S/w----------------------------------------------
+JDK 11 :-
+ https://www.oracle.com/in/java/technologies/javase-jdk11-downloads.html
+JDK 8:-
+ https://www.oracle.com/in/java/technologies/javase/javase-jdk8-downloads.html
+
+STS(Spring Tool Suite) :-
+   https://spring.io/tools
+
+Eclipse:-
+ https://www.eclipse.org/downloads/packages/release
+
+ https://www.eclipse.org/downloads/packages/release/2021-03/rc1
+ https://www.eclipse.org/downloads/packages/release/kepler/sr2
+------------------------------------------------------------------------
+STS Download Process:-
+a. Download STS  | https://spring.io/tools
+b. Click on Keep button , Keep anyway.
+c. Downloaded as JAR , double click to start extracting
+d. Open Folder Ex: C:\Users\Downloads\sts-4.10.0.RELEASE
+e. click on SpringToolSuite4.exe
+f. Provide Workspace : ex: D:\SpringBoot6PM_JUNE2021
+g. Start creating projects.
+ > File > new > Spring Starter Project
+
+ Name   : SpringBoot2FirstApp
+ GroupId: in.nareshit.raghu
+ Version: 1.0
+ Package: in.nareshit.raghu
+
+> Next > Finish
+
+h. create one class under package 'in.nareshit.raghu'.
+------------------------------
+package in.nareshit.raghu;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyDbConnection {
+
+	@Value("${my.db.driver}")
+	private String driver;
+	
+	@Value("${my.db.url}")
+	private String url;
+
+	// Source > Generate toString > Generate
+	public String toString() {
+		return "MyDbConnection [driver=" + driver + ", url=" + url + "]";
+	}
+	
+}
+------------------------------
+i. Modified main class
+package in.nareshit.raghu;
+
+//ctrl+shift+O imports
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBoot2FirstAppApplication {
+
+	public static void main(String[] args) {
+		ApplicationContext ac = SpringApplication.run(SpringBoot2FirstAppApplication.class, args);
+		Object ob = ac.getBean("myDbConnection");
+		System.out.println(ob);
+	}
+
+}
+
+j. application.properties
+# allowed symbols dot(.), dash(-), underscore(_) for key name
+my.db.driver=Oracle
+my.db.url=jdbc-orcl
+
+> Run Menu > Run Option > Java Application
+--------------------------------------------------------
+
+
+@Component --- ?? Creating Object
+@Value     --- ?? HardCoded/Read From Properties**/SpEL
+				${key}
+
+---Shortcuts--------------------------------------------------
+ctrl + / -             Adjst Font Size
+
+ctrl+shift+R         Open your classes
+ctrl+shift+T         to open pre-defined classes
+
+ctrl+F11              Run main class
+------------------------------------------------------------------
+get - read
+bean -- object
+
+ Read object from spring container
+
+classes [Spring Bean]--> Spring + Container Rules
+
+@ComponentScan("___") -- Spring 
+
+Spring Boot -- Main class package is basePackage
+
+Autowired,  Spring Boot REST + Angular ( State less, 
+		   Not HttpSession)
+         Cookies/LocalStorage/SessionStorage .. 
+----------------------------------------------------------------
+HttpSession ??--- (Statefull) Spring Boot , WEB MVC
+
+No HttpSession ?? -- (Stateless) Spring Boot , REST + JWT + UI(Angular/ReactJS)

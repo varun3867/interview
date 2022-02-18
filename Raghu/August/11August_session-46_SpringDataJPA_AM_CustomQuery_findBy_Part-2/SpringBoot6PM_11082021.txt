@@ -1,0 +1,218 @@
+				Date : 11-Aug-21
+				Sprig Boot 6:30PM
+				  Mr. RAGHU
+	---------------------------------------------------------------
+			   Data JPA -- findBy (Part-II)
+
+		findBy<Variable><KeyWord>(DT variable)
+
+a. using in operator
+mysql> select * from booktab where bid in (1011,1015,1018,1019,1120,1150);
+
+
+b. like operator
+ 
+ %  - any char (zero to n)
+
+ _  - any char only one
+
+*) Print BookAuthor having 3 character size.
+select * from book where bauthro like '___'
+
+*) Author name starts with S
+
+select * from booktab where bauthor like 'S%';
+
+*) Author name ends with M
+
+select * from booktab where bauthor like '%M';
+
+*) Author name contains A
+
+ select * from booktab where bauthor like '%A%';
+
+==code====================================================================
+1. application.properties
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot630pm
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
+#spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+
+2. Model class
+package in.nareshit.raghu.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="booktab")
+public class Book {
+	@Id
+	@Column(name="bid")
+	private Integer bookId;
+	
+	@Column(name="bname")
+	private String bookName;
+	
+	@Column(name="bauthor")
+	private String author;
+	
+	@Column(name="btype")
+	private String bookType;
+	
+	@Column(name="bcost")
+	private Double bookCost;
+}
+
+
+3. Repository
+package in.nareshit.raghu.repo;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.nareshit.raghu.model.Book;
+
+public interface BookRepository 
+	extends JpaRepository<Book, Integer> 
+{
+	//SELECT * FROM BOOKTAB WHERE AUTHOR=?
+    List<Book>	findByAuthor(String author);
+    List<Book>	findByAuthorIs(String author);
+    List<Book>	findByAuthorEquals(String author);
+    
+    //SQL: SELECT *FROM BOOKTAB bookCost > ?
+    List<Book> findByBookCostGreaterThan(Double bookCost);
+    //SQL: SELECT *FROM BOOKTAB bookCost >= ?
+    List<Book> findByBookCostGreaterThanEqual(Double bookCost);
+    
+    //SQL:  SELECT * FROM BOOKTYPE WHERE bookType !=?
+    List<Book> findByBookTypeNot(String bookType);
+    
+    //SQL: SELECT * FROM BOOKTYPE WHERE bookId Between ? and ?
+    List<Book> findByBookIdBetween(Integer bookId1,Integer bookId2);
+     /****************************IN OPERATOR**************************************/
+    //SQL : SELECT * FROM BOOKTAB WHERE BOOKID IN (?????)
+    List<Book> findByBookIdIn(List<Integer> ids);
+    
+    //SQL : SELECT * FROM BOOKTAB WHERE BOOKID NOT IN (?????)
+    List<Book> findByBookIdNotIn(List<Integer> ids);
+    
+    /*****************************LIKE *************************************/
+    //SQL : SELECT * FROM BOOKTAB WHERE BAUHTOR LIKE ?
+    List<Book> findByAuthorLike(String author);
+    
+    //SQL : SELECT * FROM BOOKTAB WHERE BAUHTOR NOT LIKE ?
+    List<Book> findByAuthorNotLike(String author);
+    
+    //SQL : SELECT * FROM BOOKTAB WHERE BAUHTOR LIKE ?%
+    List<Book> findByAuthorStartingWith(String author);
+    
+    //SQL : SELECT * FROM BOOKTAB WHERE BAUHTOR LIKE %?
+    List<Book> findByAuthorEndingWith(String author);
+    
+    //SQL : SELECT * FROM BOOKTAB WHERE BAUHTOR LIKE %?%
+    List<Book> findByAuthorContaining(String author);
+    
+    
+    /*************************** SORT ***************************/
+  //SELECT * FROM BOOKTAB WHERE AUTHOR=? ORDER BY BOOKID ASC
+    List<Book>	findByAuthorOrderByBookId(String author);
+    
+    //SELECT * FROM BOOKTAB WHERE AUTHOR=? ORDER BY BOOKID DESC
+    List<Book>	findByAuthorOrderByBookIdDesc(String author);
+}
+
+4. Runner class (Insert)
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+
+import in.nareshit.raghu.model.Book;
+import in.nareshit.raghu.repo.BookRepository;
+
+//@Component
+public class BookDataInsertRunner implements CommandLineRunner {
+
+	@Autowired
+	private BookRepository repo;
+	
+	public void run(String... args) throws Exception {
+		
+		repo.save(new Book(1011, "Core Java","SAM", "Backend", 500.0));
+		repo.save(new Book(1012, "Adv Java","SYED", "Backend", 600.0));
+		repo.save(new Book(1013, "Hibernate","RAM", "Backend", 700.0));
+		repo.save(new Book(1014, "BOOT AND MS","SYED", "Backend", 800.0));
+		repo.save(new Book(1015, "Angular","SAM", "Frontend", 500.0));
+		repo.save(new Book(1016, "Bootstrap","SYED", "Frontend", 600.0));
+		repo.save(new Book(1017, "HTML and CSS","RAM", "Frontend", 400.0));
+		repo.save(new Book(1018, "JQuery",null, "Frontend", 400.0));
+		repo.save(new Book(1019, "Tool",null, "Backend", 200.0));
+		
+		
+	}
+
+}
+
+5. Runner class (test findBy)
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.repo.BookRepository;
+
+@Component
+public class BookFindByTestRunnerTwo implements CommandLineRunner {
+
+	@Autowired
+	private BookRepository repo;
+	
+	public void run(String... args) throws Exception {
+		/*List<Book> list = repo.findByBookIdIn(
+				Arrays.asList(1011,1015,1018,1019,1120,1150)
+				);
+		list.forEach(System.out::println);
+		*/
+		
+		/*repo.findByBookIdNotIn(
+				Arrays.asList(1011,1015,1018,1019,1120,1150)
+				)
+		.forEach(System.out::println);
+		*/
+		//starts with S
+		//repo.findByAuthorLike("S%").forEach(System.out::println);
+		//repo.findByAuthorStartingWith("S").forEach(System.out::println);
+		
+		//ends with M
+		//repo.findByAuthorLike("%M").forEach(System.out::println);
+		//repo.findByAuthorEndingWith("M").forEach(System.out::println);
+		
+		
+		//contains A
+		//repo.findByAuthorLike("%A%").forEach(System.out::println);
+		//repo.findByAuthorContaining("A").forEach(System.out::println);
+		
+		//repo.findByAuthorNotLike("S%").forEach(System.out::println);
+		
+		repo.findByAuthorOrderByBookId("SYED").forEach(System.out::println);
+		//repo.findByAuthorOrderByBookIdDesc("SAM").forEach(System.out::println);
+	}
+
+}

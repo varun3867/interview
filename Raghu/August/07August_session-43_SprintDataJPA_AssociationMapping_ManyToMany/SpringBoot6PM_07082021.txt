@@ -1,0 +1,243 @@
+				Date : 07-Aug-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+		---------------------------------------------
+
+			Data JPA : Many-To-Many
+
+        1...*
+  Parent----<>Child   ===> we use many-to-many
+        *...1
+
+Ex:
+           1...*
+   Student -----<> Course ===> Use Many-To-Many Relation.
+           *...1
+
+--Relation steps--------------------------
+1. Apply HAS-A Relation
+2. check for collection/not
+3. Apply Multiplicity Annotation
+4. Provide Jointable with 2 column
+5. Draw tables.
+
+---MySQL Commands Before Running App---
+mysql> drop database boot630pm;
+Query OK, 5 rows affected (0.13 sec)
+
+mysql> create database boot630pm;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use boot630pm;
+Database changed
+
+
+
+--coding ----------------------------------
+Name : SpringBoot2DataJpaManyToManyEx
+Dep  : Data Jpa, MySQL, Lombok
+
+1. application.yml
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: root
+    url: jdbc:mysql://localhost:3306/boot630pm
+    username: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+2. Model classes
+package in.nareshit.raghu.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="crstab")
+public class Course {
+	
+	@Id
+	@Column(name="cid")
+	private Integer courseId;
+	
+	@Column(name="cname")
+	private String courseName;
+	
+	@Column(name="cfee")
+	private Double courseFee;
+	
+}
+---
+package in.nareshit.raghu.model;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="stdtab")
+public class Student {
+	@Id
+	@Column(name="sid")
+	private Integer stdId;
+	
+	@Column(name="sname")
+	private String stdName;
+	
+	@Column(name="saddr")
+	private String stdAddr;
+	
+	@ManyToMany
+	@JoinTable(
+			name="stdcrstab",
+			joinColumns = @JoinColumn(name="sidFk"),
+			inverseJoinColumns = @JoinColumn(name="cidFk")
+			)
+	private List<Course> cobs;//HAS-A
+	
+	
+}
+
+3. Reposiory interface
+package in.nareshit.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.nareshit.raghu.model.Course;
+
+public interface CourseRepository extends JpaRepository<Course, Integer> {
+
+}
+-----------------
+package in.nareshit.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.nareshit.raghu.model.Student;
+
+public interface StudentRepository extends JpaRepository<Student, Integer> {
+
+}
+
+4. Runner class
+package in.nareshit.raghu.runner;
+
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.Course;
+import in.nareshit.raghu.model.Student;
+import in.nareshit.raghu.repo.CourseRepository;
+import in.nareshit.raghu.repo.StudentRepository;
+
+@Component
+public class DataInsertRunner implements CommandLineRunner {
+
+	@Autowired
+	private CourseRepository crepo;
+	
+	@Autowired
+	private StudentRepository srepo;
+	
+	public void run(String... args) throws Exception {
+		//insert few courses
+		Course c1 = new Course(5501, "CORE JAVA", 500.0);
+		Course c2 = new Course(5502, "ADV JAVA", 600.0);
+		Course c3 = new Course(5503, "HIBERNATE", 700.0);
+		Course c4 = new Course(5504, "SPRING BOOT", 800.0);
+		
+		crepo.save(c1);
+		crepo.save(c2);
+		crepo.save(c3);
+		crepo.save(c4);
+		
+		//students with courses
+		Student s1 = new Student(901, "AA", "HYD", Arrays.asList(c1,c2));
+		Student s2 = new Student(902, "BB", "CHN", Arrays.asList(c2,c3));
+		Student s3 = new Student(903, "CC", "DHL", Arrays.asList(c4,c1));
+		
+		srepo.save(s1);
+		srepo.save(s2);
+		srepo.save(s3);
+		
+		System.out.println("DONE");
+	}
+
+}
+----pom.xml For Oracle--------------------------------------------------------------------------
+For Oracle 10g/11g/9i/12C databases:-
+<dependency>
+	<groupId>com.oracle.database.jdbc</groupId>
+	<artifactId>ojdbc8</artifactId>
+	<scope>runtime</scope>
+</dependency>
+
+OJDBC6:-
+<dependency>
+    <groupId>com.jslsolucoes</groupId>
+    <artifactId>ojdbc6</artifactId>
+    <version>11.2.0.1.0</version>
+</dependency>
+
+
+---application.properties--------
+spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:XE
+spring.datasource.username=raghu
+spring.datasource.password=raghu
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=create
+spring.jpa.database-platform=org.hibernate.dialect.Oracle10gDialect
+---------------------------------
+
+
+SQL> select * from global_name;
+Output: XE
+
+cmd> tnsping XE
+copy port number
+
+--For a new Oracle User account------------
+SQL> create user raghu identified by raghu;
+User created.
+
+SQL> grant dba to raghu;
+Grant succeeded.
+
+SQL> conn
+ raghu
+ raghu
+
+SQL> select * from tab;
+
+check tables data

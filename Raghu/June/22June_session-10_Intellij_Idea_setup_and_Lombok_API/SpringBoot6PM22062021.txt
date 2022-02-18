@@ -1,0 +1,129 @@
+				Date : 22-Jun-21
+				Spring Boot 6PM
+				  Mr. RAGHU
+	---------------------------------------------------------------------
+Maven Videos:
+https://www.youtube.com/watch?v=9eJAvApRAI0
+https://www.youtube.com/watch?v=jOykBjSl1X0
+https://www.youtube.com/watch?v=iLwuhbnFPqo
+
+			IDE : IntelliJ Idea
+
+S#1 Goto https://www.jetbrains.com/idea/download/#section=windows
+S#2 Click on Download [Community option]
+S#3 Wait until it finish download (size: 650 MB around)
+S#4 Install S/w 
+    > Double click > Next > Next > Finish
+-----------------------------------------------------------
+Create Spring Boot Project using Spring Initializer
+a. Goto https://start.spring.io/
+b. Create Project with details
+c. click on generate project
+d. Extract to a folder
+e. Copy location of Project
+C:\Users\Raghu\Downloads\SpringBoot2FirstApp
+
+-------------------------------------------------
+S#5 Open IntelliJ Idea S/w
+S#6 First Time (User Aggrement)
+S#7 Click on Open Project
+   > Enter location of your project/ choose manual
+   > Click on Open > Click on Trust
+   > Finish
+
+S#8 Wait for few minutes to download all jars
+S#9 Click on setup JDK on top right corner
+  > select JDK installed in your system
+
+S#10 Run > Run Option
+S#11 Create Package first
+ > Right click on base Package > new > package name
+ > ex: beans > finish
+
+S#12 Create class
+  > Right click on package > new > class
+  > Enter name > Ex: Product
+  > Finish
+
+S#13 Example code
+
+package in.nareshit.raghu.bean;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Product {
+    @Value("${my.id}")
+    private Integer prodId;
+    @Value("${my.code}")
+    private String prodCode;
+    @Value("${my.cost}")
+    private Double prodCost;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "prodId=" + prodId +
+                ", prodCode='" + prodCode + '\'' +
+                ", prodCost=" + prodCost +
+                '}';
+    }
+}
+
+S#14 application.properties
+ my.id=101
+ my.code=ABCD
+ my.cost=200.0
+
+S#15 Modified Main class
+package in.nareshit.raghu;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBoot2FirstAppApplication {
+
+	public static void main(String[] args) {
+		ApplicationContext ac= SpringApplication.run(SpringBoot2FirstAppApplication.class, args);
+		Object ob = ac.getBean("product");
+		System.out.println(ob);
+	}
+
+}
+
+S#16 Run class
+
+ ====================================================================
+			 Project Lombok API
+
+*) It is Open source Java API [3rd party]
+  [ Not from Sun microsystem or from pivotal ]
+
+*) It will read your java file (Source code) 
+  and generates intermediate Source code before compile
+
+ ie --> It will generate code for
+   > Constrcutors (default, param)
+   > set/get methods
+   > toString() override
+   > equals() and hashCode() override
+
+*) Add Lombok Annotations at your class
+*) at pom.xml 
+   https://projectlombok.org/setup/maven
+
+       <dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<version>1.18.20</version>
+		<scope>provided</scope>
+	</dependency>
+
+*** Notes:
+  After doing any modifications in pom.xml (IntelliJIdea)
+  > Right click On project > Maven > Reload Project
+
+

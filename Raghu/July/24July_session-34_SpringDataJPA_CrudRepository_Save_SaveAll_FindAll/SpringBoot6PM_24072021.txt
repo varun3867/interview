@@ -1,0 +1,206 @@
+				Date : 24-Jul-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+		------------------------------------------------
+			Spring Boot - DATA JPA
+
+Multiple Databases:
+https://www.youtube.com/watch?v=nzszxQbQ5WU
+
+DATA JPA-- Code --(JPA with Hibernate) -- Dynamic Proxy | Reflection API
+
+a. Entity Class / Model class
+b. Repository Interface
+
+=> Impl class is generated and object is created (Proxy)
+=> Your Repository Interface must implement any of below interface
+
+a. CrudRepository<T, ID>  
+b. PagingAndSortingRepository<T, ID>
+c. JpaRepository<T, ID>  
+
+T = Entity/Model class Name
+ID = DataType of Primary
+
+=====CrudRepository Methods===============================================
+INSERT,UPDATE,DELETE and SELECT Operations / methods.
+
+ctrl+shift+T  - CrudRepository -- ctrl+O (View all members)
+
+-->To see any abstract method implementation 
+     : press ctrl + keep your mouse over
+   -> choose Option 'Open Implementation'.
+
+------------------------------------------------------
+
+ctrl+shift+ /         to comment selected lines
+ctrl+shift+ \         to uncomment selected lines
+==========================================================================
+To find ServiceId in Oracle:
+SQL> select * from global_name;
+
+Cmd to find Port number for a given serviceId
+cmd> tnsping XE
+
+JDBC 4 API : Auto-Load and Register Driver class, 
+	need not to provide any driver class name in code
+	Based on URL and JAR added in Project Driver is auto-detected.
+
+Hibernate 5.x : Auto-Detection of Dialect.
+		based on URL Dialect best suitable class is auto-dected
+		even if we do not specify this.
+-------------------------------------------------------------------------
+Generics -- JDK 1.5
+https://docs.oracle.com/javase/tutorial/java/generics/index.html
+
+--Normal Method----------
+void save(Product p) { }
+
+=> allows only Product objects
+--Generic Method Method----------
+<T> void save(T t) { }
+
+=> allows any type provided while using method
+
+--Generic Method Method----------
+<A extends T> void save(A t) { }
+
+T= Given a Type and its sub type also allowed
+-----------------------------------------------
+ public  static final <G> void  show(int id) {}
+   AS     AM     AM    GT   RT   MN    MP    MB
+
+Generics in Java:-
+https://www.youtube.com/c/NareshIT/search?query=Generics%20java
+
+<S extends T> S save(S entity);
+For Product-->                                  
+						RT              MN    Param
+<ProductAndSubClassAlso extends Product> ProductAndSubClassAlso save(ProductAndSubClassAlso entity);
+
+=====Methods in CrudRepository========================================================
+save(S ob):S  <S extends T>
+
+=> This method is used to INSERT/UPDATE one object into Database table.
+=> Here T= Your Model class, S= sub class of your model class
+ie Your model class and its sub class also allowed.
+
+ie Product object or Product sub class object also we can pass.
+
+=> Fist this method reads PK(ID) from given object and executes SELECT SQL
+   if SQL find row exist in DB then UPDATE else INSERT.
+
+*) Note: Iterable<T> is added in JDK 1.5 
+------------------------------------------------------------
+2. saveAll(Iterable<S> entities): Iterable<S>  <S extends T> 
+
+This method is used to take multiple entities as one Collection type
+and insert as Bulk.
+
+==================================================================
+3.  findAll(): Iterable<T>
+[SELECT * FROM TABLE]
+  To find all rows into Collection Type object.
+
+
+=======full code===========================
+name : SpringBoot2DataJpaOracleCurdEd
+Dep  : Data JPA, Lombok, Oracle
+
+1. application.properties
+#spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:XE
+spring.datasource.username=nit
+spring.datasource.password=nit
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=create
+#spring.jpa.database-platform=org.hibernate.dialect.Oracle10gDialect
+
+
+2. Model class
+package in.nareshit.raghu.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name="prodtab")
+public class Product {
+	
+	@Id
+	@Column(name="pid")
+	private Integer prodId;
+	
+	//@Column(name="pcode") //default size is 255 chars for String
+	@Column(name="pcode",length = 10) 
+	private String prodCode;
+	
+	@Column(name="pcost")
+	private Double prodCost;
+	
+}
+
+
+3. Runner class
+package in.nareshit.raghu.runner;
+
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.Product;
+import in.nareshit.raghu.repo.ProductRepository;
+
+@Component
+public class TestCrudRunner implements CommandLineRunner {
+
+	@Autowired
+	private ProductRepository repo;
+
+	public void run(String... args) throws Exception {
+		repo.save(new Product(101, "PEN", 200.0));
+		repo.save(new Product(102, "BOOK", 400.0));
+		repo.save(new Product(103, "TABLE", 500.0));
+		repo.save(new Product(104, "BAT", 100.0));
+		System.out.println("--DONE-----------");
+		repo.save(new Product(104, "BAT NEW", 150.0));
+
+
+		repo.saveAll(
+				//Arrays.asList( //JDK 1.2
+				List.of( //JDK 9	
+						new Product(105, "A", 900.0),
+						new Product(106, "B", 800.0),
+						new Product(107, "C", 700.0),
+						new Product(108, "D", 600.0)
+						)
+				);
+		
+		Iterable<Product> itr = repo.findAll();
+		
+		//===Print data using diff core java concepts=============
+		//itr.forEach(System.out::println); //using method reference
+		//itr.forEach(ob -> System.out.println(ob)); //using Lambda Expression
+		Iterator<Product> it = itr.iterator(); //using iterator
+		while (it.hasNext()) {
+			Product p =  it.next();
+			System.out.println(p);
+		}
+	}
+
+}
+=====================================================================
+

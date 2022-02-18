@@ -1,0 +1,163 @@
+				Date : 12-Jul-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	--------------------------------------------------------------
+Ref Doc
+https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
+
+			Scheduling --- Spring Boot 
+			    [cron expressions]
+
+cron -- It is an expression that indicates date and time 
+
+Format:
+	 SEC   MIN    HRS  DAY   MONTH  WEEKDAY
+     0-59  0-59  0-23  1-31  1-12   SUN-SAT(1-7)   
+
+> We can specify date and time -- Point of time.
+     {it is not day/time gap}
+> We must specify all positions at least using Symbol * (all)
+> Possible  symbols
+   *  => all/any/every
+   -  => Range (Start-End)
+   /  => Period of time
+   ,  => possible values
+   ?  => all/any/every (is used for DAY/WEEK DAY WHEN MOTH IS PROVIDED)
+
+----Examples--------------------------------------------------
+1) cron =  0  0  9  *  *  *
+
+=> Given Task is executed every day,
+       9th Hour 0th Min and 0th sec
+       [It is not 9 hours gap]
+
+Ex: App is started now (6:44PM)
+1st execution ==> 13th/July   --- 9:00:00 AM
+2nd execution ==> 14th/July   --- 9:00:00 AM
+3rd execution ==> 15th/July   --- 9:00:00 AM
+..etc
+
+2) cron =  0  0  8,9  *  *  *
+
+=> Given Task is executed twice in day, at 8AM and 9AM
+ 
+Ex: App is started now (6:50PM)
+1st execution ==> 13th/July   --- 8:00:00 AM
+2nd execution ==> 13th/July   --- 9:00:00 AM
+3rd execution ==> 14th/July   --- 8:00:00 AM
+4th execution ==> 14th/July   --- 9:00:00 AM
+..etc
+
+3) cron =  0  0  18  *  *  *
+=> Given Task is executed every day, 6PM
+
+Ex: App is started now (6:50PM)
+1st execution ==> 13th/July   --- 6:00:00 PM
+
+4) cron =  0  0  8-11  *  *  *
+  is equals to
+        =  0  0 8,9,10,11  *  *  *
+
+=> Given Task is executed every day 
+   8AM, 9AM, 10AM and 11AM
+
+5) cron = 0  0  0-12,14-23  *  *  *
+=> Given task is executed for every hour, but not 1PM
+
+
+6) cron = 0  15  9  *  *  *
+=> Given task is executed every day at 9:15:00 AM 
+ (((((( IT IS NOT 15 MIN GAP, it is 15th Min of 9AM ))))))
+
+
+7) cron = 0  15  *  *  *  *
+=> Given task is executed for every hour 15th min 0th sec
+
+Ex: App is started now (7:02PM)
+
+1st execution ==> 12th/July   --- 7:15:00 PM
+2nd execution ==> 12th/July   --- 8:15:00 PM
+3rd execution ==> 12th/July   --- 9:15:00 PM
+
+8) cron = 10  *  *  * * *
+=> Given task is executed for every minute 10th sec
+
+Ex: App is started now (7:05:25 PM)
+1st execution ==> 12th/July   --- 7:06:10 PM
+2nd execution ==> 12th/July   --- 7:07:10 PM
+3rd execution ==> 12th/July   --- 7:08:10 PM
+4th execution ==> 12th/July   --- 7:09:10 PM
+
+==============Example code==============================
+package in.nareshit.raghu;
+
+import java.util.Date;
+
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyAppReport {
+
+	@Scheduled(cron = "10 30 * * * *")
+	public void executeRepo() {
+		System.out.println("HELLO "+ new Date());
+	}
+	
+}
+========================================================
+Period of time --- (time gap)  symbols -- /
+*/10 * * * * *
+=> Execute task for every 10 sec gap.
+========================================================
+8) cron = 0  0  9  1  *  *
+=> Given task is executed for every month 
+    1st day at 9:00:00 AM
+
+9) cron = 0  0  9  1  1  SUN
+=> Given task is executed for every year 
+    1st JAN 9:00:00 AM if week day is Sunday
+ 
+10) cron = 0  0  9  1  *  MON-FRI
+
+=> Given task is executed for every month  1st 
+       9:00:00 only if working day (MON to FRI)
++--------------------------------------++--------------------------------------+
+11) cron = 0  0  9  *  1  *
+=> (wrong)
+  Given task is executed for JAN MONTH, every day/weekday
+    at 9:00:00 AM
+
+=> If month value is provided and wants use all day/weekday
+   then do not use Star(*) , use symbol(?).
+
+cron = 0  0  9  ?  1  ?
++--------------------------------------++--------------------------------------+
+12) cron = 0  0  9  L  *  *
+
+=> Execute given task in last day of every month
+   at 9:00:00 AM
+
+For Invalid Syntax:
+IllegalStateException: Encountered invalid @Scheduled method 'executeRepo':
+  Cron expression must consist of 6 fields (found 7 in "10 * * * * * *")
+
+13) cron = 59  59  23  L  12  ?
+=> Execute given task 
+
+if we start now 
+1st execution --- Dec month, last day, midnight 11:59:59 PM
+
+   "1sec before to new year"
+
+14) cron =  * * * * * *
+=> Execute task in a sec gap
+
+15) cron = 0 0 49 31 15 ?
+IllegalStateException: Encountered invalid @Scheduled method 'executeRepo': Invalid value for HourOfDay (valid values 0 - 23): 49 '49' in cron expression "0 0 49 31 15 ?"
+
+IllegalStateException
+
+16) (cron = "@hourly")
+  internal meaning is cron = "0 0 * * * *"
+

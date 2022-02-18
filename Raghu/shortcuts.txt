@@ -1,0 +1,6 @@
+cltr + F11               - to run main file
+cltr + shift + o         - to open organize imports
+ctrl+shift+T (open type) - to open any pre-defined class/interface/enum/annotation
+
+to generate toString -- alt + shift + S,S>generated
+

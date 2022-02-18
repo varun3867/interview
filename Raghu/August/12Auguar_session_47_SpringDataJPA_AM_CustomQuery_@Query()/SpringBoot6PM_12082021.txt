@@ -1,0 +1,84 @@
+				Date : 12-Aug-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	--------------------------------------------------------------
+			Spring Boot Data JPA - findBy
+
+And -- and condition
+Or -- or condition
+
+findBy ----
+*) Use only for simple custom queries.
+*) Supports only SELECT Operations.
+*) Incase of lengthy where condition it is not recomanded to use
+
+Ex:
+SELECT * FROM BOOKTAB WHRERE bookCost>=? or bookId<=? order by bookName desc
+List<Book> findByBookCostGreaterThanEqualOrBookIdLessThanEqualOrderByBookNameDesc(Double bookCost, Integer bookId);
+
+*) Writing lengthy method names not recomanded.
+
+  ============================================================================
+		   Spring Data JPA - @Query("JPQL/HQL")	
+			
+*) To work with complex and custom Queries we use this one.
+*) It supports both SELECT and NON-SELECT Operations.
+*) It supports SQL(Native Query) and JPQL/HQL (Advanced Query)
+*) We can provide Joins (Fetch data from multiple tables)
+*) PROJECTIONS (Select Clause) AND RESTRICTIONS (WHERE Clause)
+   with CONDITIONS ( Order By, Group By ...) AND OPERATIONS
+   (in, and, not, or ..etc) can be implemented as we required.
+
+*) This is also we need to apply on abstract method inside Repository interface.
+
+   @Query("_____________")
+   RT  methodName(Params);
+
+*) Query Method supports Parameters,
+  a. Positional Parameters ( ?0,?1,?2,?3...etc)
+  b. Named Parameters   (:abcd, :empId, :a, :sid..etc)
+
+==================================================================================
+			   SELECT OPERATIONS
+
+*) Our SELECT query comes under one of below types
+a. FETCH ALL COLUMNS : Output : List<T> , T=Type = Model class Name
+b. FETCH ONE COLUMN DATA : Output : List<DataTypeOfVariable>
+c. FETCH MULTIPLE COLUMNS : Output : List<Object[]>
+
+*) Default Output Recomanded Type is List, cast it later.
+
+---------------------------------------------------------------------------------
+SQL queries are Database Dependent. 
+So we use JPQL (Java Persistency Query Language) / HQL (Hibernate Query Language)
+ which is Database Independent.
+ 
+	JPQL is a specification and HQL is a implementation.
+
+SQL: table and column names
+JPQL/HQL: ClassName and variable Names
+
+  Table Name ----> ClassName
+  Column Name ---> variableName
+  (case-sensitive)
+
+Other SQL Words : SELECT, WHERE, FROM... can be used as it is (case-insensitive)
+
+--Examples---------------
+1. SQL: select eid from emptab
+
+   JQPL/HQL: select empId from Employee      (OK)
+             SELECT empId FROM Employee      (Good)
+	     SELECT e.empId FROM Employee e  (Best)
+
+2. (Special Case)
+ SQL: select * from emptab
+ JPQL/HQL : SELECT * FROM Employee (WRONGGGGGGGGGGGG)
+            FROM Employee (Valid/OK)
+	    SELECT e FROM Employee e (Good)
+ 
+3. SQL: SELECT ename,esal from emptab
+   JQPL/HQL:
+             SELECT empName,empSal FROM Employee   
+             SELECT e.empName, e.empSal FROM Employee e  
+==============================================================================

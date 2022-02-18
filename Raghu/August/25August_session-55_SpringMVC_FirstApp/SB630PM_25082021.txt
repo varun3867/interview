@@ -1,0 +1,157 @@
+				Date : 25-08-2021
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	-------------------------------------------------------------
+		    Spring Boot Web Mvc - First Application
+
+*) Spring Web Dependency comes with Tomcat Embedded (Light weight server)
+   No JSP Support is given.
+*) We should add tomcat-embedded-jasper in pom.xml manually ,
+   if we are using JSP as View .
+
+*) In MVC , M (model) is optional. But C(Controller), V(view) are must.
+
+*) OracleDb, Tomcat server (external), Jenkins by default uses 8080 port.
+==================================================================================
+Step#1 Create one starter project with Spring Web Dependency
+
+Name : SpringBoot2WebMvcFirstApp
+Dep  : Spring Web
+
+pom.xml
+<dependency>
+    <groupId>org.apache.tomcat.embed</groupId>
+    <artifactId>tomcat-embed-jasper</artifactId>
+</dependency>
+----------
+step#2 application.proeprties
+server.port=9090
+
+spring.mvc.view.prefix=/WEB-INF/pages/
+spring.mvc.view.suffix=.jsp
+--------------
+step#3 Create folder system
+
+src
+ |-main 
+    |-webapp
+        |-WEB-INF
+	    |-pages
+
+> Right click on main folder > new > folder > enter name 'webapp'
+---------------
+step#4 create JSP file under 'pages' folder
+> Right click on pages > new > file > enter name : StudentHome.jsp
+
+---StudentHome.jsp-------------
+<html>
+<head>
+	<title>WELCOME</title>
+</head>
+<body>
+	<h1>WELCOME TO FIRST APP!</h1>
+	<%
+		response.addHeader("Refresh","5;http://google.com");
+	%>
+</body>
+</html>
+
+
+--StudentHome.jsp-----------------------------
+<html>
+<head>
+	<title>WELCOME</title>
+</head>
+<body>
+	<h1>WELCOME TO FIRST APP!</h1>
+	<%
+		out.println(new java.util.Date());
+		response.addHeader("Refresh","1");
+	%>
+</body>
+</html>
+-----------------------------------------------
+------------
+step#5 controller class
+package in.nareshit.raghu.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class StudentController {
+
+	@RequestMapping("/student")
+	public String showPage() {
+		return "StudentHome";
+	}
+}
+
+
+> Run main class (ctrl+F11)
+
+http://localhost:9090/student
+
+-------------------------------------------------
+*) Is your output: Whitelabel Error Page (type=Not Found, status=404).
+a. check additional spaces in application.properties
+b. check Upper/lowercase filename and Controller return value
+c. check URL entered in browser and @RequestMapping
+d. check did you add Tomcat embedded jasper
+e. If we did not specify : @Controller on class
+f. No @RequestMapping provided then same
+
+=====(Manual Configuration in Spring WEB MVC)===============================================
+a. Java based Spring Configuration file
+package in.nareshit.raghu;
+
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+@Configurable
+@EnableWebMvc
+@ComponentScan("in.nareshit.raghu")
+public class AppConfig {
+	@Bean
+	public InternalResourceViewResolver viewResolver() {
+		return new InternalResourceViewResolver("/WEB-INF/pages/",".jsp");
+	}
+}
+
+b. DispatcherServlet Java based configuration
+package in.nareshit.raghu;
+
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+		return null; 
+	}
+
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+		return new Class[] {AppConfig.class};
+	}
+
+	@Override
+	protected String[] getServletMappings() {
+		return new String[] {"/"};
+	}
+
+}
+========================================================================
+*) The defaultViewResolver which is auto-configured by Spring boot is
+   InternalResourceViewResolver
+
+-------------------------------------------
+Task: (Web MVC)
+ EmployeeController(C)
+    showPage() : "EmpHome"
+
+ EmpHome.jsp -> WELCOME TO EMPLOYEE
+-------------------------------------------

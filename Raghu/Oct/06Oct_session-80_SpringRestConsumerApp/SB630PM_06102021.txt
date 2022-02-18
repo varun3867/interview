@@ -1,0 +1,264 @@
+				Date : 06-10-2021
+				Spring Boot 6:15PM
+				  Mr. RAGHU
+	-----------------------------------------------------------
+Task to watch:
+https://www.youtube.com/c/NareshIT/search?query=angular%20raghu
+https://www.youtube.com/c/NareshIT/search?query=reactjs%20raghu
+
+		    Spring Boot ReST - Consumer Application
+
+*) POSTMAN tool is used for testing purpose only.
+
+*) Swagger creates dynamic UI by collecting all RestController methods
+   used for testing purpose only.
+
+*) Now, this time we are writing one application (Consumer Code) using
+   RestTemplate [ie Consumer Application is a Spring Boot application].
+
+*) RestTemplate behaves like one HTTP client that supports making
+   GET, POST, PUT, DELETE ...method calls.
+
+   If Consumer Application is Spring based (Spring REST) then we can use
+   it for integration with Producer application.
+
+=============================================================================
+*) RestTemplate Coding Steps
+a. Create Object to RestTemplate manually
+b. Define one URL of Producer Resource
+c. Make HTTP Request using httpMethod
+  and pass all inputs required.
+d. Read Response at same time
+e. print/use details.
+
+*) String can store any type of Data.
+(all are valid)
+String s1 = "Hello";
+String s2 = "10";
+String s3 = "{eid:10,ename:A}";
+String s4 = "<Employee><eid>10</eid></Employee>";
+
+*) IF consumer returnes String, ClassType or Collection
+  all format outputs can be stored with String type.
+
+
+
+--RestTemplate Methods-------------
+1. GET Type
+
+ getForEntity(
+    String url, 
+    Class<T> responseType, 
+    Object... uriVariables) : ResponseEntity<T>
+
+url : location of producer resource
+responsetype : Producer method Response ClassType ex:String.class
+uriVariables : Path variables passing as data.
+
+
+*) Above method supports implicite type conversions for GlobalDataTypes.
+  in place of String.class we can even use Type.class ex: Student.class
+
+==Full Example===========================================
+1. SpringBoot2ProducerEx
+   Dep : Web, Devtools, Lombok
+
+*). RestController
+package in.nareshit.raghu.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/student")
+public class StudentRestController {
+	
+	@GetMapping("/show/{id}")
+	public ResponseEntity<String> showMsg(
+			@PathVariable Integer id
+			) 
+	{
+		return new ResponseEntity<String>(
+				"DATA FOUND FOR ID :" + id,HttpStatus.OK);
+	}
+
+	@GetMapping("/find/{id}")
+	public ResponseEntity<Student> findOne(
+			@PathVariable Integer id
+			) 
+	{
+		return new ResponseEntity<Student>(
+				new Student(id, "AJAY", 300.0),
+				HttpStatus.OK);
+	}
+
+	@PostMapping("/save")
+	public ResponseEntity<String> saveStd(
+			@RequestBody Student student
+			) 
+	{
+		return new ResponseEntity<String>(
+				"Student saved => " + student,
+				HttpStatus.CREATED);
+	}
+}
+
+*) model class
+package in.nareshit.raghu.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Student {
+
+	private Integer sid;
+	private String sname;
+	private Double sfee;
+}
+
+---------------------------------------------------------------
+2. SpringBoot2RestConsumerEx
+   Dep : Spring web, lombok
+
+
+*) RestConsumer 
+package in.nareshit.raghu;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class TestConsumer implements CommandLineRunner{
+
+	public void run(String... args) throws Exception {
+		//a. Create Object to RestTemplate manually
+		RestTemplate rt = new RestTemplate();
+		
+		//b. Define one URL of Producer Resource
+		String url = "http://localhost:8080/student/show/{id}";
+		
+		//c. Make HTTP Request using httpMethod	  and pass all inputs required.
+		//d. Read Response at same time
+		ResponseEntity<String> response= 
+				rt.getForEntity(url, String.class,101);
+		
+		//e. print/use details.
+		log.info("Response body : {}", response.getBody());
+		log.info("Response Status CODE : {}", response.getStatusCode().name());
+		log.info("Response Status VALUE: {}", response.getStatusCodeValue());
+		log.info("Response HEADERS: {}", response.getHeaders());
+		
+		//stop server before running one more time
+		System.exit(0);
+	}
+}
+
+*) application.properties
+server.port=8081
+
+
+*) Consumer#2 Runner
+package in.nareshit.raghu;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+import in.nareshit.raghu.model.Student;
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class TestGetStudentJsonRunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		RestTemplate rt = new RestTemplate();
+		
+		String url = "http://localhost:8080/student/find/{id}";
+		
+		//ResponseEntity<String> resp = rt.getForEntity(url, String.class, 9025);
+		ResponseEntity<Student> resp = rt.getForEntity(url, Student.class, 9025);
+		
+		log.info("Body {}", resp.getBody());
+		log.info("Code {}", resp.getStatusCode().name());
+		log.info("value {}", resp.getStatusCode().value());
+		log.info("Header {}", resp.getHeaders());
+		
+	}
+
+}
+================================================================================
+POST METHOD CALL:
+
+postForEntity(
+    String url,
+    HttpEntity<T> request,
+    Class<T> responsetype,
+    Object... urivariables) : ResponseEntity<T>
+
+=> To make POST method call we need to create one HTTP Request contains
+    Header Params and Body data.
+
+    Header Params can be passed using HttpHeaders
+    and Body is a type ex: JSON/XML
+
+  if we combine them ie HttpHeaders + Body => HttpEntity<T> which is a request
+
+
+*) Consumer#3 Runner class
+package in.nareshit.raghu;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Slf4j
+public class TestConsumerPostTypeRunner implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		String body = "{\"sid\":10,\"sname\":\"A\",\"sfee\":200.0}";
+		
+		HttpEntity<String> request = new HttpEntity<String>(body, headers);
+		
+		
+		RestTemplate rt = new RestTemplate();
+		String url = "http://localhost:8080/student/save";
+
+		// URL, Request, ResponseType, uriVariables
+		ResponseEntity<String> resp = rt.postForEntity(url, request, String.class);
+		
+		log.info("Body {}", resp.getBody());
+		log.info("Code {}", resp.getStatusCode().name());
+		log.info("value {}", resp.getStatusCode().value());
+		log.info("Header {}", resp.getHeaders());
+		
+	}
+
+}
+
+*) If producer application is down then Consumer gets:
+  java.net.ConnectException: Connection refused: connect

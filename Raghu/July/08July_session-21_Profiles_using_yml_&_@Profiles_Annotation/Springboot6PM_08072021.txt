@@ -1,0 +1,296 @@
+				Date : 08-Jul-21
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+	--------------------------------------------------------------
+Docker
+https://www.youtube.com/watch?v=LmoLFcoaeQw
+https://www.youtube.com/watch?v=6_6MoohzdEI
+
+			Profiles YAML : Spring Boot
+
+
+*) Even YAML file supports profile management using naming rule
+     application-[profileName].yml
+
+
+ application.yml            ---- default
+
+ application-qa.yml         ----  qa
+
+ application-prod.yml       ---- prod
+
+---------------------
+pom.xml
+<version>2.4.8</version>
+change to:
+<version>2.3.12.RELEASE</version>
+and update maven project 
+------------------------------
+
+===(code)===========================================
+Step#1
+  Name : SpringBoot2ProfilesYamlEx
+  Dep  : Lombok
+
+Step#2 Model
+
+package in.nareshit.raghu.model;
+//ctrl+shift+O
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+@Data
+@Component
+public class EmailInfo {
+	
+	@Value("${mail.host}")
+	private String host;
+	
+	@Value("${mail.port}")
+	private String port;
+	
+	
+}
+
+Step#3 
+--application.yml --
+mail:
+  host: LOCAL-DEFAULT
+  port: 9966
+-------------------
+
+--application-qa.yml--
+mail:
+  host: QA-GMAIL
+  port: 8866
+-------------------
+
+
+--application-prod.yml--
+mail:
+  host: PROD-YAHOO
+  port: 9988
+-------------------
+
+Step#4 Runner class
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.EmailInfo;
+
+@Component
+public class EmailTestRunner implements CommandLineRunner {
+
+	@Autowired
+	private EmailInfo info;
+	
+	public void run(String... args) throws Exception {
+		System.out.println(info);
+	}
+
+}
+
+Step#5 While running application
+> Right click on main class > Run as > Run Configuration
+> Arguments > under programs Arguments
+   --spring.profiles.active=qa
+> Apply and Run
+
+(or)
+> Right click on Project > Run as > Maven Install > (execute as jar)
+ cmd> java -jar  Sample-1.0.jar --spring.profiles.active=qa
+
+   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+		Using One YAML file for Multiple Profiles
+			  3 dashes (---)
+   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+*) Insted of creating multiple YAML files for every profile
+  we can use single YAML file using 3 dash symbols that internally
+  creates multiple profiles.
+
+*) This concept exist in YAML only
+*) use Symbol # for comment.
+*) Any one profiles is activated and loaded same
+*) All Values/profiles are not loaded (only data exist in physical file)
+
+*) YAML even supports profile fallback.
+
+
+===(code)===========================================
+Step#1
+  Name : SpringBoot2ProfilesYamlEx
+  Dep  : Lombok
+
+Step#2 Model
+
+package in.nareshit.raghu.model;
+//ctrl+shift+O
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+@Data
+@Component
+public class EmailInfo {
+	
+	@Value("${mail.host}")
+	private String host;
+	
+	@Value("${mail.port}")
+	private String port;
+	
+	
+}
+
+Step#3 
+__________application.yml _______________________
+# This is DEFAULT Profile
+mail:
+  host: LOCAL-DEFAULT
+  port: 9966
+  
+---
+# This is QA Profile
+mail:
+  host: QA-GMAIL
+  port: 8685
+
+spring:
+  profiles: qa
+  
+---
+# This is PROD Profile
+mail:
+  host: PROD-YAHOO
+  port: 9745
+  
+spring:
+  profiles: prod  
+_____________________________________________
+
+Step#4 Runner class
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.EmailInfo;
+
+@Component
+public class EmailTestRunner implements CommandLineRunner {
+
+	@Autowired
+	private EmailInfo info;
+	
+	public void run(String... args) throws Exception {
+		System.out.println(info);
+	}
+
+}
+
+Step#5 While running application
+> Right click on main class > Run as > Run Configuration
+> Arguments > under programs Arguments
+   --spring.profiles.active=qa
+> Apply and Run
+
+(or)
+> Right click on Project > Run as > Maven Install > (execute as jar)
+ cmd> java -jar  Sample-1.0.jar --spring.profiles.active=qa
+
+===================================================================
+Q) I want to execute a logic only in Production/QA?
+A) use Annotation @Profile
+   ie called : execute a logic based on environment.
+
+__________NOTE________________
+*) Spring profiles activate and processing works upto 2.3.x.
+   In 2.4.x if you want to use same process just add below key
+
+   spring.config.use-legacy-processing=true
+
+   in application.properties
+          (or)
+   spring:
+     config:
+        use-legacy-processing: true
+
+   in application.yml
+
+__________________________________________________________________
+--------------------@Profile--------------------------------------
+*) Executed Logic based on Environment.
+
+ex: SwaggerUi, SchedulerConfig, StopWatch Logics
+    DB setup Runners..etc
+
+*) @Profile("qa") : Execute code only in QA Environment
+*) @Profile({"qa","prod","uat"})
+   : Execute code in QA/PROD/UAT Environments.
+
+*) @Profile("default") : Works only in Default Environment.
+			no in other environments.
+
+---------------------------------------------
+Q) If we did not specify @Profile over class then what is the default?
+A) No Default concept is applied here.
+   If we did not specify @Profile over class then it works in every env.
+
+@Component
+class A{}  ---> object is created in every profile
+
+@Component
+@Profile("default")
+class B{}        ---> object is created only if default profile
+				--spring.profiles.active=default
+				(or) nothing is provided
+
+		if we write --spring.profiles.active=qa  it wont work
+--------------------------------------------------------
+*) There is no fallback concept for @Profile.
+
+
+--(code)-------------------------
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+@Component
+//@Profile("qa")
+//@Profile({"qa","prod"})
+//@Profile({"qa","prod","default"})
+@Profile("default")
+public class EmailNotification implements CommandLineRunner {
+
+	public void run(String... args) throws Exception {
+		System.out.println("FROM EMAIL NOTIFICATIONS!!");
+	}
+
+}
+
+-----------------------------------------------------------------
+@Controller
+class HomeController {
+
+   @Profile("qa")  //method level
+   @RequestMapping("/email")
+   public String executeEmail() {
+      ....
+   }
+
+   ...
+   ...
+
+}
+
+

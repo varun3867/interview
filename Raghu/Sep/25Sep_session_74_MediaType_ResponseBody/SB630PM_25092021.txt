@@ -1,0 +1,301 @@
+				Date : 25-09-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+		---------------------------------------------
+			
+@ResponseBody
+> Works on ReturnType
+> Need not apply manually (@RestController)
+> ReturnType Must be Class or CollectionType
+> Default is JSON only
+> For XML , add JACKSON-DATAFORMAT-XML
+  make request With Accept Header Param
+    Accept : application/xml
+
+*)Note:
+1. Consider you did not add jackson-dataformat-xml dependency  and
+   Request Header 'Accept=application/xml' is provided.
+   In that case output is : 406 - Not acceptable
+
+2. To avoid 406 Not Acceptable, 
+   Sol#1 Provider two params for accept as
+       Accept=application/xml,application/json
+      [mean : First try for XML, if not try for JSON]
+
+   SoL#2 Add  jackson-dataformat-xml
+
+=========================================================================
+@RequestBody :- 
+> It works on Input/Method Parameter/ Http Request
+> JSON/XML ----> Object and given as method param
+
+*)Note:
+1. Empty JSON {} is valid JSON - Creating Object using default constructor.
+2. If we provide XML as input and jackson-dataformat-xml not exist
+   then 415-Unsupported MediaType error is provided.
+
+
+--Example-------------------
+Name : SpringBoot2RestMediaTypeInputEx
+Dep  : Lombok, Devtools, Web
+
+1. Models
+package in.nareshit.raghu.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Publisher {
+
+	private Integer id;
+	private String code;
+	private String location;
+	
+}
+-----------
+package in.nareshit.raghu.model;
+
+import java.util.List;
+import java.util.Map;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Book {
+
+	private Integer bookId;
+	private String bookName;
+	private Double bookCost;
+	
+	private List<String> authors;
+	private Map<String,String> versions;
+
+	public Publisher pob;
+}
+
+2. RestController
+package in.nareshit.raghu.rest;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.nareshit.raghu.model.Book;
+
+@RestController
+@RequestMapping("/book")
+public class BookRestController {
+
+	@PostMapping("/save")
+	public String createBook(@RequestBody Book book) {
+		return book.toString();
+	}
+}
+
+3. Run and make POSTMAN Request
++------------------------------------------------------+
+ POST | localhost:8080/book/save                | SEND |
++------------------------------------------------------+
+            Body
++------------------------------------------------------+
+	       (*)raw  [JSON]
++------------------------------------------------------+
+{
+    "bookId" : 102,
+    "bookName": "AA",
+    "bookCost" : 500.0,
+    "authors" : ["SAM","SYED","AJAY"],
+    "versions" : {
+        "V1" : "3.2GA",
+        "V2" : "2.2.6-RELEASE",
+        "V3" : "1.0-ALPHA"
+    },
+    "pob" : {
+        "id" : 606,
+        "code" : "PUB-NIT",
+        "location" : "HYD"
+    }
+}
++------------------------------------------------------+
+
+--XML Format :-------------------------
+<Book>
+    <bookId>8580</bookId>
+    <bookName>AA</bookName>
+    <bookCost>2000.0</bookCost>
+    <authors>
+        <authors>AA</authors>
+        <authors>BB</authors>
+        <authors>CC</authors>
+    </authors>
+    <pob>
+        <id>55</id>
+        <code>NIT</code>
+        <location>HYD</location>
+    </pob>
+    <versions>
+        <V1>3.2GA</V1>
+        <V2>4.0-RELEASE</V2>
+    </versions>
+</Book>
+
+========code====================
+1. Models
+package in.nareshit.raghu.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Processed {
+
+	private String code;
+	private String model;
+	private String status;
+	
+}
+-----------
+package in.nareshit.raghu.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Export {
+
+	private Integer id;
+	private String status;
+	private String mode;
+}
+
+2. RestController
+package in.nareshit.raghu.rest;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.nareshit.raghu.model.Export;
+import in.nareshit.raghu.model.Processed;
+
+@RestController
+@RequestMapping("/test")
+public class InOutRestcontroller {
+
+	@PostMapping("/ob")
+	public Export getExpProcess(@RequestBody Processed processed) {
+		Export exp = new Export();
+		exp.setId(processed.getCode().length());
+		exp.setMode(processed.getModel().toUpperCase());
+		exp.setStatus(processed.getStatus());
+		return exp;
+	}
+}
+
+
+
+
+
+--case#1 Input/Output: JSON-----------------------
+------------------------------------
+POST http://localhost:8080/test/ob SEND
+------------------------------------
+          Body
+------------------------------------
+	     (*) raw  [JSON]
+------------------------------------
+{
+    "code" : "abcd",
+    "model" : "new-nit",
+    "status": "FINISHED"
+
+}
+------------------------------------
+{
+    "id": 4,
+    "status": "FINISHED",
+    "mode": "NEW-NIT"
+}
+
+Case#2 JSON input and XML Output 
+
+
+------------------------------------
+POST http://localhost:8080/test/ob SEND
+------------------------------------
+Header : Accept : applciation/xml
+          Body
+------------------------------------
+	     (*) raw  [JSON]
+------------------------------------
+{
+    "code" : "abcd",
+    "model" : "new-nit",
+    "status": "FINISHED"
+
+}
+------------------------------------
+<Export>
+    <id>4</id>
+    <status>FINISHED</status>
+    <mode>NEW-NIT</mode>
+</Export>
+
+
+Case#3 XML input and XML Output 
+------------------------------------
+POST http://localhost:8080/test/ob SEND
+------------------------------------
+Header : Accept : applciation/xml
+          Body
+------------------------------------
+	     (*) raw  [XML]
+------------------------------------
+<Processed>
+	<code>AA</code>
+	<model>NN</model>
+	<status>XYZ</status>
+</Processed>
+---------------------------
+<Export>
+    <id>2</id>
+    <status>XYZ</status>
+    <mode>NN</mode>
+</Export>
+
+
+Case#4 XML input and JSON Output 
+------------------------------------
+POST http://localhost:8080/test/ob SEND
+------------------------------------
+          Body
+------------------------------------
+	     (*) raw  [XML]
+------------------------------------
+<Processed>
+	<code>AA</code>
+	<model>NN</model>
+	<status>XYZ</status>
+</Processed>
+---------------------------
+{
+    "id": 2,
+    "status": "XYZ",
+    "mode": "NN"
+}

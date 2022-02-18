@@ -1,0 +1,325 @@
+				Date : 18-Jun-21
+				Spring Boot 6PM
+				  Mr. RAGHU
+		----------------------------------------------------
+Spring Boot & MicroServices @ 6.00 PM | by Mr. Raghu
+Day-1: https://youtu.be/AmeWLe-FNZQ
+Day-2: https://youtu.be/JS0GyLglB6o
+Day-3: https://youtu.be/LdTA1Ws-on4
+Day-4: https://youtu.be/2sHh9-AEBsU
+Day-5: https://youtu.be/YscnsjwcEGM
+
+
+Admin : Srikanth : 91- 630 296 8665 |  Whatsapp
+
+
+*) In Spring f/w almost for every concept, programmer will write Manual Configuration
+   Ex: JDBC -- Manual Configuration, programmer should write code for 
+                 Database Connection.
+
+*) Normal Programmer, can never modify API (Or) F/w Pre-defined classes.
+
+--Annotation Configuration------------------
+@Component, @Value : These annotations can be applied in our source code only.
+
+=> These annotation are supported for programmer-defined class. 
+	Not for pre-defined classes.
+
+@Component : Creating Object
+@Value     : Hard Coding/Read data from proeprties /SpEL
+
+
+--Employee.java---
+@Component
+class  Employee {
+  @Value("10")
+  int empId;
+}
+---------------------------------------------------------
+Spring Java Configuration:- It is used for pre-defined class.
+
+a. Define one public class with any name
+b. Write @Configuration over class(Container takes it as input)
+c. Define one method for 1 object
+          //RT        //Method
+   public ClassName objectName() {
+      //object code
+   }
+
+d. Apply @Bean (object) over method
+
+--Example(Spring Java Configuration for JDBC)----------------
+@Configuration
+public class AppConfig {
+
+  @Bean
+  public  DriverManagerDataSource  dsObj() {
+     DriverManagerDataSource d = new DriverManagerDataSource();
+     d.setDriverClassName("OracleDriver");
+     d.setUrl("jdbc:orcl:..");
+     d.setUsername("system");
+     d.setPassword("manager");
+     return d;
+  }
+
+}
+
+*) @Bean -(obj)pre-defined class , @Component -(obj) your class
+*) @Configuration : Give current class as input to Spring container
+
+=================================================================
+Spring Boot (AutoConfiguration)
+=> Code manually written by programmer for datasource configuration
+   is given by one  jar : spring-boot-starter-jdbc (Maven/Gradle)
+   ie called as 'AutoConfiguration'.
+
+*) But inputs must be provided using : 
+      application.properties
+      application.yml
+
+----------------------------------------------------
+#1 Spring Boot Core (rules, syntax, conditions, concepts)
+#2 JDBC
+#3 Data JPA
+#4 Web MVC
+=============================================================
+*) in Spring Boot , code will be pre-defined for Configuration
+   using starters (spring-boot-starter-[])
+
+=> but inputs must be provided by programmer using pre-defined keys
+https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html
+
+
+*) We can write both pre-defined and programmer defined keys.
+
+===================================================================
+				Properties
+===================================================================
+a. Store data in key=val format
+b. key follows naming rules
+   > allowed symbols dot(.) dash(-) and underscore(_)
+   > do not give space 
+   > multiple words are allowed
+   > no duplicates(if given last combination is loaded)
+
+c. We can use @Value (Spring) and @ConfigurationProperties (Spring boot)
+   to read key vals data into our app.
+
+-----------------------------------------------------
+=> @Value("${key}") : Supports type conversion
+
+
+===(code)============================================
+S#1 Create Starter Project
+> File > new > Spring Starter Project
+> Enter name : springboot2propertiesex
+> Next > finsih
+
+S#2 create one class and read data from properties
+package in.nareshit.raghu.bean;
+//ctrl+shift+O(imports)
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component("pob")
+public class ProductInfo {
+	
+	@Value("${my.app.id}")
+	private Integer pid;
+	
+	@Value("${my.app.code}")
+	private String code;
+	
+	@Value("${my.app.loc}")
+	private String locaton;
+
+	//source menu > generate toString
+	public String toString() {
+		return "ProductInfo [pid=" + pid + ", code=" + code + ", locaton=" + locaton + "]";
+	}
+	
+}
+
+S#3 Modified main class
+package in.nareshit.raghu;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBoot2ValueExApplication {
+
+	public static void main(String[] args) {
+		ApplicationContext ac = SpringApplication.run(SpringBoot2ValueExApplication.class, args);
+		//read object
+		Object ob = ac.getBean("pob");
+		System.out.println(ob);
+	}
+
+}
+====================================================================
+Q) If given key is not present in properties file then what will happen?
+A)  Object creation is failed. IllegalArgumentException: 
+  Could not resolve placeholder 'my.app.code' in value "${my.app.code}"
+
+ ex: my.app.code key is not present.
+
+Q) What if we provide duplicate keys with different/same values?
+A) It is not recomanded.
+   If we provide last combination is loaded.
+
+Ex:
+my.app.code=NIT-A
+my.app.code=NIT-B
+my.app.code=NIT-C
+
+loaded value is NIT-C
+
+
+Q) What is datatype is not matching while loading key using @Value?
+A) 
+   TypeMismatchException: Failed to convert value of type 'java.lang.String' 
+              to required type 'java.lang.Integer'; nested exception is 
+  NumberFormatException: For input string: "10A"
+
+ex:
+ my.app.id=ABCD   //ABCD can not be stored into Integer variable.
+
+*** @Value supports even type conversion based on datatype.
+
+** Keys are cas-sensitive. ie Sample, SAMPLE, sample are different.
+
+Ex:
+my.app.loc=HYD
+my.app.LOC=BAN
+
+@Value("${my.app.loc}")   ===> HYD is loaded.
+
+*) Symbols '#' indicates comment line
+================================================================
+Q) How can we load a proeprties file into Spring container?
+   (Using Spring Code)
+
+a)  
+   if your file inide ***src/main/resources --> classpath
+   if your file inside project (not in src/main/resources)
+           --> file
+
+   @PropertySource("classpath:abcd.properties")
+
+   @PropertySource("file:./abcd.properties")
+
+--sample spring code
+@Configuration  
+// please take current class as Spring Configuration file and execute which are givne inside this class
+@PropertySource("classpath:abcd.properties")
+public class AppConfig {
+  .... 
+}
+
+XML: config.xml
+<context:property-placeholder location="classpath:abcd.properties"/>
+
+Property-- properties file , Source- location
+--------------------------------------------------------------
+Q) Can we load our own properties file in Spring Boot?
+A) YES. Not reocmanded.
+   High prioerty is given to application.properties
+
+*) create a file
+> Right click on src/main/resources > new > file
+> enter name 'abcd.properties' > finish
+> place your key-vals there
+
+---abcd.properties---
+my.app.id=9988
+my.app.code=NIT-TEST
+my.app.loc=HYD-TEST
+---------------------
+
+*) At starter class/main class : @PropertySource("classpath:abcd.properties")
+
+Q) What is same key is present in both our proerties file and 
+   pre-defined 'application.properties' file?
+
+A) Spring boot gives high priority to 'application.properties'.
+ex:
+ ---application.properties--
+    my.id=10
+
+ --- abcd.properties--- this file is loaded even
+    my.id=20
+    my.code=AA
+
+
+  @Value("${my.id}")  ==> 10
+  @Value("${my.code}") ==> AA
+  @Value("${my.status}") ==> IllegalArgumentException
+
+Q) Can we load multiple properties file?
+A) YES.
+   But if same key is present at multiple files
+   a. Search in application.properties first 
+   b. (if not found) the search in given proeprties file
+      from reverse order. bcoz last loaded is high priority.
+
+--ex-- at main class
+@PropertySource({
+	"classpath:abcd.properties",
+	"classpath:xyz.properties",
+	"classpath:mno.properties"
+})
+
+--abcd.properties---
+my.app.id=11111
+
+--xyz.properties---
+my.app.id=2222
+
+--mno.properties---
+my.app.id=3333
+
+--application.properties--
+#my.app.id=99999
+my.app.code=NIT-DEF
+my.app.loc=HYD-DEF
+-------------------------
+
+--class--
+package in.nareshit.raghu.bean;
+
+//ctrl+shift+O
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component("pob")
+public class ProductInfo {
+	
+	@Value("${my.app.id}")
+	private Integer pid;
+	
+	@Value("${my.app.code}")
+	private String code;
+	
+	@Value("${my.app.loc}")
+	private String locaton;
+
+	//source menu > generate toString
+	public String toString() {
+		return "ProductInfo [pid=" + pid + ", code=" + code + ", locaton=" + locaton + "]";
+	}
+	
+}
+
+
+Output:
+
+
+Q) What if loading properties file is not present in project?
+A)  FileNotFoundException
+
+ex: @PropertySource("classpath:abcd.properties")
+  consider abcd.properties is not created then FileNotFoundException
+
+

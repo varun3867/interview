@@ -1,0 +1,261 @@
+				Date : 26-08-2021
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+	-------------------------------------------------------------
+URL : Uniform Resource Location. It is a location of a Resource
+    (Resource : Java code, file, Image, PDF, ...etc)
+
+
+*) Context Path : project folder name (in general)
+   But we can set anything as context path
+   ex: ProjectFolder = SampleApp, context-path=/myapp
+
+http://localhost:2021/Spring5OrmSecurityEx/login  
+
+URL = URI + Resource Path + Query Params
+
+=============================================================================
+			 Controller class
+
+
+*) Controller class process the request.
+   It provides 2 things as output:
+   a. Model(optional)
+   b. ViewName (UI page name)
+
+*) Controller(java class) contains methods which are called 
+       as Request processing methods.
+
+*** browser makes request -- executed by one controller method.
+
+=> Here if Browser request URL ends with /download then FC will execute
+	(below method ) a method linked with /download
+
+@RequestMapping("/download")
+public String processExcelFile() {
+
+}
+---------------------------------------------------------------------------
+			Rule to write Controller
+
+1. Class must have @Controller, object created by spring container
+		       and support HTTP Protocol
+
+=> @Component : object created by spring container , but no HTTP support.
+
+2. Controller contains Request Processing methods, should look like
+   (Every method must be linked with one Path using @RequestMapping)
+
+    @RequestMapping("/path")
+    public String <methodName>() {
+       //logic
+       return "ViewName";
+    }
+
+3. URL is case-sensitive.
+
+  @RequestMapping("/show") |   @RequestMapping("/SHOW") |  @RequestMapping("/Show")
+   are different.
+
+4. Every Java Method must be connected with GET/POST.
+
+Syntax: 
+   @RequestMapping(value="/path",method=RequestMethod.GET)
+
+   @RequestMapping(value="/path",method=RequestMethod.POST)
+   
+
+*) If we did not specify RequestMethod, then default is GET.
+
+@Controller
+class HomeController {
+
+  //@RequestMapping("/show")
+  @RequestMapping(value="/show",method=RequestMethod.GET)
+  public String showHome() {
+  
+     return "HomePage";
+  }
+}
+
+5. Path Can be duplicated but Combination of HttpMethod + Path must be unique
+ex:
+@Controller
+class HomeController {
+
+  //@RequestMapping("/login") //GET
+  @RequestMapping(value="/login",method=RequestMethod.GET) 
+  String showLogin() {   }
+
+  @RequestMapping(value="/login",method=RequestMethod.POST) 
+  String doLogin() {   }
+}
+
+*) We can not define multiple method with same PATH and same Method type
+   (app show Exception while running)
+-----------------------
+6. We can link multiple URLs/Paths with one Java method
+ex:
+   /login ---> Home.html
+   /home  ---> Home.html
+   /logout --> Home.html
+
+@Controller
+class HomeController {
+  @RequestMapping(
+    {
+      "/login",
+      "/home",
+      "/logout"
+    }
+  )
+  String showHome() { }
+}
+
+7. We can link one Path with multiple HTTP Method types
+ex:
+   /login + GET ---> home.html
+   /login + POST --> home.html
+
+@Controller
+class HomeController {
+  @RequestMapping(
+      value="/login", 
+      method={
+          RequestMethod.GET,
+          RequestMethod.POST
+      }
+  )
+  String showLogin() {  }
+}
+
+8. We can not provide two or more times @RequestMapping to one java method
+
+//Invalid code
+@Controller
+class HomeController {
+	@RequestMapping("/show")
+	@RequestMapping("/find")
+	String showData() { }
+}
+
+9. Multiple URLs/Paths for one Java method can not be mixed with
+   specific combinations.
+
+ex:   /search + GET , /find + POST  ---> showData() //not possible
+
+
+10. Multiple URLs/Paths using Multiple Method types is valid.
+	(But Cross join model is applied).
+
+@Controller
+class HomeController {
+  @RequestMapping(
+     value={ "/search", "/find" },
+     method = { RequestMethod.GET, RequestMethod.POST}
+  String showData() {}
+}
+=> total 4 combination : /search + GET, /search + POST, /find+ GET, /find+POST
+-----------------------------------------------------------------
+11. Multiple controllers are valid (for projects/multiple modules)
+   In this case recomanded to define @RequestMapping at class level too.
+
+ex:
+(valid, but not a good one )
+@Controller
+class StudentController { 
+   @RequestMapping("/addStudent")
+   String addStudent() { }
+   @RequestMapping("/viewStudent")
+   String viewStudents() { }
+}
+@Controller
+class CourseController {
+   @RequestMapping("/addCourse")
+   String addCourse() { }
+   @RequestMapping("/viewCourse")
+   String viewCourse() { }
+}
+ex:
+@Controller
+@RequestMapping("/student")  
+// This is not GET/POST, it is just common for all methods
+class StudentController { 
+
+   @RequestMapping("/add")
+   String addStudent() { }
+   @RequestMapping("/view")
+   String viewStudents() { }
+}
+@Controller
+@RequestMapping("/course")
+class CourseController {
+   @RequestMapping("/add")
+   String addCourse() { }
+   @RequestMapping("/view")
+   String viewCourse() { }
+}
+ex: http://localhost:8080/course/add
+==================================================================
+12. *** we can set path as '/' only once with Combination
+  ie  / + GET and / + POST
+
+@Controller
+class HomeController {
+  //@RequestMapping("/")
+  //@RequestMapping(value="/",method=RequestMethod.GET)
+  //@RequestMapping(method=RequestMethod.GET)  //default is /
+  @RequestMapping      // Path-/ , method-GET
+  String showHome() {}
+
+  @RequestMapping(method=RequestMethod.POST)  // Path-/
+  String showProfile() { }
+}
+
+ex: http://localhost:8080/
+
+--------------------------------------------------------
+13. Even class level path can be set to / (or nothing)
+
+@Controller
+@RequestMapping                 // default /
+class HomeController {
+  @RequestMapping               //default / + GET
+  String showHome() {}
+}
+ex: http://localhost:8080/
+-------------------------------------------------------
+14. If we did not specify  @RequestMapping at method level
+     That is not executed for any request(Method never be called for a request)
+
+     IT IS JUST NORMAL JAVA METHOD, YOU CAN CALL IT WHERE YOU WANT.
+
+@Controller
+class HomeController {
+  String showData() {}  // this is normal java method
+}
+
+-----------------------------------------------------------------
+15. Latest Annotations  (Spring boot 2.x is current, Spring 5.x is current)
+
+@GetMapping("/path") ==> @RequestMapping(value="/path", method= RequestMethod.GET)
+
+@PostMapping("/path") ==> @RequestMapping(value="/path", method= RequestMethod.POST)
+
+@PutMapping("/path") ==> @RequestMapping(value="/path", method= RequestMethod.PUT)
+
+@DeleteMapping("/path") ==> @RequestMapping(value="/path", method= RequestMethod.DELETE)
+
+@PatchMapping("/path") ==> @RequestMapping(value="/path", method= RequestMethod.PATCH)
+
+Http Method:-
+GET     : Fetch resource from server
+POST    : create new resource at server
+PUT     : Fully Modify resource at server
+DELETE  : removed existed resource at server
+PATCH   : Partially modify resource at server
+HEAD    : Execute task similer to GET but Response is NO_CONTENT
+TRACE   : Find Resource Path but No Response Data
+CONNECT : CHECK THE Resource Access Connection
+OPTIONS : FIND POSSIBLES TO ACCESS RESOURCE
+==========================================================================

@@ -1,0 +1,140 @@
+				Date : 31-Jul-21
+				Spring Boot 6:30PM
+				   Mr. RAGHU
+		-----------------------------------------------------
+			Spring Boot Data JPA - JpaRepository
+
+Sun-JPA Operations:-
+Date and Time
+LOBS(BLOB and CLOB)
+Collections Mapping
+Association Mapping (1...1/1...*...)
+Joins
+findBy
+Custom Query
+...etc
+==============================================================================
+(JPA) java.util.Date:-
+Our Java date can be converted and stored as :
+
+a. Date(SQL)		- DD/MM/YYYY     java.sql.Date
+b. Time(SQL)		- HH:MM:SS sss   java.sql.Time
+c. DATE AND TIME(SQL)   - Both Date and Time   java.sql.Timestamp
+
+
+>> We have to use : @Temporal annotation with 
+      enum TemporalType(DATE,TIME,TIMESTAMP)
+
+-----------------------------------------------------------------------
+>> To display Date and Time to enduser we may need to format it before
+   showing using 'SimpleDateFormat'.
+https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
+
+package in.nareshit.raghu;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Test {
+
+	public static void main(String[] args) {
+		Date d = new Date();
+		System.out.println(d);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yy hh:ss");
+		String dte = sdf.format(d);
+		System.out.println(dte);
+	}
+}
+
+---Ex--------------------------------------------------------------------
+Name : SpringBoot2DataJpaConcepts
+Dep  : Data JPA, Lombok, MySQL
+
+1. Model class
+package in.nareshit.raghu.model;
+
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Student {
+	@Id
+	private Integer stdId;
+	private String stdName;
+	
+	@Temporal(TemporalType.DATE)
+	private Date dteA;
+	
+	@Temporal(TemporalType.TIME)
+	private Date dteB;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dteC;
+}
+
+2. Repository
+package in.nareshit.raghu.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import in.nareshit.raghu.model.Student;
+
+public interface StudentRepository extends JpaRepository<Student, Integer> {
+
+}
+
+3. Runner class
+package in.nareshit.raghu.runner;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import in.nareshit.raghu.model.Student;
+import in.nareshit.raghu.repo.StudentRepository;
+
+@Component
+public class DataInsertRunner implements CommandLineRunner {
+
+	@Autowired
+	private StudentRepository repo;
+
+	public void run(String... args) throws Exception {
+
+		repo.save(
+				new Student(
+						101, "AA", 
+						new Date(), 
+						new Date(), 
+						new Date())
+				);
+	}
+
+}
+
+4. properties
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/boot630pm
+spring.datasource.username=root
+spring.datasource.password=root
+
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=create
+#spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+
+=========================================================================
+*) If we create java.util.Date and did not specify any @Temporal
+   then default is @Temporal(TemporalType.TIMESTAMP)

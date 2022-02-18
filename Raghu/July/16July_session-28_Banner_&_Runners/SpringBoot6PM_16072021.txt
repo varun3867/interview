@@ -1,0 +1,174 @@
+				Date : 16-Jul-21
+				Spring Boot 6:30PM
+				  Mr. RAGHU
+		---------------------------------------------
+Debug Video
+https://www.youtube.com/watch?v=HwwF4pvYWws
+
+Runners Video
+https://www.youtube.com/watch?v=8P5x4DH2WHA
+------------------------------------------------------------------------
+Banner : Logo printed at console on application startup.
+
+*) When we run main() method internaly it will call SpringApplication.run()
+  that has logic to print Spring Logo at console.
+
+*) we can turn off Banner using :
+     setBannerMode(Banner.Mode.OFF)
+
+Here Mode is enum : CONSOLE, LOG, OFF 
+
+CONSOLE - print only at console
+LOG     -  print at console and LOG file
+OFF     - Dont print
+
+---Modified Main class-------------------------
+package in.nareshit.raghu;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
+public class SpringBoot2TestAppApplication {
+
+	public static void main(String[] args) {
+		SpringApplication sa =new SpringApplication(SpringBoot2TestAppApplication.class);
+		sa.setBannerMode(Banner.Mode.OFF);
+		ApplicationContext ac = sa.run(args);
+	}
+
+}
+-----------------------------------------------------------
+*) To provide your own banner :
+a) Create banner.txt under src/main/resources folder
+
+> right click on 'src/main/resources' > new > file
+> enter name banner.txt
+> Spring Boot Banner Online Generator
+ https://devops.datenkollektiv.de/banner.txt/index.html
+> type content and choose font
+> copy content and paste into banner.txt file
+
+-------------------------------------------------------------------------
+Inputs:-
+a. Command Line Args (--key=val) [option args]
+b. VM Args
+c. Properties
+d. YAML
+
+===========================================================================
+			Option and non-Option args
+
+a. Option-args : sending Command Line Args as --key=val that indicates input
+
+ex:
+   --my.app.client=NareshIT
+
+b. non-Option args: sending a word (no key-val) that indicates a command/instrcution
+ex:
+    exportDb
+    clearSetup
+    insertRoles
+    insertCurr
+    
+=> setup data, seed data while installing application in production.
+
+=> Command Line Run just takes all inputs given by main class and stores
+   as String Array Format. But ApplicationRunner is converting such source
+   data into Option/non-option args, based on that doing additional tasks.
+
+*) Source Args : All arguments passed to main method.
+
+
+--------code----------------------------------------------
+Name : SpringBootApplicationRunner
+
+
+a) Runner class
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DataTestRunner implements ApplicationRunner {
+
+	public void run(ApplicationArguments args) throws Exception {
+		
+		System.out.println("------------All Arguments--------------");
+		System.out.println(args.getSourceArgs());
+		
+		System.out.println("------------Option Argument key names--------------");
+		System.out.println(args.getOptionNames());
+		
+		System.out.println("------------Option Argument exist?--------------");
+		System.out.println(args.containsOption("my.app.client"));
+		
+		System.out.println("------------Option Argument values--------------");
+		System.out.println(args.getOptionValues("my.app.client"));
+		
+		System.out.println("------------Nonoption Arguments--------------");
+		System.out.println(args.getNonOptionArgs());
+	}
+
+}
+
+b) Right click on main() method > Debug as > Debug Spring Boot application
+ Pass any --key=val  and words in Program Arguments
+
+ --my.app.client=NIT --my.app.client=ORCL exportDb insertRoles --my.app.version=3.2
+
+============================================================================
+Option args:-
+
+--spring.profiles.active=qa
+--server.port=9685
+--eureka.client.serviceurl.defaultZone=http://localhost:8761/eureka
+
+
+Non-Option Args:-
+
+ insertRoles   (DB Checking-- ROLES -- ADMIN,MANAGER, USER,GUEST)
+ checkSeedData (Uom, Part Basics, Currency data...)
+
+	-------------------------------------------------------------------
+		Command Line Runner         Application Runner
+	-------------------------------------------------------------------
+		  Spring boot 1.0             Spring Boot 1.3
+
+		  Takes input as              Input converted
+		      String[]               ApplicationArguments
+
+
+                  Use for Logic                Use for execution
+		   setup execution              based on input
+	-------------------------------------------------------------------
+=> Both are 
+  a. functional interfaces
+  b. Called while starting application
+  c. Shares data from main method
+  d. executes logic only once.
+
+
+---Example for non-option args---------------------------------------------------------------------
+package in.nareshit.raghu.runner;
+
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class SetupDataTestRunner implements ApplicationRunner {
+
+	public void run(ApplicationArguments args) throws Exception {
+		if(args.getNonOptionArgs().contains("setupdata")) {
+			System.out.println("INSERT SETUP DATA");
+		} else {
+			System.out.println("NO SETUP DATA IS DONE");
+		}
+	}
+
+}
+

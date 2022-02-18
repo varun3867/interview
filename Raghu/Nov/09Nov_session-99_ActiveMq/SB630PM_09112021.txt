@@ -1,0 +1,171 @@
+			Date : 09/11/2021
+			Spring Boot 6:15PM
+			  Mr. RAGHU
+	---------------------------------------------------
+Kafka basics:-
+https://kafka.apache.org/quickstart
+https://developer.confluent.io/get-started/java/
+
+
+		JMS : Java Message Service
+
+*) Mediator s/w required : MOM (Apache ActiveMQ5)
+*) 2 Application Types
+  a. Producer
+  b. Consumer
+
+*) Both are connected to MOM s/w and exchange data using Destination 
+*) Communication Types:
+  1. Peer-To-Peer Communication (P2P)
+  2. Publish and Subscribe Communication (Pub/Sub)
+
+*) Destination Types:
+  I. Queue (used for P2P)
+ II. Topic (used for Pub/Sub)
+================================================================
+1st  Party/ Specification --- Sun/Oracle   --- JMS API
+
+3rd Party / Implementation -- Apache   --- ActiveMQ5 (API)
+
+2nd Party/Application --- We/Programmer --- Projects
+===================================================
+a. Sun/Oracle has given JMS API with interfaces
+   Ex: Session(I), Message(I), TextMessage(I)
+     inside package javax.jms
+
+b. Apache ActiveMQ5 has given Impl classes.
+  Ex: ActiveMQSession(C), ActiveMQTextMessage(C)
+
+c. In Impl class there is logic for TextMesage object creation
+
+--API--------------------
+interface Session {
+   TextMessage createTextMessage(String text);
+}
+class ActiveMQSession implements Session {
+   TextMessage createTextMessage(String text){
+      return new ActiveMQTextMessage(text);   
+   }
+}
+------------------------
+d. Spring container has created object to Session by taking
+  inputs like broker-url, username, password
+
+*) Pre-defined configuration for Session exist inside
+   jar : spring-boot-starter-activemq
+
+ Like: Session session = new ActiveMQSession();
+
+e. Programmer has to
+  I. create Message using MessageCreator(I)
+----------------------------------------------
+interface MessageCreator {
+  Message createMessage(Session session);
+}
+
+--Anonymous Inner class---
+new MessageCreator() {
+   public Message createMessage(Session session) {
+       TextMessage tm = session.createTextMessage("data");
+       return tm;
+   }
+}
+--Lambda Expression----
+#1 
+(Session session) -> {
+      TextMessage tm = session.createTextMessage("data");
+      return tm;
+  }
+#2
+session -> session.createTextMessage("data");
+----------------------------------------------
+ II. send using JmsTemplate(C)
+  @Autowired
+  JmsTemplate jt;
+
+  jt.send(destinationName, session -> session.createTextMessage("data"));
+
+*) Note:
+=> There is no direct communication between producer and consumer
+   ie like URL of Consumer given in Producer (or Producer URL
+    given in Consumer).
+
+=> Both are connected using MOM S/w. Common connection point is
+   "Destination Name".
+
+=> Enqueue : Message is given to Queue by producer
+=> Deuqueue: Message is taken out from queue to Consumer.
+
+
+=> Consumer using : @JmsListener to fetch data from MOM
+   using one destination name.
+   Data is fetching using : JmsListenerAnnotationBeanPostProcessor
+   and stored as a Map<String,Message> 
+   We can read based on Destination key name.
+================================================================
+		Pub/Sub Coding
+
+*) Define a key : spring.jms.pub-sub-domain=true
+   at both Producer and consumer applications.
+
+*** Code is same for P2P and Pub/Sub.
+
+*) spring.jms.pub-sub-domain default value is false.
+   ie P2P communication.
+
+*) For pub/sub:-
+No.of Messages Dequeued = No.of Messages Enqueued * No.of Consumers
+
+*) Incase of Java Objects (non-String types), they are converted
+   into Global Formats (ex: JSON/XML) [Sources may return same
+    or we can convert manually]
+
+*) Such data can be sent over MOM s/w.
+
+--SAMPLE CODE----------------
+package in.nareshit.raghu.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductInfo {
+
+	private String code;
+	private String vendor;
+}
+--------RUNNER CLASS---------------
+package in.nareshit.raghu.runner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import in.nareshit.raghu.model.ProductInfo;
+import in.nareshit.raghu.service.ProducerService;
+
+@Component
+public class TestJsonMessageRunner {
+
+	@Autowired
+	private ProducerService service;
+	
+	@Scheduled(fixedDelay = 3000)
+	public void run() throws Exception {
+		ProductInfo pinfo = new ProductInfo("TEST-HYD","NIT");
+		//Object --> JSON
+		String data = new ObjectMapper().writeValueAsString(pinfo);
+		service.send(data);
+	}
+
+}
+
+*) This JSON Data can be converted back into Object format
+  at consumer:-
+  ProductInfo pinfo =  new ObjectMapper().readValue(json,ProductInfo.class);
+-------------------------------------------------------------
