@@ -1,0 +1,207 @@
+
+				Date : 12-Aug-21
+				Spring Core 5:30PM
+				  Mr. RAGHU
+	-------------------------------------------------------------
+*) By Default init-method is called after setting data.
+   But destory method is not called, until we stop server/main thread
+   manually.
+
+*) To view Destory method call manually : registerShutdownHook() method
+	which is present inside AbstractApplicationContext(AC).
+
+--Pure XML Configuration----------------------------------
+Name : Spring5XmlLifeCycleEx
+
+pom.xml
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.3.9</version>
+		</dependency>
+	</dependencies>
+
+a. Spring Bean class
+package in.nareshit.raghu.bean;
+
+public class Employee {
+
+	private Integer eid;
+	private String ename;
+	
+	public Employee() {
+		super();
+		System.out.println("OBJECT IS CREATED!!");
+	}
+	public Integer getEid() {
+		return eid;
+	}
+	public void setEid(Integer eid) {
+		this.eid = eid;
+		System.out.println("DATA IS PROVIDED");
+	}
+	public String getEname() {
+		return ename;
+	}
+	public void setEname(String ename) {
+		this.ename = ename;
+	}
+	@Override
+	public String toString() {
+		return "Employee [eid=" + eid + ", ename=" + ename + "]";
+	}
+	
+	public void setup() {
+		System.out.println("FROM INIT METHOD");
+	}
+	
+	public void clear() {
+		System.out.println("FROM DESTORY METHOD");
+	}
+}
+
+b. Config.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean 
+		id="eob" 
+		class="in.nareshit.raghu.bean.Employee"
+		init-method="setup"
+		destroy-method="clear"
+		>
+		<property name="eid" value="101"/>
+		<property name="ename" value="SAM"/>
+	</bean>
+
+</beans>
+
+c. Test class
+package in.nareshit.raghu.test;
+
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+
+	public static void main(String[] args) {
+		AbstractApplicationContext ac = new ClassPathXmlApplicationContext("config.xml");
+		Object ob = ac.getBean("eob");
+		System.out.println(ob);
+		ac.registerShutdownHook();
+	}
+}
+
+--Using close method-------------------------------
+package in.nareshit.raghu.test;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+
+	public static void main(String[] args) {
+		ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("config.xml");
+		Object ob = ac.getBean("eob");
+		System.out.println(ob);
+		//ac.registerShutdownHook();
+		ac.close();
+	}
+}
+	==========================================================
+	    Pre-defined interfaces to work with LifeCycle methods
+
+*) InitializingBean(I)
+   #afterPropertiesSet()   which behaves like init() method
+
+*) DisposableBean(I)
+   #destroy()  which behaves like destroy() method
+
+ In this case no XML Configuration is required.
+
+----Spring Bean Example code--------------
+package in.nareshit.raghu.bean;
+
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+
+public class Employee implements InitializingBean, DisposableBean {
+
+	private Integer eid;
+	private String ename;
+	
+	public Employee() {
+		super();
+		System.out.println("OBJECT IS CREATED!!");
+	}
+	public Integer getEid() {
+		return eid;
+	}
+	public void setEid(Integer eid) {
+		this.eid = eid;
+		System.out.println("DATA IS PROVIDED");
+	}
+	public String getEname() {
+		return ename;
+	}
+	public void setEname(String ename) {
+		this.ename = ename;
+	}
+	@Override
+	public String toString() {
+		return "Employee [eid=" + eid + ", ename=" + ename + "]";
+	}
+	
+	public void afterPropertiesSet() throws Exception {
+		System.out.println("FROM INIT METHOD");
+	}
+	
+	public void destroy() throws Exception {
+		System.out.println("DESTORY METHOD");
+	}
+}
+-----------config.xml-------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean 
+		id="eob" 
+		class="in.nareshit.raghu.bean.Employee"
+		>
+		<property name="eid" value="101"/>
+		<property name="ename" value="SAM"/>
+	</bean>
+
+</beans>
+
+-------------Test class-------------------------
+package in.nareshit.raghu.test;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+
+	public static void main(String[] args) {
+		ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("config.xml");
+		Object ob = ac.getBean("eob");
+		System.out.println(ob);
+		//ac.registerShutdownHook();
+		ac.close();
+	}
+}
+-------------------------------------------------------

@@ -1,0 +1,66 @@
+		    Date : 06/08/2021
+		    Additional Concepts
+		         5:30PM
+		       Mr. RAGHU
+		-----------------------------
+*) Spring Core Applications
+  XML Configuration
+  Annotation Configuration
+  Java Configuration
+----------------------------------------------------------
+Spring Container (IoC)
+> Scan your class and create object
+> Provide data to variables
+> Link one Object with another (based on HAS-A)
+> Destory Object (when we stop app).
+
+Programmer has to provide inputs like
+a. Spring Bean
+b. Spring Configuration File
+---------------------------------------------------------
+a. Spring Bean : it is a class, that follows rules given 
+	by Spring container
+
+--Basic Rules---------
+1. Must have one package statement
+2. Must be public class 
+3. Variables (optional) if exist define as private
+4. Provide default constrcutor(or)Parameterized constrcutor
+      [even both also valid]
+5. Provide set/get methods for variables.
+
+--Override Rules------------------------
+*) Object(C) providing non-static, non-private and
+   non-final methods to override.
+
+6. We can override : toString(), equals() and hashCode()
+
+----Annotations Rules---------------------------
+7. Spring F/w Annotations are allowed
+   + Core Annotations are allowed
+      [Annotations defined in java.lang package]
+Ref:
+https://docs.oracle.com/javase/7/docs/api/java/lang/package-summary.html
+
+  + Integrations annotations (JPA/JMS/...etc)
+
+----Inheritance Rule----------------------------
+8. Your class can extend only Spring F/w API
+   [Spring interfaces, Spring Classes, your own classes]
+
+   + But not any Technology Related API like
+     Servlets, EJB (not recomanded)
+
+*) java.io.Serializable(I) is allowed (but not used much)
+======================================================
+Dep--? 3 (PTD(8+1)/CTD(4)/RTD(X))
+Inj --? 4 (SI/CI/LMI/II)
+------------------------------------------------------
+Maven:
+https://www.youtube.com/watch?v=9eJAvApRAI0
+https://www.youtube.com/watch?v=jOykBjSl1X0
+https://www.youtube.com/watch?v=iLwuhbnFPqo
+
+Gradle:
+https://www.youtube.com/watch?v=xQQ982rgP9c
+https://www.youtube.com/watch?v=1B3KXwZYThI

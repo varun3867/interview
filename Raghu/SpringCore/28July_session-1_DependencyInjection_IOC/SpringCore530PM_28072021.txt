@@ -1,0 +1,84 @@
+				Date : 28-Jul-21
+				Additional Concepts
+				      5:30PM
+				    Mr. RAGHU
+	-----------------------------------------------------------------
+		       Spring Core  : Spring Container
+
+*) Spring Container
+ a. BeanFactory(I) [Legacy Container] (XML)  -- supports only XML configuration
+ b. ApplicationContext(I) [New Container] (XML/Java/Annotation) -- supports XML/Java/Annotation based configuration
+
+*) ApplicationContext(I) extends BeanFactory(I) internally.
+  So, all methods those exist in BeanFactory(I) we can even access
+  using ApplicationContext(I) Reference.
+
+*) What Spring Container will do?
+> Loading Properties files
+> Specify Packages to Scan your classes
+> Load Clases, Create objects, Link Objects(HAS-A)
+> Execute Life Cycle methods (init/destroy -- optional)
+> Provide Scopes (singleton, prototype, request, session, context)
+> Events
+> prepostProcessors/ Aware Interfaces
+
+> Your normal/regular methods are never called by Spring container.
+> Methods called by container like: set method, life cycle methods,
+   event methods, Aware Methods..etc
+----------------------------------------------------------------------------
+Q) OOPs is theory or programming?
+A) Theory
+
+Q) OOPs is implemented by?
+A) Languages implementing OOPs, ex: Java, .net, PHP, Python
+
+Q) What programmer is doing Here?
+A) By following OOPs rules and Languages Syntaxes we are developing Appps.
+
+
+*) DI vs IoC :-
+  Dependency Injection --- Inversion of Control   
+     [Theory]            [Spring Container / IoC Container]
+      (OOPs)                     (Java)
+
+Dependency:-
+  It is a variable created inside class [instance variable].
+  (not local variable,not static variable)
+
+--3 types-----------
+a. Primitive Type Dependency (PTD) [8+1]
+   If a variable is created using one of below type:
+  byte, short, int, long, float, double, boolean , char and String
+  (Even wrapper classes also)
+
+b. Collection Type Dependency (CTD) [4]
+   If a variable is created using one of below type:
+           [package : java.util]
+    List(I)
+    Set(I)
+    Map(I)  and    Properties(C)
+
+c. *** Reference Type Dependency (RTD) [no count]
+  If a variable is created using class/interface.
+
+--Injection---
+Provide data to variables after creating object.
+
+---4 Types-------
+a. Setter Injection (SI): Provide data using variable set Method
+     (in this case default constructor is used)
+   
+   Employee e = new Employee();
+   e.setEmpId(10);
+   e.setEmpName("A");
+   
+b. Constrcutor Injection (CI): Provide data using parameterized Constrcutor
+
+   Employee e = new Employee(10,"A",2.2,addr,list1);
+
+c. LookUp Method Injection (LMI)
+  Special case : HAS-A
+       Parent--Single and Child --Prototype.
+
+d. Interface Injection (II)(not exist in Spring)
+

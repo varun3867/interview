@@ -1,0 +1,235 @@
+			Date : 10/08/2021
+			Spring Core 5:30PM
+			   Mr. RAGHU
+	---------------------------------------------
+		Spring Core -- XML Configuration
+
+a. HardCoding: Assign a direct value to a variable.
+   Remove this hardcoding using .properties file
+
+properties? key=val
+
+Data?  Programmer        EndUser
+        Setup          user/runtime data
+      DriverClass        Login Details
+
+Examples?
+  jdbc properties
+  email proeprties
+  scheduling proeprties
+  mvc properties
+  security properties
+  Log4J Properties
+  ..etc
+
+where to place?
+  src/main/resources -- classpath (****)
+  [project folder] -- file 
+
+Spring Boot & MS ?    
+ -- Config Server (Properties data out of side all projects)
+
+===Google========================================================
+maven compiler plugin java 8
+spring context maven dependency
+spring xml configuration
+
+Do it in every file:-
+ctrl+A ctrl+I ctrl+S
+
+ctrl+shift+T => to open any pre-defined file(class/interface/..)
+
+Note:
+*) Symbol # in proeprties file is a comment.
+*) Data must be in key=val
+*) value by default String type. AutoParsing supported
+*) Key name can be any name.
+   Symbols allowed dot(.) dash(-) and underscore(_)
+---------------------------------------------------
+1. create properties file
+> right click on src/main/resources
+> new > file > enter name : jdbc.proeprties
+> Provide some data
+
+--jdbc.properties----
+#data in key=val
+my.app.driver-name=MySQLDriver
+my.app.url=jdbc:mysql://localhost:3306/testdb
+my.app.username=root
+my.app.password=mysql
+---------------------
+
+2. To load your properties file data into Spring container
+A)
+old class: upto Spring 5.2
+PropertyPlaceholderConfigurer
+
+B)
+new clas: recomanded one
+PropertySourcesPlaceholderConfigurer
+
+and pass location: filename 
+
+C) using context schema 
+<context:property-placeholder
+    location="classpath:jdbc.properties"/>
+
+3. Reading data:       ${key}
+   ex: ${my.app.driver-name}
+
+------------------------------------------------------
+Q) What is DTD, XSD Why ther are?
+A) DTD or XSD used to provides rules to write XML file
+  like
+    What are elements/attributes can a XML file have
+    what is their order, occurances..etc
+
+=> DTD : Document Type Definition
+=> XSD : Xml Schema Design
+-----------------------------------------------------
+
+==Full Code======================
+Name : Spring5XmlPropertiesEx
+
+a)pom.xml
+<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.3.9</version>
+		</dependency>
+	</dependencies>
+
+b) Spring bean class
+package in.nareshit.raghu.bean;
+
+public class MyDbConn {
+
+	private String driver;
+	private String url;
+	private String username;
+	private String password;
+	
+	//alt+shift+S, O > DeselectAll>Generate
+	public MyDbConn() {
+		super();
+	}
+	//alt+shift+S, R > SelectAll>Generate
+
+	public String getDriver() {
+		return driver;
+	}
+
+	public void setDriver(String driver) {
+		this.driver = driver;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	//alt+shift+S,S>OK
+	@Override
+	public String toString() {
+		return "MyDbConn [driver=" + driver + ", url=" + url + ", username=" + username + ", password=" + password
+				+ "]";
+	}
+	
+	
+}
+
+c) jdbc.properties
+#data in key=val
+my.app.driver-name=MySQLDriver
+my.app.url=jdbc:mysql://localhost:3306/testdb
+my.app.username=root
+my.app.password=mysql
+
+d) XML Configuration file : config.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd
+        
+    ">
+        
+	     
+     <context:property-placeholder location="classpath:jdbc.properties"/>   
+        
+	<!-- 
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>jdbc.properties</value>
+		</property>
+	</bean> -->
+	
+	<!-- <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="location">
+			<value>jdbc.properties</value>
+		</property>
+	</bean> -->
+
+	<bean id="dbc" class="in.nareshit.raghu.bean.MyDbConn">
+		<property name="driver">
+			<value>${my.app.driver-name}</value>
+		</property>
+		<property name="url" value="${my.app.url}"/>
+		<property name="username">
+			<value>${my.app.username}</value>
+		</property>
+		<property name="password">
+			<value>${my.app.password}</value>
+		</property>
+	</bean>
+</beans>
+
+e) Test class
+package in.nareshit.raghu.test;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+
+	public static void main(String[] args) {
+		ApplicationContext ac = new ClassPathXmlApplicationContext("config.xml");
+		Object ob = ac.getBean("dbc");
+		System.out.println(ob);//toString
+	}
+}
+
+==============================================================
+(org.springframework.core.env)
+Environment (I) : This object is created by Spring container
+Impl class is : StandardEnvironment(C)

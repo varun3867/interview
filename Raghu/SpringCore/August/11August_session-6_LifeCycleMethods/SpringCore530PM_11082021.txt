@@ -1,0 +1,48 @@
+		Date : 11-Aug-21
+				Spring Core 5:30PM
+				   Mr. RAGHU
+		------------------------------------------------------
+			      Spring LifeCycle Methods
+
+*) Method and LifeCycle Method:-
+  Method : It is used to execute a task, defined and called mostly by programmer.
+  LifeCycle Methods : Types are pre-defined, executed by f/w or container
+			while creating or destroying objects.
+
+*) Adv Java Servlets (3): init, service, destory 
+
+*) in Spring F/w 2 life cycle methods exist: (optional to use)
+   a. Init method    
+   b. Destory method
+
+> Both are executed by Spring Container, not be programmer.
+> But Configuration must be done by programmer
+> Using these methods are optional.
+> Executed once per object.
+
+Init/Destory method  Syntax:-
+
+  public void <methodName>() {
+     //logic 
+  }
+
+> Must return void (taken by Container so no use)
+> Must have Zero Params 
+> Init Logic is related : Files data, Streams, Connection Pool, 
+                      Cache Creation..etc
+> Destory Logic is related : 
+       close files, clear stream, close Pool, diconnect Cache..etc
+
+> XML Configuration looks Like:
+<bean  id=""  class=""  init-method="_____"  destory-method="______">
+  ...
+</bean>
+-------------------------------------------------------------------
+Q) When init method is executed ?
+A) After creating object and setting data
+
+Q) When Destory method is executed?
+A) Before Destorying the Object.
+
+Q) Who will call these methods?
+A) Spring Container.

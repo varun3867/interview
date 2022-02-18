@@ -1,0 +1,276 @@
+			Date : 09/08/2021
+			Spring Core 5:30PM
+			  Mr. RAGHU
+	----------------------------------------------------
+		  Spring Core XML Configuration
+
+XML Configuration:
+<bean id="objName" class="FullClassName"> --- object
+<property name="variable">  --- calling set method (SI)
+<value>  -- to provide data for PTD
+---------------------------------------------------------
+Maven
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.3.9</version>
+</dependency>
+
+Gradle:
+implementation group: 'org.springframework', name: 'spring-context', version: '5.3.9'
+Gradle Short:
+implementation 'org.springframework:spring-context:5.3.9'
+
+Eclipse/STS
+1. Create Project
+> File > new > other > Search and Select Maven Project
+> Choose checkbox [v] Create Simple Project > next > Enter details
+Group : in.nareshit.raghu
+Name : Spring5XmlFirstApp
+version : 1.0
+> Finish
+
+
+2. open pom.xml and provide
+<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.3.9</version>
+		</dependency>
+	</dependencies>
+
+3. Update Project (Alt+F5)
+> Right click on Project > Maven > Update Project
+> Finish
+
+4. Code files
+a. Spring Bean
+
+package in.nareshit.raghu.bean;
+
+public class MyConnection {
+
+	private String driver;
+	private String url;
+	private String username;
+	private String password;
+	
+	//Source > Generate Constructors using Fields >DeselectAll > Generate
+	public MyConnection() {
+		super();
+	}
+	//Source > Generate set/get methods >SelectAll > Generate
+	public String getDriver() {
+		return driver;
+	}
+	public void setDriver(String driver) {
+		this.driver = driver;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	//Source  > Generate
+	@Override
+	public String toString() {
+		return "MyConnection [driver=" + driver + ", url=" + url + ", username=" + username + ", password=" + password
+				+ "]";
+	}
+	
+}
+
+b. Spring XML Configuration File
+https://docs.spring.io/spring-framework/docs/4.2.x/spring-framework-reference/html/xsd-configuration.html
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 
+		MyConnection mycon = new MyConnection();
+		mycon.setDriver("OracleDriver");
+	 -->
+	<bean id="mycon" class="in.nareshit.raghu.bean.MyConnection">
+		<property name="driver">
+			<value>OracleDriver</value>
+		</property>
+		<property name="url">
+			<value>jdbc-orcl</value>
+		</property>
+		<property name="username">
+			<value>SMAPLE</value>
+		</property>
+		<property name="password">
+			<value>NIT</value>
+		</property>
+	</bean>
+
+</beans>
+
+c. Test class:-
+
+package in.nareshit.raghu.main;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import in.nareshit.raghu.bean.MyConnection;
+
+public class Test {
+	//ctrl+Fn+F11
+	//ctrl+F11
+	public static void main(String[] args) {
+		/**
+		 * ClassPath - src/main/resources folder
+		 * Xml - XML File
+		 * ApplicationContext - Spring Container
+		 */
+		ApplicationContext ac = new ClassPathXmlApplicationContext("config.xml");
+		//get -- read, Bean -- Object (from container) 
+		//Object ob = ac.getBean("mycon");
+		MyConnection ob = ac.getBean("mycon",MyConnection.class);
+		System.out.println(ob);
+	}
+}
+
+
+--Eclipse/STS key shortcuts------------------------------
+alt+shift+S, R -> set/get methods
+alt+shift+S, O -> for Constructor
+alt+shift+S, S -> for toString
+alt+shift+S, H -> for HashCode and equals
+
+ctrl+Fn+F11
+ctrl+F11                To Run main class
+
+ctrl+A ctrl+I ctrl+S     provide indentation
+
+----------------------------------------------------
+*)Note:
+a. ClassPathXmlApplicationContext : Create Spring Container
+ using XML File which exist in src/main/resources folder.
+
+b. getBean("objName"):Object
+  This method is used to read object from container
+  but returned upcasted object as java.lang.Object.
+
+c. getBean("objName",T.class):T 
+   This method is used to read object from container
+   but without casting, using reflection to read actual type.
+
+d. If given object name is not exist (case-sensitive)
+    then Spring f/w throws
+   NoSuchBeanDefinitionException: No bean named 'mycon1' available
+
+
+e. By Default when Spring Container is created  
+    ie ApplicationContext line is executed then Objects
+    are created inside Spring Bean (Eager Loading/Early Loading)
+
+    <bean  id="" name=""    lazy-init="false">
+
+  if we want to create object on first access (Lazy loading)
+  the use lazy-init="true".
+
+f. <value> is used only for  PTD (int,String, ..etc)
+   This we can write in 3 ways
+
+ I.  value as tag
+    <property name="variable">
+       <value> ___ </value>
+    </property>
+ II.  value as attribute
+    <property name="variable" value="" />
+
+ III.  p-schema/p-namespace
+   <bean id="" class=""  p:variable="value" ... />
+
+--example I. Value as Tag-----------------
+<bean id="mycon" class="in.nareshit.raghu.bean.MyConnection" lazy-init="true">
+		<property name="driver">
+			<value>OracleDriver</value>
+		</property>
+		<property name="url">
+			<value>jdbc-orcl</value>
+		</property>
+		<property name="username">
+			<value>SMAPLE</value>
+		</property>
+		<property name="password">
+			<value>NIT</value>
+		</property>
+	</bean>
+
+---example :II.value as attribute-----------------------------------------------
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- MyConnection mycon = new MyConnection(); mycon.setDriver("OracleDriver"); -->
+	<bean id="mycon" class="in.nareshit.raghu.bean.MyConnection">
+		<property name="driver" value="MySQL" />
+		<property name="url" value="jdbc:mysql:abcd" />
+		<property name="username" value="sample" />
+		<property name="password" value="raghu" />
+
+	</bean>
+
+</beans>
+
+-----example III.p-schema---------------------------
+Must add= xmlns:p="http://www.springframework.org/schema/p"
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- MyConnection mycon = new MyConnection(); mycon.setDriver("OracleDriver"); -->
+	<bean id="mycon" class="in.nareshit.raghu.bean.MyConnection"
+		p:driver="Postgres"
+		p:url="jdbc-pd"
+		p:username="sample"
+		p:password="test-one"
+	/>
+
+</beans>
+==========================================================
+
+g.*** need not to follow order while calling <property with variable>
+    for set methods, inject in any order.
+
+f. By Default data given b/w <value> is string type. But Autoparsing
+    is supported by spring container, if we provide wring data
+    type then TypeMismatchException...
+    NumberFormatException: For input string: "ABCD" 
+    will be thrown

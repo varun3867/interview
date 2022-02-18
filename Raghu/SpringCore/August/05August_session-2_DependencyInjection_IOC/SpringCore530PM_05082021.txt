@@ -1,0 +1,103 @@
+			Date : 05/08/2021
+		    Additional Concepts 5:30 PM
+			   Mr. RAGHU
+	    --------------------------------------
+	     Spring Core -- XML, Annotation and Java
+
+Dependency Injection (DI):- [Theory]
+
+Dependency :  instance variable inside class.
+              [ Fields inside Spring Bean]
+
+Types of Dependencies(3):
+a. Primitive Type Dependency (PTD) [8+1]
+   If a instance variable is created using one of theses
+  byte, short, int, long, float, double, boolean , char + String
+
+  then such variable is called as PTD.
+
+b. Collection Type Dependency (CTD) [4]
+     [java.util]
+
+   If a instance variable is created using 
+   List(I), Set(I), Map(I), Properties(C)
+
+c. Reference Type Dependency (RTD) [No Count]
+   [HAS-A Relation in core Java]
+   If a variable is created using another class or interface
+
+--------------------------------------------------------------
+Injection : Provide data to dependency (give value to variable)
+
+Types(4)
+a. *** Setter Injection (SI): 
+   using variable set method to provide data
+
+   Employee e = new Employee();
+   e.setEmpId(101);  //set method
+   e.setEmpName("A"); //set method
+ 
+b. ** Constrcutor Injection (CI): 
+   Using Parameterized Constrcutor data is provided
+
+     Employee e = new Employee(101,"A");
+
+c. ** Lookup Method Injection (LMI):
+     (Scopes and Injections)
+    When Parent class is singleton and child class is prototype
+            Parent----<>Child
+	           HAS-A
+
+d. Interface Injection (II) [not exist in Spring]
+=============in Core Java==============================================
+Who will write code for class : Developer
+
+class A{
+  int id
+}
+Who will write code for object : Developer
+
+===Spring F/w======================================
+Who will write code for class : Developer
+Who will write code for object : IoC
+   [Inversion of Control]
+ Handling Object creation, injection, life cycles, execution
+ and destory. In simple that follows DI theory.
+
+ Objects are created in reverse order. (HAS-A/Association)
+     A---<>B---<>C--<>D--<>E
+     Then Create E object and next D object, inject E to D
+          Create C object inject D to C
+          Create B object inject C to B
+          Create A object inject B to A
+
+*) IoC also called as Spring Container.
+
+
+Q) DI v/s IoC ?
+A) Dependency Injection : it is a process of injecting
+              data to fields based on types for an object.
+	      In simple provide data to variables.
+
+IoC : By following DI concept , creating objects in reverse order
+	and manage linking, executions, destory ..etc
+	Like a Container work.
+
+        IoC is a Implementation type of DI.
+
+  -------[theory]----[Implementation]------[Application]------
+           OOPs            Java               Developer
+	   Rules            APIs               Apps
+
+	   DI        IoC(Spring Container)     Code Apps
+------------------------------------------------------------------
+ Spring Container:
+*) Objects must be created in a global memory so that
+   we can access wehere ever we want.
+
+--------------------------------------------------------
+Container(IoC) will
+a. Scan/find your class and create object
+b. Provide data to variables
+c. Link Objects based on relations
+d. Destory the objects 
