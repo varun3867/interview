@@ -1,0 +1,1145 @@
+.h1logout{
+  text-align: left;
+  line-height: 2.0;
+  margin-top: -2.7rem;
+  color:darkgray;
+}
+
+.radiologout{
+  text-align:left;
+  margin-top: 1.5em;
+  position: relative;
+  left: -4.5rem;
+  
+ }
+
+ .modalbutton{
+  background-color:darkgray;
+  width: 17%;
+  font-weight: bold;
+  padding: 9px 5px;
+  margin-top: 1em;
+  border:none;
+  color:#ffffff;
+  text-align: center;
+  margin-top: 3em;
+}
+.buttons{
+  text-align: center;
+}
+ .textlogout{
+   top:4.4em;
+   left: 6.2rem;
+   position:absolute;
+   color:black;
+   font-weight: bold;
+   font-size: 1.1em;
+ }
+ .textlogout1{
+   top:7.6rem;
+   left: 6.2rem;
+   position:absolute;
+   color:black;
+   font-size:1.1em;
+   font-weight: bold;         
+ }
+.ArrangeDashboard {
+    padding-left: 10rem;
+margin-top: -20rem;
+
+}
+.ArrangeNetwork{
+    padding-left: 100px;
+margin-top: -280px;
+}
+.ArrangeHealthcheckup{
+    padding-left: 100px;
+margin-top: -200px;
+}
+.ArrangeHistory {
+    padding-left: 100px;
+margin-top: -120px;
+
+}
+.ArrangeUser {
+    padding-left: 100px;
+margin-top: -40px;
+
+}
+.ArrangeChart{
+  padding-left: 100px;
+  margin-top: -450px;
+}
+.Chart{
+    width: 500px;
+    height: 200px;
+    /* border: 1px solid #ddd; */
+    float: left;
+    margin-left:5rem ;
+    margin-top: 6rem;
+    box-shadow: rgb(189, 174, 174) ;
+    padding-bottom: 5rem;
+    margin-bottom: 1.6rem;
+}
+
+.split {
+    text-align: left;
+    font-size: small;
+    width: 570px;
+    height: 150px;
+    border: 1px solid #ddd;
+    float: left;
+    margin-left:0.5rem ;
+    margin-top: 0rem;
+    box-shadow: rgb(189, 174, 174) ;
+    padding-bottom: 4rem;
+    margin-bottom: 0.6rem;
+  }
+  
+.accountbody{
+  margin: 100px auto;
+  width:50%;
+  padding:50px;
+  height:15rem;
+  box-shadow:3px 3px 2px 3px darkgray;
+  border:1px solid #eee;
+  text-align:center;
+  box-sizing:border-box;
+  background-color: white;
+}
+.cancelpng img{
+  position: absolute;
+  left:62.5rem;
+  height:28px;
+  width:28px;
+  top:11em;
+  border:1px solid rgb(172, 164, 164);
+  cursor:pointer;
+}
+.cancelpng:hover{
+  opacity:1.2;
+  color: #a0a0a0;
+  cursor:pointer;
+
+}
+
+.dashboard{
+
+  margin-top: -20rem;
+  margin-left: 7rem;
+margin-bottom: 15rem;
+}
+  .footer{
+      text-align:right;
+      margin-right:50px;
+      color:rgb(29, 115, 150);
+      margin-top: -0.65rem;
+  }
+  .headerss {
+    margin-left:2rem ;
+    text-justify: auto;
+    margin-top: 0.7rem;
+    color:rgb(119, 113, 113);
+    
+  }
+
+
+  .toggle{
+    display:flex;
+    flex-direction:column;
+    justify-content: space-around;
+    height:24px;
+    width: 30px;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    box-sizing:border-box;
+    position:absolute;
+    top:23px;
+}
+
+.toggle:focus{
+    outline:none;
+}
+.button_line{
+    width:30px;
+    height:2px;
+    background:white;
+}
+
+.timing{
+    
+    font-size: 1.1em;
+    position: relative;
+  }
+  .count{
+      font-size:1.2em;
+      position: relative;
+      color:#4257f5;
+      top: 0.2rem;
+  }
+  
+  .box {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color:rgb(73, 134, 73);
+    color: #fff;
+    padding-top:0px ;
+    height: 10%;
+    align-items: center;
+  }
+  .header{
+    position:relative;
+     left:180px;
+  }
+
+ .selectedValue {
+  color: #fff;
+  background-color:rgb(73, 134, 73);
+  right:50em;
+  font-size: medium;
+ 
+}
+
+.list {
+  padding-left:70em;
+  padding-right:-70em;
+}
+
+.center{
+  position:fixed;
+  left:600px;
+}
+
+.drawer{
+  top:5px;
+  margin-left: -13.5em;
+}
+
+
+.navbar_fixedtop {
+  position:relative;
+  background-color:white;
+  top:0rem;
+  left:4.5rem;
+  width:86%;
+  height:65px;
+  border-radius: 2px;
+  margin-left:0.5em;
+}
+
+.maindiv{
+  position:relative;
+  border: 1.5px solid whitesmoke;
+  box-shadow: rgb(189, 174, 174);
+}
+
+.nav_link1{
+  font-size:1.2em;
+  padding-left: 3.4em;
+  padding-top: 0.7em;
+
+}
+
+.time{
+  font-size:1.2em;
+  position:relative;
+  left: 4rem;
+  top: -1.7rem;
+}
+
+.navbar_items{
+  display:flex;
+  padding:0;
+  margin:0;
+  list-style: none;
+}
+
+.timing{
+  padding-left: 24em;
+  font-size: 1.1em;
+  margin-top: -1.1rem;
+}
+
+.Logo2 img {
+    background-color:white;
+    position: absolute;
+    left:1110px;
+    padding:10px;
+    height:28px;
+    width:30px;
+    top:9px;
+    cursor:pointer;
+}
+.Logo1 img {
+  position: relative;;
+  left:73rem;
+  padding:10px;
+  height:35px;
+  width:40px;
+  top:-5.3rem;
+  cursor:pointer;
+}
+.Logo img {
+  position: absolute;
+  left:-75px;
+  padding:10px;
+  height:50px;
+  width:55px;
+  top:6px;
+}
+
+.Pars img{
+  padding: 4px;
+  width: 30px;
+  height: 25px;
+  margin: 9px 4px;
+  margin-top: 1px;
+  margin-left: 0.5rem; 
+}
+
+.diagnostic{
+  margin-top: -20rem;
+  margin-left: 7rem;
+width: 72%;
+  }
+
+  .Diaheaders {
+    text-justify: auto;
+    color:black;
+    background-color:#a0a0a0;
+    margin-top: 0rem;
+  }
+  
+
+  .Diacontent {
+    margin-left:2rem ;
+    font-size: 0.95rem;
+  }
+.headertext{
+
+  margin-top: -3.0rem;
+  margin-left: 3.8rem;
+  text-align: left;
+  line-height: 2;
+}
+.DiasplitB {
+ 
+  text-align: left;
+  font-size: small;
+  width: 280px;
+  height: 140px;
+  border: 2.5px solid whitesmoke;
+  float: left;
+  margin-left:0.5rem ;
+  margin-top: 0rem;
+  box-shadow: rgb(189, 174, 174);
+  padding-bottom: 4rem;
+  margin-bottom: 0.8rem;
+}
+.DiasplitC {
+ 
+  text-align: left;
+  font-size: small;
+  width: 280px;
+  height: 140px;
+  border: 2.5px solid whitesmoke;
+  float: left;
+  margin-left:0.5rem ;
+  margin-top: -1.2rem;
+  box-shadow: rgb(189, 174, 174);
+  padding-bottom: 4rem;
+  margin-bottom: 0.8rem;
+}
+.DiasplitM {
+ 
+  text-align: left;
+  font-size: small;
+  width: 280px;
+  height: 140px;
+  border: 2.5px solid whitesmoke;
+  float: left;
+  margin-left:0.5rem ;
+  margin-top: -2.3rem;
+  box-shadow: rgb(189, 174, 174);
+  padding-bottom: 4rem;
+  margin-bottom: 0.8rem;
+}
+.DiasplitS {
+ 
+  text-align: left;
+  font-size: small;
+  width: 280px;
+  height: 140px;
+  border: 2.5px solid whitesmoke;
+  float: left;
+  margin-left:0.5rem ;
+  margin-top: -13.8rem;
+  box-shadow: rgb(189, 174, 174);
+  padding-bottom: 4rem;
+  margin-bottom: 0.8rem;
+}
+
+.DiasplitA {
+ 
+  text-align: left;
+  font-size: small;
+  width: 280px;
+  height: 140px;
+  border: 2.5px solid whitesmoke;
+  float: left;
+  margin-left:0.5rem ;
+  margin-top: 0rem;
+  box-shadow: rgb(189, 174, 174);
+  padding-bottom: 4rem;
+  margin-bottom: 0.8rem;
+}
+.DiasplitG{
+ 
+  text-align: left;
+  font-size: small;
+  width: 280px;
+  height: 140px;
+  border: 2.5px solid whitesmoke;
+  float: left;
+  margin-left:0.5rem ;
+  margin-top: 0rem;
+  box-shadow: rgb(189, 174, 174);
+  padding-bottom: 4rem;
+  margin-bottom: 0.8rem;
+}
+
+
+
+.sidediagnostic{
+  margin-left: 65rem;
+  margin-top: -26.9rem;
+  height: 430px;
+  width: 315px;
+  
+  }
+
+.SideDiasplit {
+  text-align: left;
+  font-size: small;
+  width: 300px;
+  height: 340px;
+  /* border: 3px solid #ddd; */
+  float: left;
+  margin-left:0.1rem ;
+  margin-top: -27.6rem;
+  /* box-shadow: rgb(189, 174, 174); */
+  padding-bottom: 4rem;
+  margin-bottom: 0.8rem;
+
+}
+.SideDiaheadersM {
+  text-justify: auto;
+  color:black;
+  background-color:#a0a0a0;
+  margin-top: 0rem;
+  text-align: left;
+  line-height:2;
+}
+
+.SideHeaderText{
+  margin-left: 2rem;
+}
+
+.Contentdiagnostic {
+  margin-left: 1.8rem;
+  font-size: medium;
+  line-height: 1.5;
+}
+
+.ContentText {
+  margin-left:7.5rem;
+  margin-top: -6rem;
+}
+
+.ContentTextG {
+  margin-left:12rem;
+  margin-top: -6rem;
+}
+.ContentTextM {
+  margin-left:8.9rem;
+  margin-top: -6rem;
+}
+.ContentdiagnosticM {
+  margin-left: 0rem;
+  font-size: medium;
+  line-height: 1.5;
+}
+.ContentTextC {
+  margin-left:9.3rem;
+  margin-top: -12rem;
+}
+
+.header1{
+  position:relative;
+   left:-35em;
+}
+.Logotop img {
+  position: absolute;
+  left:-80px;
+  padding:10px;
+  height:55px;
+  width:55px;
+  top:6px;
+}
+.button{
+  background-color:darkgray;
+  width: 17%;
+  font-weight: bold;
+  padding: 9px 5px;
+  margin-top: 1em;
+  border:none;
+  color:#ffffff;
+  text-align: center;
+  
+  }
+  .button:hover{
+  opacity:0.8;
+  }
+.text{
+  width:32%;
+  padding:7px 10px;
+  margin: 8px 0;
+  display:inline-block;
+  border: 3px solid #ccc;
+  box-sizing: border-box;
+  }
+
+  .body{
+      margin: 100px auto;
+      width:50%;
+      padding:50px;
+      height:19rem;
+      box-shadow:3px 3px 2px 3px darkgray;
+      border:1px solid #eee;
+      text-align:center;
+      box-sizing:border-box;
+      background-color: white;
+      }
+
+      .h1{
+          width:116%;
+          font-size:20px;
+          color:white;
+          background-color:darkgray;
+          line-height: 2.0;
+          margin-top: -3.3rem;
+          margin-left: -3.2rem;
+          text-align: left;
+          padding-left: 10px;
+          margin-bottom: 3rem;
+      }
+      .label{
+          text-align:center ;
+          
+      }
+      
+      .submit{
+          text-align:center ;
+      }
+      .tileicon img{
+        width: 20px;
+        height: 18px;
+        margin-left: 2rem;
+        
+      }
+      .redicon img{
+        width: 45px;
+        height: 27px;
+        margin-left: 1.3rem;
+      }
+      .healthText{
+        left: 0.8rem;
+        position: relative;
+        font-weight: bold;
+      }
+      .content {
+        margin-left:4rem ;
+      }
+      .tileicon1 img{
+        top: -0.2rem;
+        width: 20px;
+        left: 5rem;
+        height: 18px;
+        position: relative;
+        margin-left: 1.8rem;
+        
+      }
+      .redicon1 img{
+        top: -0.2rem;
+        left: 5rem;
+        width: 50px;
+        height: 27px;
+        margin-left: 1.8rem;
+        position: relative;
+
+      }
+      .healthText1{
+        left: 6rem;
+        position: relative;
+        font: bold;
+        font-weight: bold;
+      }
+      .tiletext{
+        margin-top: -1rem;
+        margin-left: 1rem;
+        text-align: left;
+        line-height: 2;
+        
+      }
+      .contentdb{
+        margin-left: 3.5rem;
+        font-size: medium;
+        line-height: 1.5;
+        margin-top: -0.4rem;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      }
+      .contenthealth{
+          margin-left: 3.5rem;
+          font-size: medium;
+          line-height: 1.5;
+          margin-top: -0.4rem;
+          font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        }
+      .contentdia{
+        margin-left: 1.8rem;
+        font-size: medium;
+      }
+      .tablecontent{
+        margin-top: -0.6rem;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      }
+      #table {
+        text-align: center;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        border: 3px solid #ddd;
+        margin-top: -1.1rem;
+        margin-left: -1.75rem;
+        width: 300px;
+        }
+      
+      #table td, #table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        line-height: 1.68;
+      }
+      .radiologout{
+        text-align:left;
+        padding-left:  5.5em;
+        margin-top: 1.5em;
+        
+       }
+       .Networkmap img{
+        width:24rem;
+        height: 9rem;
+        margin-left: 5rem;
+        margin-top: -0.5rem;
+      }
+
+      .operator{
+        margin-left: 0.25rem;
+      }
+      .operator1{
+        margin-left: 2.1rem;
+      }
+      .Usersplit {
+        text-align: left;
+        font-size: small;
+        width: 580px;
+        height: 390px;
+        border: 2.5px solid whitesmoke;
+        float: left;
+        margin-left:0.6rem ;
+        margin-top: 0rem;
+        box-shadow: rgb(189, 174, 174);
+        padding-bottom: 4rem;
+        margin-bottom: 0.6rem;
+      }
+      .IPTVUsersplit {
+        text-align: left;
+        font-size: small;
+        width: 580px;
+        height: 190px;
+        border: 2.5px solid whitesmoke;
+        float: left;
+        margin-left:0.6rem ;
+        margin-top: -14.3rem;
+        box-shadow: rgb(189, 174, 174);
+        padding-bottom: 4rem;
+        margin-bottom: 0.6rem;
+      }
+      .BroadUsersplit {
+        text-align: left;
+        font-size: small;
+        width: 580px;
+        height: 260px;
+        border: 2.5px solid whitesmoke;
+        float: left;
+        margin-left:0.6rem ;
+        margin-top: 0rem;
+        box-shadow: rgb(189, 174, 174);
+        padding-bottom: 4rem;
+        margin-bottom: 0.6rem;
+      }
+      .VoiceUsersplit {
+        text-align: left;
+        font-size: small;
+        width: 580px;
+        height: 290px;
+        border: 2.5px solid whitesmoke;
+        float: left;
+        margin-left:0.6rem ;
+        box-shadow: rgb(189, 174, 174);
+        padding-bottom: 4rem;
+        margin-bottom: 0.6rem;
+      }
+      .User{
+        margin-top: -20rem;
+        margin-left: 7rem;
+        margin-bottom: 15rem;
+        width:100%;
+        }
+        .Userheaders {
+          text-justify: auto;
+          color:black;
+          background-color:#a0a0a0;
+          margin-top: 0rem;
+          text-align: center;
+          line-height:1.7;
+        }
+       
+        .Usertablecontent{
+          margin-left: 1.8rem;
+          font-size: medium;
+        }
+        #table1 {
+          text-align: center;
+          font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          border: 3px solid #ddd;
+          width: 555px;
+          height: 150px;
+          margin-top: -0.5rem;
+          margin-left: -1.0rem;
+          }
+        
+        #table1 td, #table1 th {
+          border: 1px solid #ddd;
+          padding: 8px;
+          line-height: 1.0;
+        }
+        .message{
+          color: red; 
+          top: 1rem;  
+          position: relative;      
+        }
+        .message1{
+          color: red; 
+          left: 4rem; 
+          position: relative;       
+        }
+        @media screen and (max-width: 700px) {
+          .body{
+            width: 290px;
+          }
+          .accountbody{
+            width:290px;
+          }
+          .cancelpng img{
+            position: absolute;
+            left:20.5rem;
+            height:23px;
+            width:23px;
+            top:10.98em;
+          }
+          .accountnumber{
+            margin-left: -4.1rem;
+            margin-right: -3.1rem;
+          }
+          .h1{
+            width: 285px;
+          }
+          .operator{
+            margin-left: -3.9rem;
+            margin-right: -3.1rem;
+           }
+           .operator1{
+            margin-left: -2.2rem;
+            margin-right: -3.1rem;
+
+           }
+           .text{
+            width:110px;
+            padding:6px 10px;
+            text-align: center;
+            position: relative;
+            right: -3.2rem;
+           }
+           .button{
+             width: 5rem;
+           }
+           
+           .header1{
+             left: -5rem;
+           }
+           .Logotop img {
+            position: absolute;
+            height:45px;
+            width:45px;
+          }
+
+        }
+        @media screen and (max-width: 700px) {
+          .drawer{
+            margin-left: -7.7rem;
+            margin-top: -0.3rem;
+          }
+          .toggle{
+            height:20px;
+            width: 20px;           
+        }
+        .header{
+          position:relative;
+           left:6rem;
+        }
+        .Logo img {
+          left:-4.9rem;
+          top: 0.1rem;
+          height:49px;
+          width:49px;
+        }
+        .list {
+          padding-left:12em;
+        }
+       
+        .nav_link1{
+          left: -7.2rem;
+          padding-top: 0.2em;
+          position: relative;
+          font-size: 0.95rem;
+          font-weight: bold;
+        }
+        .time{
+          left: -4rem;
+          top: -3rem;
+          position: relative;
+          font-size: 0.95rem;
+          font-weight: bold;
+
+        }
+        .Logo2 img {
+          left:14.6rem;
+          height:23px;
+          width:23px;
+          top: 0.1rem;
+      }
+      .Logo1 img {
+        left:17.3rem;
+        height:32px;
+        width:32px;
+        top:-5.6rem;
+      }
+      .timing{
+        right: 13.6rem;
+        font-size: 0.95rem;
+        font-weight: bold;
+        position: relative;
+      }
+      .count{
+          font-size:1rem;
+          position: relative;
+          color:#4257f5;
+          top: -1.1rem;
+          left: 3rem;
+      }
+      .navbar_fixedtop {
+        height:54px; 
+      }  
+    }     
+    @media screen and (max-width: 700px) {
+      .dashboard{
+        margin-top: -14.5rem;
+        margin-left: 3.6rem;
+      }
+      .split {
+        width: 330px;
+        height: 130px;
+      }
+      .headerss {
+        margin-left:0.5rem ;
+        margin-top: -0.6rem;
+        font-size: smaller;
+      }
+      .footer{
+        margin-right:30px;
+        margin-top: -0.2rem;
+      }
+      .contentdb{
+        margin-left: 2rem;
+        margin-top: -0.3rem;
+        font-size: 0.9o5rem;
+      }
+    .tileicon img{
+        width: 18.5px;
+        height: 18px;
+        margin-left: 0.3rem;
+        
+      }
+      .redicon img{
+        width: 35px;
+        height: 25px;
+        margin-left: -0.2rem;
+      }
+      .healthText{
+        left: 0.3rem;
+        font-size: smaller;
+      }
+      
+      .tileicon1 img{
+        width: 18.5px;
+        height: 18px;
+        left: 1.8rem;  
+      }
+      .redicon1 img{
+        top: -0.2rem;
+        left: 1.5rem;
+        width: 35px;
+        height: 25px;
+        position: relative;
+      }
+      .healthText1{
+        left:2rem;
+        font-size: smaller;
+      }
+      .contenthealth{
+        margin-left: 2rem;
+        margin-top: -0.7rem;
+      }
+      .Networkmap img{
+        width:18rem;
+        height: 8rem;
+        margin-left: 1rem;
+        margin-top: 0rem;
+      }
+      
+    } 
+    @media screen and (max-width: 700px) {
+      .User{
+        margin-top: -14.5rem;
+        margin-left: 3.6rem;
+      }
+      .Userheaders {
+        line-height:1.7;
+      }
+      .Usersplit {
+        width: 325px;
+        height: 337px;
+      }
+      .IPTVUsersplit {
+        width: 325px;
+        height: 165px;
+       top: 14rem;
+       margin-bottom: 0.7px;
+       position: relative;
+      }
+      .BroadUsersplit {
+        width: 325px;
+        height: 262px;
+      }
+      .VoiceUsersplit {
+        width: 325px;
+        height: 264px;
+       
+      }
+      .Usertablecontent{
+        margin-left: 1.8rem;
+        font-size: 0.9rem;
+      }
+      #table1 {
+        width: 311px;
+        height: 150px;
+        margin-left: -1.3rem;
+        }
+      
+      #table1 td, #table1 th {
+        border: 1px solid #ddd;
+        padding: 7px;
+        line-height: 1.0;
+      }
+    }
+    @media screen and (max-width: 700px) {
+    .h1logout{
+      line-height: 1.5;
+      margin-top: -2.7rem;
+      position: relative;
+      left: -2.3rem;
+    }
+    .radiologout{
+      margin-top: 2.1em;
+      left: -8rem;
+      position: relative;
+     }
+     .modalbutton{     
+      width: 4rem;
+      margin-top: 3em;
+    }
+     .textlogout{
+     left:2rem;
+       top:4.8em;
+       font-size: 1em;
+     }
+     .textlogout1{
+       left:2em;
+       top:8.2rem;
+       font-size:1em;
+     }
+    }
+      @media screen and (max-width:700px)
+      {
+        
+        .DiasplitB {
+ 
+         
+          width: 180px;
+          height: 150px;
+          border: 2.5px solid whitesmoke;
+          margin-left:-5rem ;
+          margin-top: 8rem;
+          box-shadow: rgb(189, 174, 174);
+          
+        }
+        .DiasplitC {
+         
+        
+          width: 180px;
+          height: 150px;
+          border: 2.5px solid whitesmoke;
+          margin-left:-11.5rem ;
+          margin-top: 21rem;
+          box-shadow: rgb(189, 174, 174);
+        }
+        .DiasplitM {
+         
+          
+          width: 180px;
+          height: 150px;
+          border: 2.5px solid whitesmoke;
+          
+          margin-left:-11.5rem ;
+          margin-top: 34rem;
+          box-shadow: rgb(189, 174, 174);
+        
+        }
+        .DiasplitS {
+         
+          
+          width: 180px;
+          height: 150px;
+          border: 2.5px solid whitesmoke;
+          margin-left:-11.5rem ;
+          margin-top: 73rem;
+          box-shadow: rgb(189, 174, 174);
+        }
+        
+        .DiasplitA {
+         
+          
+          width: 180px;
+          height: 150px;
+          border: 2.5px solid whitesmoke;
+        
+          margin-left:-11.5rem ;
+          margin-top: 47rem;
+          box-shadow: rgb(189, 174, 174);
+          
+        }
+        .DiasplitG{
+         
+         
+          width: 180px;
+          height: 150px;
+          border: 2.5px solid whitesmoke;
+          
+          margin-left:-11.5rem ;
+          margin-top: 60rem;
+          box-shadow: rgb(189, 174, 174);
+        }
+
+
+        .sidediagnostic{
+          margin-left: 65rem;
+          margin-top: -26.9rem;
+          height: 430px;
+          width: 315px;
+          
+          }
+        
+        .SideDiasplit {
+          text-align: left;
+          font-size: small;
+          width: 180px;
+          height: 150px;
+          /* border: 3px solid #ddd; */
+          float: left;
+          margin-left:-48.7rem ;
+          margin-top: 2.5rem;
+          /* box-shadow: rgb(189, 174, 174); */
+          padding-bottom: 4rem;
+          margin-bottom: 0.8rem;
+        
+        }
+        
+        .SideHeaderText{
+          margin-left: 2rem;
+        }
+        #table {
+          text-align: center;
+          font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          border: 3px solid #ddd;
+          margin-top: -1.1rem;
+          margin-left: -1.75rem;
+          width: 2px;
+          }
+           .SideDiaheaders{
+            text-justify: auto;
+            color:black;
+            background-color:#a0a0a0;
+            margin-top: 0rem;
+            text-align: left;
+            line-height:2;
+            width: 10px;
+          }
+           
+          .SideDiaheadersM{
+            text-justify: auto;
+            color:black;
+            background-color:#a0a0a0;
+            margin-top: 0rem;
+            text-align: left;
+            line-height:2;
+            width: 170px;
+          }
+          
+          .SideHeaderText{
+            margin-left: 2rem;
+          }
+          .contentdia{
+            margin-left: 1.8rem;
+            font-size: 10px;
+            margin-top: -1.2rem;
+            font-weight: bold;
+
+          }
+         
+      }
+      

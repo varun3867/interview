@@ -1,0 +1,49 @@
+.Activityinfosplit {
+    text-align: left;
+    font-size: 1em;
+    width: 580px;
+    height: 400px;
+    border: 2.5px solid whitesmoke;
+    float: left;
+    margin-left:0.6rem ;
+    margin-top: -5.5rem;
+    box-shadow: rgb(189, 174, 174);
+    padding-bottom: 4rem;
+    margin-bottom: 0.6rem;
+    position:absolute;
+  }
+
+  .Sessionheaders {
+    text-justify: auto;
+    color:black;
+    background-color:#a0a0a0;
+    margin-top: 0rem;
+    text-align: left;
+    line-height:2.5;
+    padding-left: 1em;
+  }
+  @media screen and (max-width: 700px) {
+    .Activityinfosplit {
+      text-align: left;
+      font-size: 1em;
+      width: 330px;
+      height: 400px;
+      border: 2.5px solid rgb(224, 209, 209);
+      float: left;
+      margin-left:-37rem ;
+      margin-top: 25rem;
+      box-shadow: rgb(189, 174, 174);
+      padding-bottom: 4rem;
+      margin-bottom: 0.6rem;
+    }
+  
+    .Sessionheaders {
+      text-justify: auto;
+      color:black;
+      background-color:#a0a0a0;
+      margin-top: 0rem;
+      text-align: left;
+      line-height:2.5;
+      padding-left: 1em;
+    }
+  }

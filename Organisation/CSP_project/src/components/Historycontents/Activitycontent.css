@@ -1,0 +1,85 @@
+ .Activitytablecontent{
+    margin-left: -0.1rem;
+    font-size: medium;
+    width: 576px;
+    height: 390px;
+     overflow: scroll;
+  }
+    
+  #table1 {
+    text-align: left;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 580px;
+    height: 100px;
+    margin-left: -0.1rem;
+    margin-top: -1em;
+    overflow: scroll;
+    }
+  
+  #table1 td, #table1 th {
+    border: 1px solid #ddd;
+    padding-left:1.5em ;
+    padding-top:0.6em;
+    line-height: 1.6;
+  } 
+
+  .service{
+    padding-left: 3.3em;
+  }
+  .service2{
+    padding-left: 3.9em;
+  }
+  .service3{
+    padding-left: 6.4em;
+  }
+  .service4{
+    padding-left: 4.6em;
+  }
+  .service5{
+    padding-left: 2.4em;
+  }
+  @media screen and (max-width: 700px) {
+
+    .Activitytablecontent{
+      margin-left: -0.1rem;
+      font-size: medium;
+      width: 338px;
+      height: 370px;
+       overflow: scroll;
+    }
+      
+    #table1 {
+      text-align: left;
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 335px;
+      height: 310px;
+      margin-left: 0.5rem;
+      }
+    
+    #table1 td, #table1 th {
+      border: 1px solid #ddd;
+      padding-left:0.01em ;
+      padding-top:0.6em;
+      line-height: 1.6;
+    } 
+  
+    .service{
+      padding-left: 1em;
+    }
+    .service2{
+      padding-left: 1.7em;
+    }
+    .service3{
+      padding-left: 4.3em;
+    }
+    .service4{
+      padding-left: 2.6em;
+    }
+    .service5{
+      padding-left: 0.3em;
+    }
+}
+    
+  

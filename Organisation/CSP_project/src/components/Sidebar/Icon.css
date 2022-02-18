@@ -1,0 +1,191 @@
+.Arrows img{
+    /* background-color: rgb(212, 205, 205); */
+    padding: 4px;
+    width: 45px;
+    height: 45px;
+    margin: 10px 4px;
+    border-radius: 50%;
+    cursor: pointer;
+    /* box-shadow: 3px 5px 5px grey; */
+    /* box-shadow:  9px 6px 10px grey;  
+    border: 1px solid green; */
+    transition: border-radius 20s , box-shadow 20s;  
+ }
+ .Image:hover {
+     border-radius: 50%;
+     box-shadow: 3px 5px 5px  grey;
+ } 
+ .Image:active{
+     border-radius: 50%;
+     box-shadow: inset -3px 5px 5px  grey;
+ }
+ 
+ .Para img{
+    background-color: white;
+    padding: 4px;
+    width: 45px;
+    height: 45px;
+    margin: 10px 4px;
+    border-radius: 10%;
+    /* box-shadow: rgb(189, 174, 174); */
+    /* box-shadow: 9px 5px 5px #ccc; */
+    /* transition: background-color 2s, padding 2s, width 2s, height 2s, margin 2s, border-radius 2s, transform 2s; */
+ }
+ .Paras img{
+    background-color: white;
+    padding: 4px;
+    width: 45px;
+    height: 45px;
+    margin: 10px 4px;
+    border-radius: 10%;
+    /* box-shadow: rgb(189, 174, 174); */
+    /* box-shadow: 9px 5px 5px #ccc; */
+     transition: background-color 2s, padding 2s, width 2s, height 2s, margin 2s, border-radius 2s, transform 2s; 
+     /* transform: rotateY(180deg); */
+     transform: translateY(-0.5rem);
+ }
+ .Parass img{
+    background-color: white;
+    padding: 4px;
+    width: 45px;
+    height: 45px;
+    margin: 10px 4px;
+    border-radius: 10%;
+    /* box-shadow: rgb(189, 174, 174); */
+    /* box-shadow: 9px 5px 5px #ccc; */
+     transition: background-color 2s, padding 2s, width 2s, height 2s, margin 2s, border-radius 2s, transform 2s; 
+     /* transform: rotateZ(360deg); */
+     transform: translateY(0.5rem);
+ }
+ .Parassss img{
+    background-color: white;
+    padding: 4px;
+    width: 45px;
+    height: 45px;
+    margin: 10px 4px;
+    border-radius: 10%;
+    /* box-shadow: rgb(189, 174, 174); */
+    /* box-shadow: 9px 5px 5px #ccc; */
+     transition: background-color 2s, padding 2s, width 2s, height 2s, margin 2s, border-radius 2s, transform 2s; 
+     /* transform: rotateY(180deg); */
+      transform: translateY(-0.5rem);
+ }
+ .Parasz img{
+    background-color: white;
+    padding: 4px;
+    width: 45px;
+    height: 45px;
+    margin: 10px 4px;
+    border-radius: 10%;
+    /* box-shadow: rgb(189, 174, 174); */
+    /* box-shadow: 9px 5px 5px #ccc; */
+     transition: background-color 2s, padding 2s, width 2s, height 2s, margin 2s, border-radius 2s, transform 2s; 
+     /* transform: rotateZ(360deg); */
+     transform: translateY(0.5rem);
+ }
+ 
+
+
+ /* .Para, .Par img:hoever{
+
+    transform:  rotate(180deg);
+ } */
+ .Paradashboard img{
+    background-color: white;
+    padding: 4px;
+    width: 45px;
+    height: 45px;
+    margin: 10px 4px;
+    border-radius: 10%;
+    /* box-shadow: rgb(189, 174, 174); */
+ }
+ .Par img{
+    background: white;
+    color: white;
+    padding: 4px;
+    width: 45px;
+    height: 45px;
+    margin: 10px 4px;
+    border-radius: 10%;
+    /* box-shadow: rgb(189, 174, 174); */
+ }
+ 
+ .buttonTrue {
+ 
+    background-color:red;
+ }
+ 
+ .buttonFalse {
+    background-color:gray;
+ }
+ 
+ .activelink{
+    /* border: 5px solid rgb(201, 199, 199); */
+    border-radius: 10%;
+    padding-top: 3.4rem;
+    position: relative;
+    border-bottom: 2rem;
+    padding-right: 0.15rem;
+    /* background-color: rgb(201, 199, 199); */
+    /* box-shadow:  9px 6px 10px grey; */
+    transition: all .5s ease-in-out; 
+    /* box-shadow: inset -4px -2px 8px black; */
+   
+    /* -moz-box-shadow:    inset 0 0 5px #000000; */
+    /* -webkit-box-shadow: inset 0 0 5px #000000;  */
+    box-shadow:         inset -3px 5px 5px -2px grey;
+    /* box-shadow: inset 0 0 7px 5px #ddd; */
+ }
+ .sidebar{
+     position: relative ;
+     margin-top:0.5rem;
+     margin-right: 78rem;
+     margin-left:0.3rem;
+     /* overflow:scroll; */
+      /* transition-property: position 2s, margin-top 2s, margin-right 2s,  margin-left 2s, transform 2s; */
+    /*transition-duration: 2s;
+    transition-delay: 0.5s;
+    transition-timing-function: linear; */
+
+ }
+ .sidebars{
+    position: relative ;
+    margin-top:0.5rem;
+    margin-right: 78rem;
+    margin-left:0.3rem;
+    /* overflow:scroll; */
+      /* transition-property: position 2s, margin-top 2s, margin-right 2s,  margin-left 2s, transform 2s; 
+      transform:  scale(2,3); */
+   
+}
+ 
+ 
+ @media screen and (max-width: 700px) {
+     .Paradashboard img{
+         width: 27px;
+         height: 30px;
+         margin: 2px;
+         
+     }
+     .activelink{
+         padding-top: 1.7rem;
+         padding-left: -0.2rem;
+     }
+     .Para img{
+         width: 27px;
+         height: 35px;
+         margin: 2px;
+        
+     }
+     .sidebar{
+         position: relative;
+         top:0.35rem;
+     }
+     .Par img{
+         width: 27px;
+         height: 35px;
+         margin: 2px;
+        
+     }
+ }
+ 
