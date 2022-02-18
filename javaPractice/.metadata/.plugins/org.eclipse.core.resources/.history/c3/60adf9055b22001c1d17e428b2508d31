@@ -1,0 +1,14 @@
+package com.example.practice.yasdemo;
+
+public class checkB {
+	
+	public static void main(String[] args) {
+		
+		//checkA.m1();
+		checkA a = new checkA();
+		a.m1();
+		
+	}
+	
+
+}

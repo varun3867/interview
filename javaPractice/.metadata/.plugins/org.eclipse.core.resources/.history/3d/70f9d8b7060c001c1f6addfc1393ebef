@@ -1,0 +1,13 @@
+package com.example.practice.list;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class ArrayListSorting {
+	
+	public static void main(String[] args) {
+		ArrayList<Integer> al = new ArrayList<>(Arrays.asList(1,2,3));
+		System.out.println(al);
+		
+	}
+}

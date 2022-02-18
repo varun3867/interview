@@ -1,0 +1,17 @@
+package com.example.practice.list;
+
+import java.util.*;
+
+import com.example.practice.model.Employee; 
+class ArrayListDemo
+{	
+	public static void main(String[] args)
+	{
+		Employee e1 = new Employee(111,"ratan");
+		ArrayList<Employee> al = new ArrayList<Employee>(Collections.nCopies(5,e1));
+		for (Employee e:al)
+		{
+			System.out.println(e.getEid()+"---"+e.getEname());
+		}
+	}
+}

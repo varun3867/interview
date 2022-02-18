@@ -1,0 +1,26 @@
+package com.example.practice.list;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class ArrayListSorting {
+	
+	public static void main(String[] args) {
+		System.out.println("-----------------Integer Sorting-------------------------------");
+		ArrayList<Integer> al = new ArrayList<>(Arrays.asList(3,2,7,1,0));
+		System.out.println(al);
+		Collections.sort(al);
+		System.out.println("Ascending order : "+al);
+		Collections.sort(al,Collections.reverseOrder());
+		System.out.println("Descending order : "+al);
+		
+		System.out.println("------------------String Sorting--------------------------------");
+		ArrayList<String> al1 = new ArrayList<>(Arrays.asList("y","a","t","p","c","b"));
+		System.out.println(al1);
+		Collections.sort(al1);
+		System.out.println("Ascending order : "+al1);
+		Collections.sort(al1, Collections.reverseOrder());
+		
+	}
+}

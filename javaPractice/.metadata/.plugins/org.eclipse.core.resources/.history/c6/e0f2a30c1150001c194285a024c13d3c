@@ -1,0 +1,9 @@
+package com.example.practice.model;
+
+public class Check extends StudentClass{
+	public static void main(String[] args) {
+		//StudentClass sc = new StudentClass();
+		Check sc = new Check();
+		System.out.println(sc.d);
+	}
+}

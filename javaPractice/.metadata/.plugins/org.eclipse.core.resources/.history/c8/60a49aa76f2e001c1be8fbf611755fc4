@@ -1,0 +1,13 @@
+package com.example.practice.list;
+
+import java.util.Arrays;
+
+public class RemoveDuplicates {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	Arrays.asList(new Emp(1, "rajiv"),new Emp(2, "sanket"));
+
+	}
+
+}

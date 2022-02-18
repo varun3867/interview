@@ -1,0 +1,15 @@
+package com.example.practice.list;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
+public class ArrayListSorting {
+	
+	public static void main(String[] args) {
+		ArrayList<Integer> al = new ArrayList<>(Arrays.asList(3,2,7,1,0));
+		System.out.println(al);
+		Collections.sort(al);
+	}
+}

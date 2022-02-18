@@ -1,0 +1,52 @@
+package com.example.practice.list;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class ConversionOfArrayToArrayListViceVersa {
+	
+	public static void main(String[] args) {
+		
+		String[] str={"ratan","Sravya","aruna"};
+		ArrayList<String> al = new ArrayList<String>(Arrays.asList(str));
+		al.add("newperson-1");
+		al.add("newperson-2");
+		//printing data by using enhanced for loop
+		for (String s: al)
+		{	System.out.println(s);
+		}
+
+		System.out.println("----------------------------------------------------");
+		
+		Integer[] arr = {1,2,3};
+		ArrayList<Integer> al1 = new ArrayList<Integer>(Arrays.asList(arr));
+		System.out.println(al1);
+		System.out.println("----------------------------------------------------");
+		
+		
+		List<String> al2 = new ArrayList<String>(); 
+		al2.add("anu");
+		al2.add("Sravya");
+		al2.add("ratan");
+		al2.add("natraj");
+		String[] a = new String[al2.size()]; 
+		al2.toArray(a);
+		//for-each loop to print the data
+		for (String s:a)
+		{
+			System.out.println(s);
+		}
+
+		
+
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+}

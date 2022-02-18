@@ -1,0 +1,9 @@
+package com.example.practice.yasdemo;
+
+public class checkA {
+	
+	public void m1() {
+		System.out.println("A:m1");
+	}
+
+}

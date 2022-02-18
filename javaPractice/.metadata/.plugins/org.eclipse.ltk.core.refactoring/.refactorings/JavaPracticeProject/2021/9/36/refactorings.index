@@ -1,0 +1,9 @@
+1630503519253	Move compilation unit
+1630503635464	Move compilation unit
+1630506378105	Copy compilation unit
+1630565236607	Rename type 'SynchronizationDemo'
+1630588306042	Copy compilation unit
+1630588354718	Rename type 'SampleThreadWithOutIllegalMonitorStateException'
+1630588456794	Rename type 'SynchronizedBlockLockOnClassLevel'
+1630588472955	Rename type 'SynchronizedBlockLockOnCurrentObject'
+1630589789829	Rename compilation unit 'Sample.java'
