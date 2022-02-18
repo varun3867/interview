@@ -1,0 +1,6 @@
+1) OAuth 2.0 Cookbook 
+	by Adolfo Eloy Nascimento
+Publisher: Packt Publishing
+Release Date: October 2017
+ISBN: 9781788295963
+Topics: Spring OAuth

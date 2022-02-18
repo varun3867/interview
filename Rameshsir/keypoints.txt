@@ -1,0 +1,98 @@
+The microservices contain following resources means end points:
+/fares/get
+/search/get
+/booking/create
+/booking/get/{id}
+/checkin/create
+/checkin/get/{id}
+Note: If resources are protected by Resource Server by validating token then these resourses are called as oauth protected resources.
+In microservice projects, it is recommended to implement our own oauth provider.
+
+Microservice projects need 3 authentications:
+1) Resource owner authentication [adolfo/123] 
+2) End user authentication [user1@example.com/user1]
+3) Client authentication [client-id & client-secret]
+
+In microservice projects, we need to separate authorization and resource servers.
+
+The authorization server has two end points:
+1) /oauth/authorize	- This endpoint needs Resource Owner authentication
+2) /oauth/token		- This endpoint needs Client Authentication
+
+4 ways of authorizing payment transaction:
+1) OTP based authorization							
+2) PIN based authorization							
+3) Net banking credentials based authorization					
+4) Auto pay based authorization (Your loan account automatically deducts amount from your salary account)
+
+The authorization code can be used as an authorization grant to obtain an access token.
+The resource owner’s authentication and authorization implicitly used as an authorization grant to obtain an access token.
+The resource owner’s password can used as an authorization grant to obtain an access token.
+The client credentials can be used as an authorization grant to obtain an access token.
+
+Grant Types
+===========
+1) authorization_code
+2) implicit
+3) resource owner password credentials
+4) client credentials
+
+4 grant types
+=============
+1) authorization_code
+	Uses both /oauth/authorize and /oauth/token endpoints.
+
+2) implicit
+	Uses only /oauth/authorize end point but not /oauth/token end point.
+ 
+3) password
+	Uses only /oauth/token end piont but not /oauth/authorize end point.
+
+4) client_credentials
+	Uses only /oauth/token end piont but not /oauth/authorize end point.
+
+Encoding
+========
+The purpose of encoding is to transform data (but not secure data) in understandable format.
+Diff encoding algorithms are ASCII, UniCode (UTF-8, UTF-16), URL Encoding, Base64, etc
+Encoded data can be decoded by using same encoding algorithm.
+There is no secret key during encoding & decoding.
+
+Hashing
+=======
+The purpose of hashing is to secure passwords stored in db or ldap server.
+Diff hashing algorithms are SHA, MD5, HS256, etc.
+Two diff types of hashing are 1-way and 2-way.
+In case of 1-way hashing, re-hahsing is not possible.
+In case of 2-way hashing, re-hashing is possible.
+There is a secret key during hashing.
+
+Encryption
+==========
+The purpose of encryption is to protect data between web browser and web server.
+Diff encryption algorithms are DES, AES, RSA, BlowFish, etc.
+Encrypted data can be decrypted by using private key in digital certificate.
+
+Does https protocol carry hashed data or encrypted data?
+Ans) Encrypted data
+
+Does db server or ldap server or file store hashed data or encrypted data?
+Ans) hashed data
+
+End users --> Website --> Microservices
+End users --> Website --> Eureka Server --> Microservices
+End users --> Website --> API Gateway --> Eureka Server --> Microservices
+
+Spring Security Module
+	- Authentication protects web site from end users with the help of username/password.
+	- Authorization	protects web pages with in website with the help of roles.
+	- Hashing protects passwords stored in db server or ldap server
+	- Digital Certificates protects data between web browser and web server by representing data in encrypted format.
+
+Spring OAuth2 Module
+	- Authorization Server
+	- Resource Server
+	- Resource Owner
+	- Client Application
+	- Grant Types
+

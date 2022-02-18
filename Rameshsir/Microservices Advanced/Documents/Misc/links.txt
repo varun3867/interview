@@ -1,0 +1,23 @@
+OAuth
+=====
+https://alexbilbie.com/guide-to-oauth-2-grants/
+https://oauth2.thephpleague.com/authorization-server/which-grant/
+https://dzone.com/articles/building-microservice-using-spring-boot-and-secure
+https://medium.com/tech-tajawal/microservice-authentication-and-authorization-solutions-e0e5e74b248a
+https://www.cloudave.com/472/authn-authz-and-gluecon/
+
+API Gateways
+============
+https://dzone.com/articles/microservices-part-5-spring-cloud-zuul-proxy-as-ap
+https://dzone.com/articles/advanced-microservices-security-with-spring-and-oa
+https://www.globallogic.com/gl_news/microservice-architecture-api-gateway-considerations/
+https://piotrminkowski.wordpress.com/2017/02/22/microservices-security-with-oauth2/
+
+Installing RabbitMQ With Erlang on AWS EC2 Amazon Linux Instance
+================================================================
+https://dzone.com/articles/installing-rabbitmq-37-along-with-erlang-version-2
+
+JWT
+===
+https://medium.com/vandium-software/5-easy-steps-to-understanding-json-web-tokens-jwt-1164c0adfcec
+https://danielmiessler.com/study/encoding-encryption-hashing-obfuscation/#encoding

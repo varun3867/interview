@@ -1,0 +1,28 @@
+The following steps are used to register client application with facebook by using developer console:
+1) https://developers.facebook.com/
+Login to facebook
+username: rkandepu@rediffmail.com
+pwd: ******
+
+My Apps --> Create New App
+Display Name: Jbcp Calendar Online
+Contact Email: rkandepu@rediffmail.com
+Click on "Create App ID"
+Settings --> click on "Basic"
+
+API ID	    : 417927345361441
+App Secrect : b82500f3187048368cf50e73f5f88289
+
+Note: No callback urls.
+
+2) Configure App Id and App Secret Key in application.yml file
+   spring:
+       social:
+	 # facebook
+    	 facebook:
+      		appId: 417927345361441
+      		appSecret: b82500f3187048368cf50e73f5f88289
+  
+
+   
+   

@@ -1,0 +1,789 @@
+2019-02-13 10:57:11,782 [Worker-13: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:PSSBook:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\pom.xml.
+2019-02-13 10:57:18,147 [Worker-13: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:CheckInCustomers:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\pom.xml.
+2019-02-13 10:57:18,626 [Worker-9: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:PSSBook:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\pom.xml.
+2019-02-13 10:57:22,511 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:22,537 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:57:22,563 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:57:22,567 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:22,567 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-02-13 10:57:23,873 [Worker-13: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:PSSBook:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\pom.xml.
+2019-02-13 10:57:24,279 [Worker-9: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:CheckInCustomers:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\pom.xml.
+2019-02-13 10:57:26,088 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:26,088 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:57:26,113 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:57:26,119 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:26,119 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-13 10:57:28,643 [Worker-3: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:PSSBook:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\pom.xml.
+2019-02-13 10:57:28,984 [Worker-9: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FaresFlightTickets:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\pom.xml.
+2019-02-13 10:57:29,319 [Worker-12: Download sources and javadoc] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/springframework/data/spring-data-rest-hal-browser/2.6.3.RELEASE/spring-data-rest-hal-browser-2.6.3.RELEASE-sources.jar
+2019-02-13 10:57:29,463 [Worker-12: Download sources and javadoc] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/springframework/data/spring-data-rest-hal-browser/2.6.3.RELEASE/spring-data-rest-hal-browser-2.6.3.RELEASE-sources.jar
+2019-02-13 10:57:29,673 [Worker-12: Download sources and javadoc] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.springframework.data:spring-data-rest-hal-browser:2.6.3.RELEASE
+2019-02-13 10:57:29,811 [Worker-12: Download sources and javadoc] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/springframework/data/spring-data-rest-webmvc/2.6.3.RELEASE/spring-data-rest-webmvc-2.6.3.RELEASE-sources.jar
+2019-02-13 10:57:30,498 [Worker-12: Download sources and javadoc] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/springframework/data/spring-data-rest-webmvc/2.6.3.RELEASE/spring-data-rest-webmvc-2.6.3.RELEASE-sources.jar
+2019-02-13 10:57:30,642 [Worker-12: Download sources and javadoc] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.springframework.data:spring-data-rest-webmvc:2.6.3.RELEASE
+2019-02-13 10:57:30,801 [Worker-12: Download sources and javadoc] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/springframework/data/spring-data-rest-core/2.6.3.RELEASE/spring-data-rest-core-2.6.3.RELEASE-sources.jar
+2019-02-13 10:57:30,965 [Worker-12: Download sources and javadoc] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/springframework/data/spring-data-rest-core/2.6.3.RELEASE/spring-data-rest-core-2.6.3.RELEASE-sources.jar
+2019-02-13 10:57:31,075 [Worker-12: Download sources and javadoc] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.springframework.data:spring-data-rest-core:2.6.3.RELEASE
+2019-02-13 10:57:31,118 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:31,119 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:57:31,125 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:57:31,128 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:31,128 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-02-13 10:57:31,280 [Worker-12: Download sources and javadoc] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/atteo/evo-inflector/1.2.1/evo-inflector-1.2.1-sources.jar
+2019-02-13 10:57:31,412 [Worker-12: Download sources and javadoc] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/atteo/evo-inflector/1.2.1/evo-inflector-1.2.1-sources.jar
+2019-02-13 10:57:31,608 [Worker-12: Download sources and javadoc] WARN  o.e.a.i.i.DefaultRepositoryEventDispatcher - Failed to dispatch repository event to org.eclipse.m2e.core.internal.embedder.EclipseRepositoryListener: null
+2019-02-13 10:57:31,612 [Worker-12: Download sources and javadoc] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.atteo:evo-inflector:1.2.1
+2019-02-13 10:57:31,825 [Worker-12: Download sources and javadoc] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-hateoas/1.5.3.RELEASE/spring-boot-starter-hateoas-1.5.3.RELEASE-sources.jar
+2019-02-13 10:57:32,038 [Worker-12: Download sources and javadoc] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-hateoas/1.5.3.RELEASE/spring-boot-starter-hateoas-1.5.3.RELEASE-sources.jar
+2019-02-13 10:57:32,056 [Worker-9: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FlightsWebSite:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\pom.xml.
+2019-02-13 10:57:32,177 [Worker-12: Download sources and javadoc] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.springframework.boot:spring-boot-starter-hateoas:1.5.3.RELEASE
+2019-02-13 10:57:34,242 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:34,243 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:57:34,246 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-02-13 10:57:34,272 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:34,272 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-02-13 10:57:38,042 [Worker-3: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:PSSBook:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\pom.xml.
+2019-02-13 10:57:39,190 [Worker-0: Download sources and javadoc] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.springframework.data:spring-data-rest-core:2.6.3.RELEASE
+2019-02-13 10:57:39,198 [Worker-0: Download sources and javadoc] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for org.atteo:evo-inflector:1.2.1
+2019-02-13 10:57:39,418 [Worker-3: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:CheckInCustomers:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\pom.xml.
+2019-02-13 10:57:39,809 [Worker-3: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FaresFlightTickets:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\pom.xml.
+2019-02-13 10:57:40,150 [Worker-3: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FlightsWebSite:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\pom.xml.
+2019-02-13 10:57:40,600 [Worker-3: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:SearchFlightTickets:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\pom.xml.
+2019-02-13 10:57:48,983 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:48,991 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:57:49,015 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:57:49,018 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:49,019 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-02-13 10:57:54,439 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:54,441 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:57:54,447 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:57:54,450 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:54,450 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-13 10:57:57,272 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:57,274 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:57:57,277 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:57:57,281 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:57,282 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-02-13 10:57:59,616 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:59,618 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:57:59,623 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-02-13 10:57:59,656 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:57:59,656 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-02-13 10:58:03,326 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:58:03,331 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:58:03,336 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:58:03,339 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:58:03,339 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-13 10:59:03,153 [Worker-8: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:PSSBook:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\pom.xml.
+2019-02-13 10:59:05,356 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:05,357 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:59:05,491 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:59:05,494 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:05,494 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-02-13 10:59:06,041 [Worker-8: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:CheckInCustomers:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\pom.xml.
+2019-02-13 10:59:07,231 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:07,231 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:59:07,234 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:59:07,237 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:07,237 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-13 10:59:07,778 [Worker-8: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FaresFlightTickets:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\pom.xml.
+2019-02-13 10:59:08,874 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:08,875 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:59:08,878 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:59:08,881 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:08,881 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-02-13 10:59:09,509 [Worker-8: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FlightsWebSite:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\pom.xml.
+2019-02-13 10:59:10,508 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:10,509 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:59:10,511 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-02-13 10:59:10,534 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:10,534 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-02-13 10:59:11,132 [Worker-8: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:SearchFlightTickets:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\pom.xml.
+2019-02-13 10:59:12,262 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:12,263 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:59:12,266 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:59:12,269 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:12,269 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-13 10:59:15,730 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:15,735 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:59:15,739 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:59:15,743 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:15,743 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-02-13 10:59:16,822 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:16,825 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:59:16,828 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:59:16,832 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:16,832 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-13 10:59:17,774 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:17,776 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:59:17,778 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:59:17,784 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:17,784 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-02-13 10:59:18,548 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:18,551 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:59:18,556 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-02-13 10:59:18,590 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:18,590 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-02-13 10:59:19,557 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:19,558 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:59:19,562 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:59:19,567 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:19,567 [Worker-0: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-13 10:59:44,975 [Worker-12: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2019-02-13 10:59:46,837 [Worker-12: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:PSSBook:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\pom.xml.
+2019-02-13 10:59:47,583 [Worker-12: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:CheckInCustomers:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\pom.xml.
+2019-02-13 10:59:47,872 [Worker-12: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FaresFlightTickets:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\pom.xml.
+2019-02-13 10:59:48,077 [Worker-12: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FlightsWebSite:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\pom.xml.
+2019-02-13 10:59:48,364 [Worker-12: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:SearchFlightTickets:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\pom.xml.
+2019-02-13 10:59:49,862 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /BookingFlightTickets/src/main/java
+2019-02-13 10:59:49,864 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /BookingFlightTickets/src/main/resources
+2019-02-13 10:59:49,864 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /BookingFlightTickets/src/main/resources
+2019-02-13 10:59:49,865 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /BookingFlightTickets/src/test/java
+2019-02-13 10:59:50,427 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /CheckInCustomers/src/main/java
+2019-02-13 10:59:50,429 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /CheckInCustomers/src/main/resources
+2019-02-13 10:59:50,429 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /CheckInCustomers/src/main/resources
+2019-02-13 10:59:50,430 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /CheckInCustomers/src/test/java
+2019-02-13 10:59:50,767 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /FaresFlightTickets/src/main/java
+2019-02-13 10:59:50,767 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /FaresFlightTickets/src/main/resources
+2019-02-13 10:59:50,768 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /FaresFlightTickets/src/main/resources
+2019-02-13 10:59:50,768 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /FaresFlightTickets/src/test/java
+2019-02-13 10:59:51,059 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /FlightsWebSite/src/main/java
+2019-02-13 10:59:51,059 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /FlightsWebSite/src/main/resources
+2019-02-13 10:59:51,060 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /FlightsWebSite/src/main/resources
+2019-02-13 10:59:51,060 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /FlightsWebSite/src/test/java
+2019-02-13 10:59:51,324 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /SearchFlightTickets/src/main/java
+2019-02-13 10:59:51,325 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /SearchFlightTickets/src/main/resources
+2019-02-13 10:59:51,325 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /SearchFlightTickets/src/main/resources
+2019-02-13 10:59:51,326 [Worker-12: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /SearchFlightTickets/src/test/java
+2019-02-13 10:59:52,238 [Worker-12: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 7 sec
+2019-02-13 10:59:55,766 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:55,767 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 10:59:55,787 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 10:59:55,789 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 10:59:55,789 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-02-13 11:00:00,167 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:00:00,167 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 11:00:00,169 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 11:00:00,171 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:00:00,171 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-13 11:00:02,896 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:00:02,897 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 11:00:02,899 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 11:00:02,901 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:00:02,901 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-02-13 11:00:05,642 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:00:05,643 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 11:00:05,647 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-02-13 11:00:05,684 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:00:05,684 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-02-13 11:00:08,726 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:00:08,729 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 11:00:08,731 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 11:00:08,734 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:00:08,735 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-13 11:01:45,233 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:01:45,239 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 11:01:45,241 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 11:01:45,243 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:01:45,243 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-02-13 11:02:48,932 [Worker-7: Launching Executing clean in D__MICROSERVICES ADVANCED_MicroservicesAwsWorkspace_FaresFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets
+2019-02-13 11:02:48,934 [Worker-7: Launching Executing clean in D__MICROSERVICES ADVANCED_MicroservicesAwsWorkspace_FaresFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B clean
+2019-02-13 11:02:54,402 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:02:54,403 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 11:02:54,407 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 11:02:54,411 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:02:54,411 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-02-13 11:03:03,411 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-02-13 11:03:10,521 [Worker-3: Launching FaresFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets
+2019-02-13 11:03:10,522 [Worker-3: Launching FaresFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-02-13 11:03:41,155 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:03:41,156 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 11:03:41,159 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 11:03:41,166 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:03:41,166 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-02-13 11:24:51,589 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:24:51,589 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 11:24:51,593 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 11:24:51,595 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:24:51,595 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-13 11:25:07,497 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:25:07,498 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 11:25:07,502 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 11:25:07,505 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:25:07,505 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-13 11:25:47,206 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:25:47,206 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-13 11:25:47,209 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-13 11:25:47,211 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-13 11:25:47,211 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-15 09:39:26,185 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:39:26,232 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 09:39:26,263 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 09:39:26,269 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:39:26,269 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-02-15 09:39:29,564 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:39:29,566 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 09:39:29,585 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 09:39:29,594 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:39:29,595 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-15 09:39:31,476 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:39:31,476 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 09:39:31,482 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 09:39:31,487 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:39:31,487 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-02-15 09:39:33,182 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:39:33,184 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 09:39:33,187 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 09:39:33,190 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:39:33,191 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-15 09:41:35,439 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:41:35,444 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 09:41:35,453 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 09:41:35,460 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:41:35,460 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-15 09:42:38,576 [Worker-14: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:42:38,576 [Worker-14: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 09:42:38,579 [Worker-14: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 09:42:38,583 [Worker-14: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 09:42:38,583 [Worker-14: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-15 11:14:28,384 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:14:28,385 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:14:28,386 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:14:28,390 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:14:28,391 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-15 11:29:54,239 [Worker-37: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:29:54,240 [Worker-37: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:29:54,243 [Worker-37: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:29:54,245 [Worker-37: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:29:54,246 [Worker-37: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-15 11:33:11,228 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:33:11,231 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:33:11,232 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:33:11,235 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:33:11,235 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-15 11:38:33,740 [Worker-47: Launching Executing clean in D__MICROSERVICES ADVANCED_MicroservicesAwsWorkspace_SearchFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets
+2019-02-15 11:38:33,752 [Worker-47: Launching Executing clean in D__MICROSERVICES ADVANCED_MicroservicesAwsWorkspace_SearchFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B clean
+2019-02-15 11:38:38,406 [Worker-47: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:38:38,408 [Worker-47: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:38:38,414 [Worker-47: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:38:38,417 [Worker-47: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:38:38,417 [Worker-47: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-15 11:38:43,321 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-02-15 11:38:52,216 [Worker-48: Launching SearchFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets
+2019-02-15 11:38:52,216 [Worker-48: Launching SearchFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-02-15 11:39:08,684 [Worker-48: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:39:08,686 [Worker-48: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:39:08,688 [Worker-48: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:39:08,692 [Worker-48: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:39:08,693 [Worker-48: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-15 11:41:21,286 [Worker-53: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:41:21,286 [Worker-53: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:41:21,288 [Worker-53: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:41:21,290 [Worker-53: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:41:21,291 [Worker-53: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-02-15 11:42:03,140 [Worker-52: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:42:03,143 [Worker-52: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:42:03,146 [Worker-52: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:42:03,149 [Worker-52: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:42:03,149 [Worker-52: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-02-15 11:42:53,117 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-02-15 11:42:58,662 [Worker-55: Launching BookingFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets
+2019-02-15 11:42:58,663 [Worker-55: Launching BookingFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-02-15 11:43:29,414 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:43:29,415 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:43:29,418 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:43:29,426 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:43:29,426 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-02-15 11:46:48,196 [Worker-51: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:46:48,196 [Worker-51: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:46:48,198 [Worker-51: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:46:48,201 [Worker-51: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:46:48,201 [Worker-51: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-15 11:47:12,698 [Worker-54: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:47:12,699 [Worker-54: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:47:12,701 [Worker-54: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:47:12,704 [Worker-54: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:47:12,704 [Worker-54: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-15 11:52:39,091 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-02-15 11:52:44,147 [Worker-58: Launching CheckInCustomers] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers
+2019-02-15 11:52:44,148 [Worker-58: Launching CheckInCustomers] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-02-15 11:53:00,739 [Worker-59: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:53:00,741 [Worker-59: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:53:00,743 [Worker-59: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:53:00,750 [Worker-59: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:53:00,750 [Worker-59: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-15 11:56:23,270 [Worker-58: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:56:23,270 [Worker-58: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:56:23,272 [Worker-58: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:56:23,273 [Worker-58: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:56:23,273 [Worker-58: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-15 11:56:57,566 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-02-15 11:57:03,688 [Worker-58: Launching CheckInCustomers (1)] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers
+2019-02-15 11:57:03,689 [Worker-58: Launching CheckInCustomers (1)] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-02-15 11:57:17,551 [Worker-61: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:57:17,552 [Worker-61: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 11:57:17,554 [Worker-61: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 11:57:17,558 [Worker-61: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 11:57:17,559 [Worker-61: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-15 14:46:15,833 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:46:15,843 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 14:46:15,861 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 14:46:15,865 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:46:15,865 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-02-15 14:46:17,312 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:46:17,313 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 14:46:17,315 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 14:46:17,318 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:46:17,318 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-02-15 14:46:18,160 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:46:18,160 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 14:46:18,162 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 14:46:18,164 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:46:18,165 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-02-15 14:46:19,070 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:46:19,071 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 14:46:19,073 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-02-15 14:46:19,155 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:46:19,155 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-02-15 14:46:20,141 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:46:20,141 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 14:46:20,142 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-02-15 14:46:20,144 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:46:20,144 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-02-15 14:48:17,799 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:48:17,810 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 14:48:17,813 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-02-15 14:48:17,816 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:48:17,816 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-02-15 14:48:31,218 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:48:31,219 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 14:48:31,222 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-02-15 14:48:31,227 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:48:31,227 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-02-15 14:49:26,261 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:49:26,278 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 14:49:26,283 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-02-15 14:49:26,291 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:49:26,291 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-02-15 14:50:28,369 [Worker-3: Launching Executing clean in D__MICROSERVICES ADVANCED_MicroservicesAwsWorkspace_FlightsWebSite] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite
+2019-02-15 14:50:28,372 [Worker-3: Launching Executing clean in D__MICROSERVICES ADVANCED_MicroservicesAwsWorkspace_FlightsWebSite] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B clean
+2019-02-15 14:50:31,073 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:50:31,074 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 14:50:31,077 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-02-15 14:50:31,095 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:50:31,095 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-02-15 14:50:34,393 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-02-15 14:50:41,900 [Worker-13: Launching FlightsWebSite] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite
+2019-02-15 14:50:41,900 [Worker-13: Launching FlightsWebSite] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-02-15 14:50:59,105 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:50:59,109 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-02-15 14:50:59,110 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-02-15 14:50:59,118 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-02-15 14:50:59,118 [Worker-13: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-03-18 09:47:21,782 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2019-03-18 09:47:33,577 [Worker-0: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:PSSBook:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\pom.xml.
+2019-03-18 09:47:36,089 [Worker-0: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:CheckInCustomers:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\pom.xml.
+2019-03-18 09:47:36,625 [Worker-0: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FaresFlightTickets:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\pom.xml.
+2019-03-18 09:47:36,943 [Worker-0: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FlightsWebSite:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\pom.xml.
+2019-03-18 09:47:37,467 [Worker-0: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:SearchFlightTickets:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\pom.xml.
+2019-03-18 09:47:45,187 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:47:45,204 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-18 09:47:45,282 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-18 09:47:45,286 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:47:45,286 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-03-18 09:47:49,194 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:47:49,194 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-18 09:47:49,243 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-18 09:47:49,248 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:47:49,248 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-03-18 09:47:50,632 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:47:50,633 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-18 09:47:50,635 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-18 09:47:50,638 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:47:50,639 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-03-18 09:47:52,306 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:47:52,306 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-18 09:47:52,309 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-03-18 09:47:52,454 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:47:52,454 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-03-18 09:47:54,484 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:47:54,485 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-18 09:47:54,511 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-18 09:47:54,515 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:47:54,515 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-03-18 09:53:46,108 [Worker-9: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2019-03-18 09:53:46,833 [Worker-9: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:PSSBook:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\pom.xml.
+2019-03-18 09:53:47,989 [Worker-9: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /BookingFlightTickets/src/main/java
+2019-03-18 09:53:47,991 [Worker-9: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /BookingFlightTickets/src/main/resources
+2019-03-18 09:53:47,992 [Worker-9: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /BookingFlightTickets/src/main/resources
+2019-03-18 09:53:47,994 [Worker-9: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /BookingFlightTickets/src/test/java
+2019-03-18 09:53:48,838 [Worker-9: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 2 sec
+2019-03-18 09:53:50,574 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:53:50,574 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-18 09:53:50,576 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-18 09:53:50,619 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:53:50,620 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-03-18 09:54:00,504 [Worker-8: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2019-03-18 09:54:01,583 [Worker-8: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:CheckInCustomers:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\pom.xml.
+2019-03-18 09:54:02,363 [Worker-8: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FaresFlightTickets:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\pom.xml.
+2019-03-18 09:54:02,635 [Worker-8: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:FlightsWebSite:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\pom.xml.
+2019-03-18 09:54:02,942 [Worker-8: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: edu.aspire:SearchFlightTickets:1 @ D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\pom.xml.
+2019-03-18 09:54:04,037 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /CheckInCustomers/src/main/java
+2019-03-18 09:54:04,037 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /CheckInCustomers/src/main/resources
+2019-03-18 09:54:04,038 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /CheckInCustomers/src/main/resources
+2019-03-18 09:54:04,038 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /CheckInCustomers/src/test/java
+2019-03-18 09:54:04,505 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /FaresFlightTickets/src/main/java
+2019-03-18 09:54:04,506 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /FaresFlightTickets/src/main/resources
+2019-03-18 09:54:04,506 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /FaresFlightTickets/src/main/resources
+2019-03-18 09:54:04,507 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /FaresFlightTickets/src/test/java
+2019-03-18 09:54:04,895 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /FlightsWebSite/src/main/java
+2019-03-18 09:54:04,895 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /FlightsWebSite/src/main/resources
+2019-03-18 09:54:04,895 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /FlightsWebSite/src/main/resources
+2019-03-18 09:54:04,895 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /FlightsWebSite/src/test/java
+2019-03-18 09:54:05,203 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /SearchFlightTickets/src/main/java
+2019-03-18 09:54:05,204 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /SearchFlightTickets/src/main/resources
+2019-03-18 09:54:05,205 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /SearchFlightTickets/src/main/resources
+2019-03-18 09:54:05,206 [Worker-8: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /SearchFlightTickets/src/test/java
+2019-03-18 09:54:06,360 [Worker-8: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 5 sec
+2019-03-18 09:54:09,072 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:54:09,074 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-18 09:54:09,076 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-18 09:54:09,078 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:54:09,078 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-03-18 09:54:10,284 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:54:10,285 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-18 09:54:10,286 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-18 09:54:10,291 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:54:10,292 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-03-18 09:54:11,305 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:54:11,306 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-18 09:54:11,307 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-03-18 09:54:11,331 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:54:11,331 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-03-18 09:54:12,398 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:54:12,399 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-18 09:54:12,404 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-18 09:54:12,407 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-18 09:54:12,407 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-03-19 09:36:57,683 [Worker-3: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2019-03-19 09:43:42,308 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 09:43:42,407 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 09:43:42,431 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-19 09:43:42,436 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 09:43:42,436 [Worker-15: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-03-19 09:43:44,539 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 09:43:44,546 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 09:43:44,548 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-19 09:43:44,552 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 09:43:44,553 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-03-19 09:45:27,572 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-03-19 09:45:35,121 [Worker-5: Launching SearchFlightTickets (1)] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets
+2019-03-19 09:45:35,122 [Worker-5: Launching SearchFlightTickets (1)] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-03-19 09:45:53,625 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 09:45:53,653 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 09:45:53,658 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-19 09:45:53,664 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 09:45:53,666 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-03-19 09:59:50,042 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 09:59:50,043 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 09:59:50,045 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-19 09:59:50,053 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 09:59:50,053 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-03-19 10:00:06,069 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:00:06,072 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 10:00:06,076 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-19 10:00:06,078 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:00:06,079 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-03-19 10:00:22,663 [Worker-22: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:00:22,663 [Worker-22: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 10:00:22,665 [Worker-22: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-19 10:00:22,670 [Worker-22: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:00:22,670 [Worker-22: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-03-19 10:01:43,038 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-03-19 10:01:48,118 [Worker-14: Launching BookingFlightTickets (1)] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets
+2019-03-19 10:01:48,119 [Worker-14: Launching BookingFlightTickets (1)] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-03-19 10:02:11,023 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:02:11,026 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 10:02:11,028 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-19 10:02:11,033 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:02:11,033 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-03-19 10:16:40,217 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:16:40,218 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 10:16:40,232 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-19 10:16:40,237 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:16:40,237 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-03-19 10:17:13,129 [Worker-14: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:17:13,131 [Worker-14: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 10:17:13,134 [Worker-14: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-19 10:17:13,139 [Worker-14: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:17:13,139 [Worker-14: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-03-19 10:17:19,972 [Worker-24: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:17:19,973 [Worker-24: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 10:17:19,976 [Worker-24: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-19 10:17:19,978 [Worker-24: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:17:19,979 [Worker-24: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-03-19 10:53:54,185 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-03-19 10:54:04,146 [Worker-23: Launching CheckInCustomers (2)] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers
+2019-03-19 10:54:04,148 [Worker-23: Launching CheckInCustomers (2)] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-03-19 10:54:20,665 [Worker-27: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:54:20,667 [Worker-27: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 10:54:20,670 [Worker-27: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-03-19 10:54:20,681 [Worker-27: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 10:54:20,681 [Worker-27: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-03-19 11:00:04,193 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:00:04,195 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 11:00:04,199 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-03-19 11:00:04,364 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:00:04,365 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-03-19 11:01:04,760 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:01:04,812 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 11:01:04,815 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-03-19 11:01:04,823 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:01:04,823 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-03-19 11:01:16,698 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:01:16,700 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 11:01:16,703 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-03-19 11:01:16,707 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:01:16,707 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-03-19 11:02:51,594 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:02:51,597 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 11:02:51,600 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-03-19 11:02:51,607 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:02:51,607 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-03-19 11:04:21,527 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:04:21,529 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 11:04:21,532 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-03-19 11:04:21,541 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:04:21,541 [Worker-20: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-03-19 11:05:26,821 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-03-19 11:05:32,999 [Worker-20: Launching FlightsWebSite (1)] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite
+2019-03-19 11:05:32,999 [Worker-20: Launching FlightsWebSite (1)] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-03-19 11:05:49,985 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:05:49,988 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-03-19 11:05:49,992 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-03-19 11:05:50,003 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-03-19 11:05:50,004 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-04-15 07:18:54,174 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2019-04-15 07:19:09,467 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:19:09,474 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 07:19:09,503 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-15 07:19:09,510 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:19:09,510 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-04-15 07:19:12,154 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:19:12,155 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 07:19:12,158 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-04-15 07:19:12,280 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:19:12,280 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-04-15 07:24:37,403 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-04-15 07:24:59,333 [Worker-19: Launching FaresFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets
+2019-04-15 07:24:59,333 [Worker-19: Launching FaresFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-04-15 07:26:03,564 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:26:03,565 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 07:26:03,576 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-15 07:26:03,579 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:26:03,581 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-04-15 07:40:40,914 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:40:40,914 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 07:40:40,916 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-15 07:40:40,923 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:40:40,923 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-04-15 07:41:57,503 [main] INFO  o.e.m2e.actions.ExecutePomAction - Using existing launch configuration
+2019-04-15 07:41:57,754 [Worker-15: Launching SearchFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets
+2019-04-15 07:41:57,755 [Worker-15: Launching SearchFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-04-15 07:42:14,702 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:42:14,708 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 07:42:14,712 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-15 07:42:14,714 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:42:14,715 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-04-15 07:52:18,517 [Worker-33: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:52:18,520 [Worker-33: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 07:52:18,523 [Worker-33: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-15 07:52:18,527 [Worker-33: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:52:18,527 [Worker-33: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-04-15 07:52:27,119 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:52:27,121 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 07:52:27,123 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-15 07:52:27,126 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:52:27,126 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-04-15 07:53:29,442 [main] INFO  o.e.m2e.actions.ExecutePomAction - Using existing launch configuration
+2019-04-15 07:53:29,642 [Worker-33: Launching BookingFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets
+2019-04-15 07:53:29,642 [Worker-33: Launching BookingFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-04-15 07:53:42,455 [Worker-31: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:53:42,457 [Worker-31: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 07:53:42,463 [Worker-31: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-15 07:53:42,472 [Worker-31: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 07:53:42,472 [Worker-31: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-04-15 08:09:23,162 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:09:23,163 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 08:09:23,165 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-15 08:09:23,169 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:09:23,169 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-04-15 08:09:35,455 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:09:35,456 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 08:09:35,458 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-15 08:09:35,464 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:09:35,464 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-04-15 08:10:20,052 [main] INFO  o.e.m2e.actions.ExecutePomAction - Using existing launch configuration
+2019-04-15 08:10:20,229 [Worker-29: Launching CheckInCustomers] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers
+2019-04-15 08:10:20,229 [Worker-29: Launching CheckInCustomers] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-04-15 08:10:51,109 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:10:51,112 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 08:10:51,117 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-15 08:10:51,126 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:10:51,126 [Worker-6: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-04-15 08:15:04,666 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:15:04,682 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 08:15:04,685 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-04-15 08:15:04,689 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:15:04,689 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-04-15 08:15:09,622 [Worker-36: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:15:09,624 [Worker-36: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 08:15:09,626 [Worker-36: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-04-15 08:15:09,631 [Worker-36: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:15:09,631 [Worker-36: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-04-15 08:15:29,617 [Worker-39: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:15:29,624 [Worker-39: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 08:15:29,627 [Worker-39: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-04-15 08:15:29,632 [Worker-39: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:15:29,633 [Worker-39: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-04-15 08:16:05,224 [main] INFO  o.e.m2e.actions.ExecutePomAction - Using existing launch configuration
+2019-04-15 08:16:05,414 [Worker-29: Launching FlightsWebSite] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite
+2019-04-15 08:16:05,414 [Worker-29: Launching FlightsWebSite] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-04-15 08:16:23,369 [Worker-40: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:16:23,372 [Worker-40: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-15 08:16:23,377 [Worker-40: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-04-15 08:16:23,383 [Worker-40: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-15 08:16:23,384 [Worker-40: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-04-26 08:36:14,197 [Worker-4: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2019-04-26 08:36:26,495 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:36:26,522 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:36:26,567 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 08:36:26,574 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:36:26,574 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-04-26 08:36:32,610 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:36:32,611 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:36:32,649 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 08:36:32,653 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:36:32,653 [Worker-7: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-04-26 08:36:36,574 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:36:36,575 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:36:36,581 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 08:36:36,593 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:36:36,594 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-04-26 08:36:40,942 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:36:40,942 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:36:40,947 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-04-26 08:36:41,055 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:36:41,060 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-04-26 08:36:43,264 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:36:43,265 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:36:43,325 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 08:36:43,332 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:36:43,332 [Worker-9: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-04-26 08:37:21,000 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:37:21,005 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:37:21,007 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 08:37:21,011 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:37:21,011 [Worker-3: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-04-26 08:38:15,305 [Worker-3: Launching Executing clean in D__MICROSERVICES ADVANCED_MicroservicesAwsWorkspace_FaresFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets
+2019-04-26 08:38:15,337 [Worker-3: Launching Executing clean in D__MICROSERVICES ADVANCED_MicroservicesAwsWorkspace_FaresFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B clean
+2019-04-26 08:38:22,941 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:38:22,991 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:38:22,993 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 08:38:22,997 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:38:22,999 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-04-26 08:38:28,624 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-04-26 08:38:45,605 [Worker-4: Launching FaresFlightTickets (1)] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets
+2019-04-26 08:38:45,606 [Worker-4: Launching FaresFlightTickets (1)] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-04-26 08:39:08,817 [Worker-5: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:39:08,818 [Worker-5: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:39:08,823 [Worker-5: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 08:39:08,834 [Worker-5: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:39:08,835 [Worker-5: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-04-26 08:39:37,962 [Worker-8: Launching Executing clean in D__MICROSERVICES ADVANCED_MicroservicesAwsWorkspace_FaresFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets
+2019-04-26 08:39:37,963 [Worker-8: Launching Executing clean in D__MICROSERVICES ADVANCED_MicroservicesAwsWorkspace_FaresFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B clean
+2019-04-26 08:39:43,732 [Worker-4: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:39:43,733 [Worker-4: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:39:43,735 [Worker-4: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 08:39:43,741 [Worker-4: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:39:43,741 [Worker-4: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-04-26 08:39:48,621 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2019-04-26 08:39:56,127 [Worker-6: Launching FaresFlightTickets (2)] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets
+2019-04-26 08:39:56,133 [Worker-6: Launching FaresFlightTickets (2)] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-04-26 08:40:12,503 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:40:12,504 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:40:12,508 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 08:40:12,512 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:40:12,512 [Worker-8: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FaresFlightTickets\src\test\resources
+2019-04-26 08:51:18,788 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:51:18,788 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:51:18,789 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 08:51:18,792 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:51:18,792 [Worker-12: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-04-26 08:52:12,880 [main] INFO  o.e.m2e.actions.ExecutePomAction - Using existing launch configuration
+2019-04-26 08:52:13,068 [Worker-2: Launching SearchFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets
+2019-04-26 08:52:13,068 [Worker-2: Launching SearchFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-04-26 08:52:30,583 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:52:30,585 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 08:52:30,587 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 08:52:30,591 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 08:52:30,591 [Worker-16: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\SearchFlightTickets\src\test\resources
+2019-04-26 09:01:05,030 [Worker-18: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:01:05,030 [Worker-18: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 09:01:05,032 [Worker-18: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 09:01:05,037 [Worker-18: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:01:05,037 [Worker-18: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-04-26 09:01:15,320 [Worker-18: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:01:15,321 [Worker-18: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 09:01:15,324 [Worker-18: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 09:01:15,327 [Worker-18: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:01:15,327 [Worker-18: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-04-26 09:02:09,363 [main] INFO  o.e.m2e.actions.ExecutePomAction - Using existing launch configuration
+2019-04-26 09:02:09,599 [Worker-24: Launching BookingFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets
+2019-04-26 09:02:09,600 [Worker-24: Launching BookingFlightTickets] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-04-26 09:02:27,359 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:02:27,362 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 09:02:27,364 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 09:02:27,369 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:02:27,369 [Worker-23: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\BookingFlightTickets\src\test\resources
+2019-04-26 09:09:57,426 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:09:57,427 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 09:09:57,429 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 09:09:57,435 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:09:57,435 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-04-26 09:10:16,440 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:10:16,444 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 09:10:16,447 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 09:10:16,450 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:10:16,451 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-04-26 09:11:14,864 [main] INFO  o.e.m2e.actions.ExecutePomAction - Using existing launch configuration
+2019-04-26 09:11:15,042 [Worker-19: Launching CheckInCustomers] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers
+2019-04-26 09:11:15,042 [Worker-19: Launching CheckInCustomers] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-04-26 09:11:29,214 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:11:29,216 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 09:11:29,218 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 09:11:29,221 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:11:29,222 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\CheckInCustomers\src\test\resources
+2019-04-26 09:13:43,494 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:13:43,495 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 09:13:43,497 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2019-04-26 09:13:43,501 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:13:43,501 [Worker-17: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-04-26 09:14:30,896 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:14:30,944 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 09:14:30,947 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-04-26 09:14:30,957 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:14:30,957 [Worker-21: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-04-26 09:15:01,863 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:15:01,865 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 09:15:01,868 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-04-26 09:15:01,873 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:15:01,873 [Worker-25: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources
+2019-04-26 09:16:23,565 [main] INFO  o.e.m2e.actions.ExecutePomAction - Using existing launch configuration
+2019-04-26 09:16:23,717 [Worker-25: Launching FlightsWebSite] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite
+2019-04-26 09:16:23,717 [Worker-25: Launching FlightsWebSite] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -Ppom.xml -B -Dmaven.test.skip=true -DskipTests package
+2019-04-26 09:16:50,256 [Worker-26: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:16:50,257 [Worker-26: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2019-04-26 09:16:50,261 [Worker-26: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 7 resources
+2019-04-26 09:16:50,267 [Worker-26: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2019-04-26 09:16:50,267 [Worker-26: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\MICROSERVICES ADVANCED\MicroservicesAwsWorkspace\FlightsWebSite\src\test\resources

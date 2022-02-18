@@ -1,0 +1,44 @@
+EC2 Instance Creation
+=====================
+Click on "EC2" --> Click on "Running Instances" --> Click on "Launch Instance" --> Select "Amazon Linux AMI" --> click on "Review and Launch" --> Create a new Key Pair --> Give Key pair name as "MicroservicesAwsKeyPair" --> click on "Download Key Pair" --> Save "MicroservicesAwsKeyPair.pem" in location "D:\MICROSERVICES ADVANCED\Documents\Misc" --> click on "Launch Instance"
+
+Run below commands form git-bash:
+ssh -i "AspireAwsKeyPair.pem" ec2-user@ec2-3-17-241-82.us-east-2.compute.amazonaws.com
+sudo passwd ec2-user
+New Password: aspire123
+Re-Enter New Password: aspire123
+
+java -version
+sudo yum remove java-1.7.0-openjdk
+sudo yum install java-1.8.0
+java -version
+
+java -jar JdbcDocker.jar
+
+java -jar FaresFlightTickets.jar &
+ps -a
+bg
+The below command gives memory info:
+cat /proc/meminfo
+
+Rabbitmq Installation
+=====================
+https://gist.github.com/joshdvir/e4124a6494a6f6b8ba7e
+sudo yum remove erlang
+Note: The 'guest' user can only connect via localhost.
+Hence create new account in rabbitmq to access outside of localhost.
+sudo rabbitmqctl add_user aspire aspire
+sudo rabbitmqctl set_permissions -p / aspire ".*" ".*" ".*"
+sudo rabbitmqctl set_user_tags aspire  administrator
+sudo /sbin/service rabbitmq-server restart
+
+WinScp Settings
+===============
+File Protocol: SFTP
+Host Name: ec2-18-222-84-0.us-east-2.compute.amazonaws.com
+Port Number: 22
+User name: ec2-user
+Password: Not required!
+Click On Advanced --> SSH --> Authentication --> Upload Private key file: AspireAwsKeyPair.ppk
+
+

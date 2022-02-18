@@ -1,0 +1,27 @@
+https://aws.amazon.com/console/
+Click on "Create a new account"
+Email address: balaji@java2aspire.com
+Password: 
+Confirm Password:
+AWS Account Name: aspireramesh
+Account Type: Personal
+Full Name: Kandepu Ramesh
+Phone Number: 7799208899
+Country / Region: India
+Enter Address Details:
+
+
+Click on "Create Account and Continue"
+
+Payment Information
+===================
+Provide card details
+
+Login
+=====
+https://aws.amazon.com/console/
+username: balaji@java2aspire.com
+Password:
+Click on "Sign In"
+
+

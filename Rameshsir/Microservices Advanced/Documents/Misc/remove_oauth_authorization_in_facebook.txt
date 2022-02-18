@@ -1,0 +1,1 @@
+login to facebook ---> goto settings --> click on 'Apps and Websites' --> select redbus --> click on 'Remove'

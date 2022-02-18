@@ -1,0 +1,101 @@
+Authorization_code Grant Type
+=============================
+Authorization Request
+---------------------
+http://localhost:9090/oauth/authorize?client_id=clientapp&redirect_uri=http://localhost:9000/callback&response_type=code&scope=read_profile
+Authorization Response
+----------------------
+http://localhost:9000/callback?code=w9rw3x
+
+Access Token Request
+--------------------
+curl -X POST http://localhost:9090/oauth/token --user clientapp:123456 -H "content-type: application/x-www-form-urlencoded" -d "grant_type=authorization_code&redirect_uri=http://localhost:9000/callback&scope=read_profile&code=w9rw3x"
+Access Token Response
+---------------------
+access_token: ad1c7340-9459-4f93-80e4-d6e80d081b12
+token_type: bearer
+
+Resource Endpoint Request
+-------------------------
+curl -X GET http://localhost:9090/api/profile -H "authorization: Bearer ad1c7340-9459-4f93-80e4-d6e80d081b12"
+
+Resource Endpoint Response
+--------------------------
+{"name":"adolfo","email":"adolfo@mailinator.com"}
+
+Implicit Grant Type
+===================
+Authorization Request
+---------------------
+http://localhost:9090/oauth/authorize?client_id=clientapp&redirect_uri=http://localhost:9000/callback&response_type=token&scope=read_profile
+Access Token Response
+----------------------
+http://localhost:9000/callback#access_token=2bd425f8-9218-43bf-bd26-3fb970a5cd63&token_type=bearer&expires_in=119
+
+Resource Endpoint Request
+-------------------------
+curl -X GET http://localhost:9090/api/profile -H "authorization: Bearer 2bd425f8-9218-43bf-bd26-3fb970a5cd63"
+
+Resource Endpoint Response
+--------------------------
+{"name":"adolfo","email":"adolfo@mailinator.com"}
+
+Password
+========
+Access Token Request
+--------------------
+curl -X POST http://localhost:9090/oauth/token --user clientapp:123456 -H "accept: application/json" -H "content-type: application/x-www-form-urlencoded" -d "grant_type=password&username=adolfo&password=123&scope=read_profile"
+Access Token Response
+---------------------
+{
+"access_token":"2db1bcda-f2e0-4334-a9da-04919f3586ff",
+"token_type":"bearer",
+"expires_in":43199,
+"scope":"read_profile"
+}
+
+Resource Endpoint Request
+-------------------------
+curl -X GET http://localhost:9090/api/profile -H "authorization: Bearer 7e6cc063-50e0-4702-88d3-2716e09b3aad"
+Resource Endpoint Response
+--------------------------
+{"name":"adolfo","email":"adolfo@mailinator.com"}
+
+
+client_credentials
+==================
+Access Token Request
+--------------------
+curl -X POST "http://localhost:9090/oauth/token" --user clientapp:123456 -d "grant_type=client_credentials&scope=read_profile"
+Access Token Response
+---------------------
+{
+"access_token":"2d10e917-b0d1-4a07-b18b-99fcfea296b5",
+"token_type":"bearer",
+"expires_in":42831,
+"scope":"read_profile"
+}
+
+Resource Endpoint Request
+-------------------------
+curl -X GET http://localhost:9090/api/profile -H "authorization: Bearer 2d10e917-b0d1-4a07-b18b-99fcfea296b5"
+curl -X GET http://localhost:9090/api/hello -H "authorization: Bearer 2d10e917-b0d1-4a07-b18b-99fcfea296b5"
+
+Resource Endpoint Response
+--------------------------
+Hello world
+
+refresh_token
+=============
+curl -X POST --user clientapp:123456 http://localhost:9090/oauth/token -H "accept: application/json" -H "content-type: application/x-www-form-urlencoded" -d "grant_type=password&username=adolfo&password=123&scope=read_profile"
+curl -X GET http://localhost:9090/api/profile -H "authorization: Bearer 5baba9f0-fe9f-4131-8e14-bbd4991886bc"
+curl -X GET http://localhost:9090/api/hello -H "authorization: Bearer 5baba9f0-fe9f-4131-8e14-bbd4991886bc"
+curl -X POST --user clientapp:123456 http://localhost:9090/oauth/token -H "content-type: application/x-www-form-urlencoded" -d "grant_type=refresh_token&scope=read_profile&refresh_token=bbe9ab75-0c71-49ca-bc98-358cabddb6a5"
+curl -X GET http://localhost:9090/api/profile -H "authorization: Bearer 319e9108-d0ae-439c-81b7-4acda5a5f08a"
+--------------------------------
+Broken OAuth Provider
+http://localhost:9090/oauth/authorize?client_id=clientapp&redirect_uri=http://localhost:9000/callback&response_type=code&scope=read_profile
+curl -X POST --user clientapp:123456 http://localhost:9090/oauth/token -H "content-type: application/x-www-form-urlencoded" -d "code=tttiSe&grant_type=authorization_code&redirect_uri=http://localhost:9000/callback&scope=read_profile"
+curl -X GET http://localhost:8081/api/profile -H "authorization: Bearer c7c5ae99-5104-40b3-95e8-97f82260c28c"
+
+
